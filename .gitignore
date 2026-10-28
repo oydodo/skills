@@ -1,5 +1,2 @@
-# DSH is an on-demand, pinned, partial sparse checkout.
-# Git tracks the pin and setup script; never commit upstream source files.
+# Legacy local standalone checkout from old approach; not tracked.
 /upstream/dsh-skills/
-# An old pre-migration full DSH submodule checkout may remain on a user's disk.
-/upstream/deepseek-harness/

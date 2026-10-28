@@ -1,6 +1,6 @@
 # Skills
 
-个人 AI Skills 的统一管理仓库。自研 Skill 在此维护；第三方开源 Skill 优先以 **Git submodule** 追踪，DSH 例外采用固定版本的 **稀疏部分克隆**（只取 Skill 目录）。使用 [registry/skills.yaml](registry/skills.yaml) 精确声明已采用的子目录。
+个人 AI Skills 的统一管理仓库。自研 Skill 在此维护；**所有第三方来源统一采用 Git submodule** 固定上游版本，按需结合 Sparse Checkout 和 Partial Clone。使用 [registry/skills.yaml](registry/skills.yaml) 精确声明已采用的子目录。
 
 ## 我们的 Core v1 · 精简、分工、可验证
 
@@ -35,7 +35,7 @@
 | 来源 | 本机对应数量 | 位置 | 维护 |
 | --- | ---: | --- | --- |
 | [Matt Pocock](https://github.com/mattpocock/skills) | 31 | `upstream/mattpocock-skills` | submodule，main |
-| [DeepSeek Harness Skills](https://github.com/deepseek-ai/deepseek-harness/tree/master/.agents/skills) | 19 | `upstream/dsh-skills/.agents/skills` | 固定 SHA、稀疏部分克隆，仅获取 Skills |
+| [DeepSeek Harness Skills](https://github.com/deepseek-ai/deepseek-harness/tree/master/.agents/skills) | 19 | `upstream/deepseek-harness/.agents/skills` | Git submodule + Sparse Checkout，Gitlink 固定版本 |
 | [Technical Writing](https://github.com/luoling8192/technical-writing) | 1 | `upstream/technical-writing` | submodule |
 | [Technical Documentation](https://github.com/wondelai/skills/tree/main/technical-documentation) | 1 | `upstream/wondelai-skills/technical-documentation` | submodule（**只使用此子目录**） |
 | [Technical Language](https://github.com/jjsnack/technical-language-skill) | 1 | `upstream/technical-language-skill` | submodule |
@@ -63,7 +63,7 @@ cd skills
 # 根据需要选择具体上游
 git submodule update --init upstream/mattpocock-skills
 git submodule update --init upstream/technical-writing
-# DSH 不使用 submodule；只检出上游 .agents/skills/ 目录
+# DSH 使用 submodule；初始化时只检出 .agents/skills/
 bash scripts/checkout-dsh-skills.sh
 ```
 
@@ -76,22 +76,36 @@ git commit -m "chore: update Matt Pocock skills"
 git push
 ```
 
-### DSH：为什么不使用 submodule
+### DSH：Submodule + Sparse Checkout
 
-Git submodule 不能指向上游仓库的单个子目录。为避免整个 Harness 源码进入本仓库和本地工作树，DSH 改为 `scripts/checkout-dsh-skills.sh`：
+DSH 与其他第三方仓库一样，主仓库通过 **Gitlink** 固定整个上游仓库的 commit；`skill_path` 声明**采用的子目录**，而 Sparse Checkout 才负责限制**工作树实际检出的文件**。Git submodule 本身无法直接引用一个子目录。
 
-- `--filter=blob:none`：部分克隆，避免下载不需要的源码 blob。
-- `--no-checkout` + `sparse-checkout --no-cone '/.agents/skills/'`：仅检出 `.agents/skills/` 下的文件。
-- `registry/dsh-upstream.sha`：固定可复现的上游版本；本仓库不会提交 DSH 的源码副本。
-- 如需跟进最新上游，可以运行 `bash scripts/checkout-dsh-skills.sh --latest`，然后审查并提交更新后的 SHA 文件。
+首次克隆主仓库时不要使用 `--recurse-submodules`，否则可能先检出 Harness 的全部文件。运行：
 
-若此前已完整检出旧 DSH submodule，本次 GitHub 变更不会自动清理旧文件；请确认无本地修改后再手动清理。
+```bash
+bash scripts/checkout-dsh-skills.sh
+```
+
+脚本先执行 `git clone --no-checkout --filter=blob:none --depth 1`，再配置 `sparse-checkout`，最后检出父仓库 Gitlink 固定的版本并执行 `git submodule absorbgitdirs`。因此只在工作树中保留 `.agents/skills/`，不包含 Harness 的其他应用源码文件；Git 元数据仍包含上游仓库的树结构。
+
+主动更新到上游最新版本：
+
+```bash
+bash scripts/checkout-dsh-skills.sh --latest
+git add upstream/deepseek-harness
+git commit -m "chore: update DSH skills"
+git push
+```
+
+首次初始化后，常规 `git submodule status` 可查看版本；不再使用额外的 SHA pin 文件。旧方案遗留的 `upstream/dsh-skills/` 不会自动删除，如需清理请先确认无本地修改。
+
+其他 submodule（如 WondelAI）同样可**按需**启用稀疏检出，但仅登记 `skill_path` 不等于自动应用 Sparse Checkout。
 
 单个 Skill 的实际安装目录请在 [登记表](registry/skills.yaml) 查 `skill_path`，不要把大型多 Skill 仓库直接作为单个 Skill 安装；可根据客户端支持的方式选择子目录或创建软链接。
 
 ## 维护原则
 
-- 第三方由上游维护。Git submodule 与 DSH 稀疏部分克隆只记录来源、版本及实际采用路径，不改写上游代码。
+- 第三方由上游维护，统一通过 Git submodule 记录来源和版本；稀疏检出只管理工作树，不复制或修改上游源码。
 - 未核实的本机 Skill 不上传源文件；也不自动把所有已安装目录变成自研项目。
 - 仅更新 GitHub 元数据与 submodule **不会改变本机现有 Skill 安装**。
 - 保持私有仓库，尤其不要上传项目内部资料、密钥或未经审核的第三方内容。

@@ -22,3 +22,7 @@
 	path = upstream/addyosmani-agent-skills
 	url = https://github.com/addyosmani/agent-skills.git
 	branch = main
+[submodule "upstream/deepseek-harness"]
+	path = upstream/deepseek-harness
+	url = https://github.com/deepseek-ai/deepseek-harness.git
+	branch = master

@@ -2,14 +2,14 @@
 
 > 快照时间：2026-10-28；实际本机仍有 **80 个** Skill 目录；以下是管理仓库的筛选清单，按要求排除了 **12 个 Codas 专用/相关目录**（10 个 `codas-*`、`codegraph` 和 `code-explainer`），剩余 **68 个**。没有删除或移动任何本机文件。
 >
-> 来源归类来自上游仓库对应的 `SKILL.md` 路径。名称与来源匹配不代表本地文件一定等于当前上游版本；Git submodule 或 DSH 的固定 SHA 记录具体版本。
+> 来源归类来自上游仓库对应的 `SKILL.md` 路径。名称与来源匹配不代表本地文件一定等于当前上游版本；Git submodule 的 Gitlink 记录具体版本。
 
 ## 来源汇总
 
 | 来源 | 本机目录数 | 处理方式 |
 | --- | ---: | --- |
 | [Matt Pocock](https://github.com/mattpocock/skills) | 31 | 一个 submodule，逐项选取路径 |
-| [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness/tree/master/.agents/skills) | 19 | 稀疏检出，仅获取 `.agents/skills/` |
+| [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness/tree/master/.agents/skills) | 19 | Git submodule + Sparse Checkout，仅检出 `.agents/skills/` |
 | 3 个既有来源 | 3 | 保留原 submodule |
 | 其他来源 | 15 | [13 个已追溯公开来源、2 个本地定制未证实公开上游](other-sources.md)；`code-explainer` 在审计记录中但已排除 |
 | **合计** | **68** | |

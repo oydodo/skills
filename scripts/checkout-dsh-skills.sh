@@ -1,68 +1,65 @@
 #!/usr/bin/env bash
-# Fetch only DeepSeek Harness's .agents/skills subtree (not the entire Harness worktree).
-# Third-party source is NOT committed to the skills repository.
+# Initialize the DSH Git submodule with only its .agents/skills worktree.
 set -euo pipefail
-
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SOURCE_URL="https://github.com/deepseek-ai/deepseek-harness.git"
-DEST="$ROOT/upstream/dsh-skills"
-PIN_FILE="$ROOT/registry/dsh-upstream.sha"
-
-if [[ "$#" -gt 1 ]]; then
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+MODULE="upstream/deepseek-harness"
+DEST="$ROOT/$MODULE"
+ACTION="${1:-}"
+if [[ $# -gt 1 || ( -n "$ACTION" && "$ACTION" != "--latest" ) ]]; then
   echo "Usage: bash scripts/checkout-dsh-skills.sh [--latest]" >&2
   exit 2
 fi
-ACTION=""
-if [[ "$#" -eq 1 ]]; then
-  ACTION="$1"
+ENTRY="$(git -C "$ROOT" ls-files --stage -- "$MODULE")"
+if [[ "$ENTRY" != "160000 "* ]]; then
+  echo "Expected a tracked Git submodule at $MODULE" >&2
+  exit 1
 fi
-if [[ -n "$ACTION" && "$ACTION" != "--latest" ]]; then
-  echo "Usage: bash scripts/checkout-dsh-skills.sh [--latest]" >&2
-  exit 2
+PIN="${ENTRY#160000 }"
+PIN="${PIN%% *}"
+URL="$(git config -f "$ROOT/.gitmodules" --get "submodule.$MODULE.url")"
+BRANCH="$(git config -f "$ROOT/.gitmodules" --get "submodule.$MODULE.branch" || echo master)"
+
+git -C "$ROOT" submodule init -- "$MODULE"
+
+if [[ -e "$DEST" && ! -e "$DEST/.git" ]]; then
+  if [[ -n "$(ls -A "$DEST")" ]]; then
+    echo "Destination exists with unknown files: $DEST; refusing overwrite" >&2
+    exit 1
+  fi
 fi
-
-if [[ "$ACTION" == "--latest" ]]; then
-  SHA="$(git ls-remote "$SOURCE_URL" refs/heads/master | awk 'NR==1 {print $1}')"
-  [[ "$SHA" =~ ^[0-9a-f]{40}$ ]] || { echo "Failed to resolve upstream master" >&2; exit 1; }
-else
-  SHA="$(tr -d '[:space:]' < "$PIN_FILE")"
+NEW_CLONE=0
+if [[ ! -e "$DEST/.git" ]]; then
+  NEW_CLONE=1
+  mkdir -p "$(dirname "$DEST")"
+  git clone --depth 1 --filter=blob:none --branch "$BRANCH" --no-checkout "$URL" "$DEST"
 fi
-
-[[ "$SHA" =~ ^[0-9a-f]{40}$ ]] || { echo "Invalid pinned SHA in $PIN_FILE" >&2; exit 1; }
-
-if [[ -e "$DEST" && ! -d "$DEST/.git" ]]; then
-  echo "Destination exists but is not a standalone Git clone: $DEST" >&2
+if [[ "$NEW_CLONE" -eq 0 && -n "$(git -C "$DEST" status --porcelain)" ]]; then
+  echo "DSH checkout has local changes; refusing to overwrite" >&2
   exit 1
 fi
 
-if [[ ! -d "$DEST/.git" ]]; then
-  mkdir -p "$(dirname "$DEST")"
-  # No initial checkout: avoid downloading application blobs before enabling sparse patterns.
-  git clone --depth=1 --filter=blob:none --branch master --no-checkout "$SOURCE_URL" "$DEST"
-else
-  [[ -z "$(git -C "$DEST" status --porcelain)" ]] || {
-    echo "Local DSH checkout has changes; refusing to overwrite them" >&2
-    exit 1
-  }
-fi
-
-# Non-cone mode excludes even root-level application files.
+git -C "$ROOT" submodule absorbgitdirs -- "$MODULE"
 git -C "$DEST" sparse-checkout set --no-cone '/.agents/skills/'
 
-if ! git -C "$DEST" cat-file -e "$SHA^{commit}" 2>/dev/null; then
-  git -C "$DEST" fetch --depth=1 --filter=blob:none origin "$SHA"
-fi
-git -C "$DEST" checkout --detach "$SHA"
-
-[[ -d "$DEST/.agents/skills" ]] || {
-  echo "Pinned revision lacks .agents/skills" >&2
-  exit 1
-}
-
 if [[ "$ACTION" == "--latest" ]]; then
-  printf '%s\n' "$SHA" > "$PIN_FILE"
-  echo "Updated revision pin: $PIN_FILE"
+  git -C "$DEST" fetch --depth 1 --filter=blob:none origin "$BRANCH"
+  TARGET="$(git -C "$DEST" rev-parse FETCH_HEAD)"
+else
+  TARGET="$PIN"
+  if ! git -C "$DEST" cat-file -e "${TARGET}^{commit}" 2>/dev/null; then
+    git -C "$DEST" fetch --depth 1 --filter=blob:none origin "$TARGET"
+  fi
 fi
 
-echo "DSH Skills available at: $DEST/.agents/skills"
-echo "Pinned revision: $SHA"
+git -C "$DEST" checkout --detach "$TARGET"
+if [[ ! -d "$DEST/.agents/skills" ]]; then
+  echo "The selected revision has no .agents/skills/ directory" >&2
+  exit 1
+fi
+
+echo "DSH source: $URL"
+echo "Skills: $DEST/.agents/skills"
+echo "Commit: $TARGET"
+if [[ "$ACTION" == "--latest" ]]; then
+  echo "Review and pin update: git add $MODULE && git commit -m 'chore: update DSH skills'"
+fi
