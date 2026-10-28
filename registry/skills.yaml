@@ -1,30 +1,242 @@
-# Manually curated list of adopted skills. Gitlinks determine the exact pinned revision.
-# For multi-skill sources, ONLY the given skill_path is adopted, even if the whole repo is checked out.
-version: 1
+# Curated Skills registry. A submodule pins a source-repository commit;
+# only individual skill_path values listed below are adopted.
+# 'unverified' records are a local inventory only, not installed from this repo.
+version: 2
+upstreams:
+  mattpocock:
+    url: https://github.com/mattpocock/skills
+    module_path: upstream/mattpocock-skills
+    branch: main
+  deepseek-harness:
+    url: https://github.com/deepseek-ai/deepseek-harness
+    module_path: upstream/deepseek-harness
+    branch: master
+  luoling:
+    url: https://github.com/luoling8192/technical-writing
+    module_path: upstream/technical-writing
+    branch: main
+  wondelai:
+    url: https://github.com/wondelai/skills
+    module_path: upstream/wondelai-skills
+    branch: main
+  jjsnack:
+    url: https://github.com/jjsnack/technical-language-skill
+    module_path: upstream/technical-language-skill
+    branch: main
 skills:
   - name: crux-first-reasoning
-    type: maintained
+    source: maintained
     category: reasoning
     skill_path: skills/crux-first-reasoning
-    purpose: Key problem identification, evidence-based independent decisions
-  - name: technical-writing
-    type: submodule
-    category: writing
-    upstream: https://github.com/luoling8192/technical-writing
-    module_path: upstream/technical-writing
-    skill_path: upstream/technical-writing
-    purpose: Chinese technical writing
+  - name: grill-me
+    source: mattpocock
+    category: reasoning
+    skill_path: upstream/mattpocock-skills/skills/productivity/grill-me
+  - name: grill-with-docs
+    source: mattpocock
+    category: reasoning
+    skill_path: upstream/mattpocock-skills/skills/engineering/grill-with-docs
+  - name: grilling
+    source: mattpocock
+    category: reasoning
+    skill_path: upstream/mattpocock-skills/skills/productivity/grilling
+  - name: research
+    source: mattpocock
+    category: reasoning
+    skill_path: upstream/mattpocock-skills/skills/engineering/research
+  - name: to-questionnaire
+    source: mattpocock
+    category: reasoning
+    skill_path: upstream/mattpocock-skills/skills/productivity/to-questionnaire
+  - name: wait-what
+    source: mattpocock
+    category: reasoning
+    skill_path: upstream/mattpocock-skills/skills/productivity/wait-what
+  - name: wayfinder
+    source: mattpocock
+    category: reasoning
+    skill_path: upstream/mattpocock-skills/skills/engineering/wayfinder
+  - name: retro
+    source: mattpocock
+    category: planning
+    skill_path: upstream/mattpocock-skills/skills/engineering/retro
+  - name: to-spec
+    source: mattpocock
+    category: planning
+    skill_path: upstream/mattpocock-skills/skills/engineering/to-spec
+  - name: to-tickets
+    source: mattpocock
+    category: planning
+    skill_path: upstream/mattpocock-skills/skills/engineering/to-tickets
+  - name: triage
+    source: mattpocock
+    category: planning
+    skill_path: upstream/mattpocock-skills/skills/engineering/triage
+  - name: codebase-design
+    source: mattpocock
+    category: architecture
+    skill_path: upstream/mattpocock-skills/skills/engineering/codebase-design
+  - name: domain-modeling
+    source: mattpocock
+    category: architecture
+    skill_path: upstream/mattpocock-skills/skills/engineering/domain-modeling
+  - name: improve-codebase-architecture
+    source: mattpocock
+    category: architecture
+    skill_path: upstream/mattpocock-skills/skills/engineering/improve-codebase-architecture
+  - name: code-review
+    source: mattpocock
+    category: development
+    skill_path: upstream/mattpocock-skills/skills/engineering/code-review
+  - name: diagnosing-bugs
+    source: mattpocock
+    category: development
+    skill_path: upstream/mattpocock-skills/skills/engineering/diagnosing-bugs
+  - name: git-guardrails-claude-code
+    source: mattpocock
+    category: development
+    skill_path: upstream/mattpocock-skills/skills/misc/git-guardrails-claude-code
+  - name: implement
+    source: mattpocock
+    category: development
+    skill_path: upstream/mattpocock-skills/skills/engineering/implement
+  - name: implement-spec
+    source: mattpocock
+    category: development
+    skill_path: upstream/mattpocock-skills/skills/engineering/implement-spec
+  - name: migrate-to-shoehorn
+    source: mattpocock
+    category: development
+    skill_path: upstream/mattpocock-skills/skills/misc/migrate-to-shoehorn
+  - name: pr
+    source: mattpocock
+    category: development
+    skill_path: upstream/mattpocock-skills/skills/engineering/pr
+  - name: prototype
+    source: mattpocock
+    category: development
+    skill_path: upstream/mattpocock-skills/skills/engineering/prototype
+  - name: setup-pre-commit
+    source: mattpocock
+    category: development
+    skill_path: upstream/mattpocock-skills/skills/misc/setup-pre-commit
+  - name: tdd
+    source: mattpocock
+    category: development
+    skill_path: upstream/mattpocock-skills/skills/engineering/tdd
   - name: technical-documentation
-    type: submodule
+    source: wondelai
     category: writing
-    upstream: https://github.com/wondelai/skills
-    module_path: upstream/wondelai-skills
     skill_path: upstream/wondelai-skills/technical-documentation
-    purpose: Developer documentation style
   - name: technical-language
-    type: submodule
+    source: jjsnack
     category: writing
-    upstream: https://github.com/jjsnack/technical-language-skill
-    module_path: upstream/technical-language-skill
     skill_path: upstream/technical-language-skill
-    purpose: Simplified technical English
+  - name: technical-writing
+    source: luoling
+    category: writing
+    skill_path: upstream/technical-writing
+  - name: record-browser-gif
+    source: deepseek-harness
+    category: visual
+    skill_path: upstream/deepseek-harness/.agents/skills/record-browser-gif
+  - name: agent-experience
+    source: deepseek-harness
+    category: agent
+    skill_path: upstream/deepseek-harness/.agents/skills/agent-experience
+  - name: ask-matt
+    source: mattpocock
+    category: agent
+    skill_path: upstream/mattpocock-skills/skills/engineering/ask-matt
+  - name: handoff
+    source: mattpocock
+    category: agent
+    skill_path: upstream/mattpocock-skills/skills/productivity/handoff
+  - name: setup-matt-pocock-skills
+    source: mattpocock
+    category: agent
+    skill_path: upstream/mattpocock-skills/skills/engineering/setup-matt-pocock-skills
+  - name: wizard
+    source: mattpocock
+    category: agent
+    skill_path: upstream/mattpocock-skills/skills/engineering/wizard
+  - name: writing-for-agents
+    source: mattpocock
+    category: agent
+    skill_path: upstream/mattpocock-skills/skills/productivity/writing-for-agents
+  - name: scaffold-exercises
+    source: mattpocock
+    category: education
+    skill_path: upstream/mattpocock-skills/skills/misc/scaffold-exercises
+  - name: teach
+    source: mattpocock
+    category: education
+    skill_path: upstream/mattpocock-skills/skills/productivity/teach
+  - name: cordis-styling-nitpicking
+    source: deepseek-harness
+    category: project-dsh
+    skill_path: upstream/deepseek-harness/.agents/skills/cordis-styling-nitpicking
+  - name: dsh-archive-agent-notes
+    source: deepseek-harness
+    category: project-dsh
+    skill_path: upstream/deepseek-harness/.agents/skills/dsh-archive-agent-notes
+  - name: dsh-ci-test-reliability
+    source: deepseek-harness
+    category: project-dsh
+    skill_path: upstream/deepseek-harness/.agents/skills/dsh-ci-test-reliability
+  - name: dsh-client-ui-ux
+    source: deepseek-harness
+    category: project-dsh
+    skill_path: upstream/deepseek-harness/.agents/skills/dsh-client-ui-ux
+  - name: dsh-code-review
+    source: deepseek-harness
+    category: project-dsh
+    skill_path: upstream/deepseek-harness/.agents/skills/dsh-code-review
+  - name: dsh-create-upgrade-guide
+    source: deepseek-harness
+    category: project-dsh
+    skill_path: upstream/deepseek-harness/.agents/skills/dsh-create-upgrade-guide
+  - name: dsh-doc
+    source: deepseek-harness
+    category: project-dsh
+    skill_path: upstream/deepseek-harness/.agents/skills/dsh-doc
+  - name: dsh-error-handling
+    source: deepseek-harness
+    category: project-dsh
+    skill_path: upstream/deepseek-harness/.agents/skills/dsh-error-handling
+  - name: dsh-find-simplifications
+    source: deepseek-harness
+    category: project-dsh
+    skill_path: upstream/deepseek-harness/.agents/skills/dsh-find-simplifications
+  - name: dsh-merging-stacked-prs
+    source: deepseek-harness
+    category: project-dsh
+    skill_path: upstream/deepseek-harness/.agents/skills/dsh-merging-stacked-prs
+  - name: dsh-official-plugin-artwork
+    source: deepseek-harness
+    category: project-dsh
+    skill_path: upstream/deepseek-harness/.agents/skills/dsh-official-plugin-artwork
+  - name: dsh-pre-push-checks
+    source: deepseek-harness
+    category: project-dsh
+    skill_path: upstream/deepseek-harness/.agents/skills/dsh-pre-push-checks
+  - name: dsh-prose-standard
+    source: deepseek-harness
+    category: project-dsh
+    skill_path: upstream/deepseek-harness/.agents/skills/dsh-prose-standard
+  - name: dsh-responsive-ui
+    source: deepseek-harness
+    category: project-dsh
+    skill_path: upstream/deepseek-harness/.agents/skills/dsh-responsive-ui
+  - name: dsh-speed-up-perf
+    source: deepseek-harness
+    category: project-dsh
+    skill_path: upstream/deepseek-harness/.agents/skills/dsh-speed-up-perf
+  - name: dsh-translate-docs
+    source: deepseek-harness
+    category: project-dsh
+    skill_path: upstream/deepseek-harness/.agents/skills/dsh-translate-docs
+  - name: dsh-trim-cot-leakage
+    source: deepseek-harness
+    category: project-dsh
+    skill_path: upstream/deepseek-harness/.agents/skills/dsh-trim-cot-leakage
