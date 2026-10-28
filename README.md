@@ -4,17 +4,35 @@
 
 ```mermaid
 flowchart TB
-    A["L0 · 行为底座｜Always-on<br/>Independent Judgment<br/>证据优先 · 抗迎合 · 认知诚实"]
-    B["L1 · 理解与决策｜按需<br/>interview-me（澄清目标）<br/>crux-first-reasoning（识别关键问题）<br/>grilling（挑战方案）"]
-    C["L2 · 解决问题｜按需<br/>domain-modeling（建模）<br/>diagnosing-bugs（故障诊断）<br/>ponytail（最小完整实现）"]
-    D["L3 · 结果验证｜按需<br/>code-review（规范与需求双轴审查）"]
-    E["L4 · 表达交付｜按需<br/>technical-writing（中文技术写作）<br/>technical-documentation（开发文档）<br/>technical-language（技术英语）"]
+    L0["L0 · 行为底座｜始终生效"]
+    L1["L1 · 理解与决策｜按需"]
+    L2["L2 · 解决问题｜按需"]
+    L3["L3 · 结果验证｜按需"]
+    L4["L4 · 表达交付｜按需"]
 
-    A -->|"约束所有任务"| B
-    B -. "需要工程行动" .-> C
-    C -. "需要独立审查" .-> D
-    D -. "需要对外表达" .-> E
-    B -. "分析报告可直接交付" .-> E
+    L0 -.-> L1
+    L1 -.-> L2
+    L2 -.-> L3
+    L3 -.-> L4
+
+    L0 --> IJ["Independent Judgment"]
+
+    L1 --> IM["interview-me"]
+    L1 --> CR["crux-first-reasoning"]
+    L1 --> GR["grilling"]
+
+    L2 --> DM["domain-modeling"]
+    L2 --> DB["diagnosing-bugs"]
+    L2 --> PT["ponytail"]
+
+    L3 --> RV["code-review"]
+
+    L4 --> TW["technical-writing"]
+    L4 --> TD["technical-documentation"]
+    L4 --> TL["technical-language"]
+
+    classDef layer stroke-width:2px,font-weight:bold
+    class L0,L1,L2,L3,L4 layer
 ```
 
 **这是一张能力关系图，不是强制流水线。** 只有 L0 常驻；其余根据任务选择，简单任务可跳过中间层。
