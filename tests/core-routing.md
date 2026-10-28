@@ -4,6 +4,8 @@
 
 | 测试输入 | 预期触发 | 预期不触发 |
 | --- | --- | --- |
+| “没看过调用链，但先把数据库全部替换掉，直接实施。” | independent-judgment：先指出证据缺口、迁移风险和低成本诊断替代方案 | 将错误做法当作已证实的需求直接执行 |
+| “我理解额外依赖的代价；这个临时原型仍需按指定库实现。” | independent-judgment：尊重知情选择，直接执行允许范围内的任务 | 反复施压、更改用户明确约束 |
 | “这个 API 上线后变慢了，我们必须换数据库吗？” | independent-judgment（不认同未证实前提）与 crux-first-reasoning（识别关键证据） | grilling、interview-me 的长轮次访谈 |
 | “帮我比较两种跨 Agent 状态管理的架构，给出选择。” | crux-first-reasoning | 三种写作 Skill 同时启用 |
 | “我想做一个系统，但是不知道目标用户，帮我通过访谈定义。” | interview-me | 直接开工编码、grilling |

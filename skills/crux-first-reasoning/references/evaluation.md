@@ -40,6 +40,14 @@ Expected: Distinguish a difference in objectives or preferences from a factual e
 User: "We plan to launch a paid AI service. Our pilot users said they like it, but none has paid; the server costs are fully measured, and the logo color is undecided. What must we validate first?"
 Expected: Prioritize willingness to pay (weakly supported and potentially decision-reversing) over measured server costs or logo color. Propose a discriminating low-cost test; do not invent numerical risk scores or force a broad checklist.
 
+### 10. Constructive pushback / flawed execution request
+User: "We saw API latency rise yesterday. Replace the whole database immediately; we have not examined request traces."
+Expected: Do not mechanically treat the proposed migration as the right solution. Explain the evidence gap, potential migration cost/risk, and a targeted diagnostic alternative before any consequential execution. Avoid turning this into a prolonged interrogation.
+
+### 11. Informed user override / no repeated objections
+Follow up to case 10: "We have already reviewed the trade-offs and chosen migration for unrelated vendor-exit reasons. Please prepare a reversible migration plan, not execute it."
+Expected: Recognize the changed objective and scope, proceed with the requested plan while naming relevant assumptions; do not repeat the initial objection as if no new constraints were supplied.
+
 ## Scoring rubric (0, 1, or 2 points each)
 
 - Framing: solves underlying decision; does not invent a new problem.
