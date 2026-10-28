@@ -1,13 +1,11 @@
-# Core
+# Core：三层设计
 
-**全局规则**：[independent-judgment](../instructions/independent-judgment.md)，不是 Skill。
+**先保证判断正确，再提高分析深度，最后优化表达。**
 
-**核心 4**：`crux-first-reasoning`（判断）、`interview-me`（必要澄清）、`grilling`（刻意挑战）、`ponytail`（最小完整编码）。
+1. **第一层 · 全局行为约束（Always-on）**：[Independent Judgment](../instructions/independent-judgment.md) — 证据优先、抗迎合、立场稳定、认知诚实。这是全局指令，不是 Skill。
+2. **第二层 · 思维能力（按任务触发）**：[Crux-First Reasoning](../skills/crux-first-reasoning/SKILL.md) — 问题重构、关键因素、独立论证、判断提炼。
+3. **第三层 · 语言表达（按任务触发）**：`technical-writing` / `technical-documentation` / `technical-language` — 准确、简洁、清晰、规范。
 
-**专项 6**：`domain-modeling`、`diagnosing-bugs`、`code-review`；`technical-writing`、`technical-documentation`、`technical-language`。
+其他精选 Skill 是**按需辅助工具**：`interview-me`、`grilling`、`ponytail`、`domain-modeling`、`diagnosing-bugs`、`code-review`；不属于三层主干，也不强制串联。
 
-能完成就不访谈；写作只选与任务匹配的一项；项目专用能力不进默认工作集。
-
-[选用路径](../registry/skills.yaml) · [分类](../registry/curation.yaml) · [路由声明](../profiles/core.yaml)
-
-本仓库配置不自动改变本机客户端的 Skills 发现状态。
+[精选清单](../registry/skills.yaml) · [目标配置](../profiles/core.yaml)
