@@ -1,5 +1,5 @@
-# Desired workset only; not an installer or activation configuration.
-version: 4
+# Desired workset only, not automatic runtime activation.
+version: 5
 always_on_instructions:
   - instructions/independent-judgment.md
 cognition_skills:
@@ -15,25 +15,12 @@ cognition_skills:
     role: stress_test
     path: upstream/mattpocock-skills/skills/productivity/grilling
     trigger: explicit_stress_test
-task_skills:
-  - name: domain-modeling
-    role: domain_model
-    path: upstream/mattpocock-skills/skills/engineering/domain-modeling
-    trigger: explicit_modeling
-  - name: diagnosing-bugs
-    role: diagnosis
-    path: upstream/mattpocock-skills/skills/engineering/diagnosing-bugs
-    trigger: hard_bug_or_regression
+coding_skills:
   - name: ponytail
     role: coding_simplicity
     path: upstream/ponytail/skills/ponytail
     trigger: coding_task
-verification_skills:
-  - name: code-review
-    role: review
-    path: upstream/mattpocock-skills/skills/engineering/code-review
-    trigger: review_against_diff_and_spec
-communication_skills:
+writing_skills:
   - name: technical-writing
     role: chinese_technical_prose
     path: upstream/technical-writing
@@ -47,8 +34,9 @@ communication_skills:
     path: upstream/technical-language-skill
     trigger: english_technical_rewrite
 routing:
+  crux_for_consequential_analysis: true
+  interview_only_when_essential: true
+  grilling_only_when_requested: true
+  writing_select_one_primary: true
   skip_unneeded_layers: true
-  simple_requests: direct_execution
-  require_user_request_for_grilling: true
-  code_review_is_not_a_substitute_for_tests: true
   project_specific_skills: not_global

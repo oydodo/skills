@@ -1,23 +1,19 @@
-# 工作能力架构
+# 最小核心
 
-**核心原则**：行为约束是常驻底座；按任务进入认知、行动、验证或表达，不固定调用链。
+**核心不是 7 个 Skill。** 真正的通用底座只有：
 
-| 层 | 决策问题 | 精选 Skill |
+- **Independent Judgment** — [常驻行为约束](../instructions/independent-judgment.md)，基于证据、不迎合、保持认知诚实；不是 Skill。
+- **Crux-First Reasoning** — [推理核心](../skills/crux-first-reasoning/SKILL.md)，复杂分析时识别关键问题、形成有依据的判断。
+
+其余按需选择：
+
+| 能力位置 | Skill | 触发边界 |
 | --- | --- | --- |
-| L0 行为底座 | 凭什么相信结论？ | [Independent Judgment](../instructions/independent-judgment.md)（全局指令，非 Skill） |
-| L1 理解与决策 | 目标是什么？什么最关键？方案经得起挑战吗？ | `interview-me`、`crux-first-reasoning`、`grilling` |
-| L2 解决问题 | 应该怎样设计、诊断和最小化实现？ | `domain-modeling`、`diagnosing-bugs`、`ponytail` |
-| L3 结果验证 | 改动满足要求和约束吗？ | `code-review` |
-| L4 表达交付 | 怎样让读者准确理解成果？ | `technical-writing`、`technical-documentation`、`technical-language` |
+| L1 澄清 | `interview-me` | 缺少决定性需求，无法直接推进时 |
+| L1 挑战 | `grilling` | 明确要求压力测试已有方案时 |
+| L2a 编码 | `ponytail` | 编码场景中约束复杂度；不能省略必要验证 |
+| L2b 表达 | `technical-writing` / `technical-documentation` / `technical-language` | 按中文技术稿、开发文档、技术英语选其中最合适的一个 |
 
-## 触发边界
+L1 与 L2 表示能力关系，而**不是每个任务必经的顺序**。专业建模、故障排查与代码审查仍可直接完成，不必依赖额外 Skill。
 
-- L0 在每个任务中生效，**不靠一个每次触发的 Skill 实现**。
-- L1：只有关键需求缺失才访谈；复杂分析才用 Crux；明确要求压力测试才用 Grilling。
-- L2：工程任务按问题类型选 **建模、诊断或最简实现**，不默认三项全用。
-- L3：需要审查现有改动时使用；不会因为未使用该 Skill 就跳过必要的自动测试。
-- L4：根据交付物选择**一个主导写作 Skill**；单纯写作可直接进入此层，无须依次调用 L1–L3。
-
-**第二个维度是选用状态，不是能力层级**：精选 / 待验证 / 项目专用 / 保留不动。详见 [剪枝清单](../registry/curation.yaml)。上游仓库不是完整的默认 Skill 集。
-
-仓库元数据不自动改变 Codex、Claude 或 Pi 的本机发现配置。
+[选用配置](../profiles/core.yaml) · [Skill 索引](../registry/skills.yaml) · [剪枝状态](../registry/curation.yaml)

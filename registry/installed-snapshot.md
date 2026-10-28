@@ -1,6 +1,6 @@
 # 本机 Skills：按领域与上游来源分类
 
-> 快照时间：2026-10-28；实际本机仍有 **80 个** Skill 目录；以下是管理仓库的筛选清单，按要求排除了 **12 个 Codas 专用/相关目录**（10 个 `codas-*`、`codegraph` 和 `code-explainer`），剩余 **68 个**进入盘点候选库，其中本机仅 **9 个 Skill 被选中**，另有仓库自研的 `crux-first-reasoning`。没有删除或移动本机文件。
+> 快照时间：2026-10-28；实际本机仍有 **80 个** Skill 目录；以下是管理仓库的筛选清单，按要求排除了 **12 个 Codas 专用/相关目录**（10 个 `codas-*`、`codegraph` 和 `code-explainer`），剩余 **68 个**进入盘点候选库，其中本机仅 **6 个 Skill 被选中**，另有仓库自研的 `crux-first-reasoning`。没有删除或移动本机文件。
 >
 > 来源归类来自上游仓库对应的 `SKILL.md` 路径。名称与来源匹配不代表本地文件一定等于当前上游版本；Git submodule 的 Gitlink 记录具体版本。
 
@@ -130,4 +130,4 @@
 
 - 该文件是本机盘点的**筛选视图**，不是安装指令；其他来源的 15 个仍在筛选清单中，其中 ponytail 已作为 submodule 接入；没有复制其他目录源码，来源审查见 [other-sources.md](other-sources.md)。
 - 本仓库对第三方 Git submodule 或稀疏克隆的固定 SHA 作版本管理；多 Skill 仓库仅采用列出的 Skill 路径。
-- [正式精选清单](skills.yaml) 目前仅 **10 个 Skill**（9 个本机已有、1 个仓库自研），未全盘采用 Matt 或 DSH。
+- [正式精选清单](skills.yaml) 目前仅 **7 个 Skill**（6 个本机已有、1 个仓库自研），未全盘采用 Matt 或 DSH。

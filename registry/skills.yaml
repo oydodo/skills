@@ -1,5 +1,6 @@
-# Selected candidates, not activation settings. Git submodules are upstream sources only.
-version: 9
+# Selected Skills only; submodules are source repositories, not installed worksets.
+# Classification does not change the Skills discovered by Codex / Claude / Pi.
+version: 10
 upstreams:
   addyosmani:
     url: https://github.com/addyosmani/agent-skills
@@ -47,38 +48,23 @@ skills:
     category: reasoning
     skill_path: upstream/mattpocock-skills/skills/productivity/grilling
     capability_layer: cognition
-  - name: domain-modeling
-    source: mattpocock
-    category: architecture
-    skill_path: upstream/mattpocock-skills/skills/engineering/domain-modeling
-    capability_layer: task
-  - name: diagnosing-bugs
-    source: mattpocock
-    category: development
-    skill_path: upstream/mattpocock-skills/skills/engineering/diagnosing-bugs
-    capability_layer: task
   - name: ponytail
     source: ponytail
     category: development
     skill_path: upstream/ponytail/skills/ponytail
-    capability_layer: task
-  - name: code-review
-    source: mattpocock
-    category: development
-    skill_path: upstream/mattpocock-skills/skills/engineering/code-review
-    capability_layer: verification
+    capability_layer: coding
   - name: technical-writing
     source: luoling
     category: writing
     skill_path: upstream/technical-writing
-    capability_layer: communication
+    capability_layer: writing
   - name: technical-documentation
     source: wondelai
     category: writing
     skill_path: upstream/wondelai-skills/technical-documentation
-    capability_layer: communication
+    capability_layer: writing
   - name: technical-language
     source: jjsnack
     category: writing
     skill_path: upstream/technical-language-skill
-    capability_layer: communication
+    capability_layer: writing
