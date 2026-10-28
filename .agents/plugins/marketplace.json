@@ -1,0 +1,20 @@
+{
+  "name": "oydodo",
+  "interface": {
+    "displayName": "oydodo Skills"
+  },
+  "plugins": [
+    {
+      "name": "oydodo-skills",
+      "source": {
+        "source": "local",
+        "path": "./plugins/oydodo-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

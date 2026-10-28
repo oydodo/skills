@@ -87,3 +87,16 @@ flowchart TB
 | [`tests/`](tests/) | 待执行的行为验收与 A/B 测试案例 |
 
 本仓库先回答 **“为什么选择这些 Skill，以及它们应该在什么任务上发挥作用”**。实际安装、启用与本机剪枝是下一步独立的工作，不应与精选结论混为一谈。
+
+## 一次安装 8 个 Skill：ChatGPT Plugin
+
+ChatGPT 的单个 Skill 上传入口不能直接识别包含多个 Skill 的仓库；为保留独立触发并免去 8 次手工上传，本仓库提供 [oydodo Skills Plugin](plugins/oydodo-skills/README.md)：一个 Plugin 内打包 **8 个独立的 Skill**，通过 [GitHub Marketplace](.agents/plugins/marketplace.json) 分发，不合并成“万能 Skill”。
+
+在支持 Plugin Marketplace 的 ChatGPT 桌面版 / Codex 环境运行：
+
+```bash
+codex plugin marketplace add oydodo/skills
+codex plugin add oydodo-skills@oydodo
+```
+
+首次添加来源后仅需安装一个 Plugin，重启 ChatGPT 桌面版并在新会话验证。**这是本地 Marketplace 发行方式**，不能假定自动同步到 Web/iOS。第三方固定版本、有限触发描述适配和许可见 [来源与改动](plugins/oydodo-skills/SOURCES.md)。

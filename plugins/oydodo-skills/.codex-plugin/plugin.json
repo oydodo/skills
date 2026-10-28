@@ -1,0 +1,18 @@
+{
+  "name": "oydodo-skills",
+  "version": "0.1.0",
+  "description": "Eight curated skills for evidence-based judgment, decisive analysis, interviewing, stress-testing, coding simplicity, and technical writing.",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "oydodo Skills",
+    "shortDescription": "Eight independent skills for reasoning, coding and writing.",
+    "longDescription": "Independent judgment, crux-first reasoning, requirement interviews, plan stress testing, minimal coding, Chinese technical writing, developer documentation and English technical editing.",
+    "developerName": "oydodo",
+    "category": "Productivity",
+    "defaultPrompt": [
+      "Review this decision and challenge its assumptions when necessary.",
+      "Choose the decisive factor in this architecture tradeoff.",
+      "Write a README that explains why, how, and expected results."
+    ]
+  }
+}
