@@ -1,97 +1,99 @@
-# First-pass non-destructive curation based on local installed-snapshot.md (68 entries).
-# This does NOT toggle skills in Codex/Claude/Pi and does NOT delete files.
-version: 1
-snapshot_date: 2026-10-28
-scope_count: 68
-core_from_local:
-  - grilling
-  - interview-me
-  - ponytail
-  - technical-writing
-  - technical-documentation
-  - technical-language
-on_demand:
-  - product-brainstorming
-  - research
-  - to-questionnaire
-  - wait-what
-  - wayfinder
-  - retro
-  - to-spec
-  - to-tickets
-  - triage
-  - codebase-design
-  - domain-modeling
-  - improve-codebase-architecture
-  - code-annotator
-  - code-review
-  - diagnosing-bugs
-  - git-guardrails-claude-code
-  - implement
-  - implement-spec
-  - pr
-  - prototype
-  - setup-pre-commit
-  - tdd
-  - anatomy
-  - archify
-  - design-taste-frontend
-  - visual-explainer
-  - find-skills
-  - handoff
-  - nopua
-  - setup-matt-pocock-skills
-  - wizard
-  - writing-for-agents
-  - i-have-adhd
-  - teach
-project_only_dsh:
-  - record-browser-gif
-  - agent-experience
-  - cordis-styling-nitpicking
-  - dsh-archive-agent-notes
-  - dsh-ci-test-reliability
-  - dsh-client-ui-ux
-  - dsh-code-review
-  - dsh-create-upgrade-guide
-  - dsh-doc
-  - dsh-error-handling
-  - dsh-find-simplifications
-  - dsh-merging-stacked-prs
-  - dsh-official-plugin-artwork
-  - dsh-pre-push-checks
-  - dsh-prose-standard
-  - dsh-responsive-ui
-  - dsh-speed-up-perf
-  - dsh-translate-docs
-  - dsh-trim-cot-leakage
-prune_review:
-  - grill-me
-  - grill-with-docs
-  - ask-matt
-  - write-a-skill
-  - migrate-to-shoehorn
-  - scaffold-exercises
-  - explore-recipes
-self_maintained_hold:
-  - codex-appserver-doctor
-  - remote-html-preview
-core_repository_only:
-  - crux-first-reasoning
-excluded_from_scope:
-  - code-explainer
-  - codegraph
-  - codas-accept
-  - codas-coordinate
-  - codas-design
-  - codas-implement
-  - codas-model
-  - codas-note-archive
-  - codas-ontology
-  - codas-prose
-  - codas-review
-  - codas-trim-cot
+# Non-destructive first cut: local snapshot 80, selection 9 local + 1 repo-only.
+version: 2
+installed_snapshot: 80
+selected_count: 10
+selected_local_count: 9
+selected:
+  core:
+    - crux-first-reasoning
+    - interview-me
+    - grilling
+    - ponytail
+  specialist:
+    - domain-modeling
+    - diagnosing-bugs
+    - code-review
+    - technical-writing
+    - technical-documentation
+    - technical-language
+not_selected:
+  matt:
+    - grill-me
+    - grill-with-docs
+    - research
+    - to-questionnaire
+    - wait-what
+    - wayfinder
+    - retro
+    - to-spec
+    - to-tickets
+    - triage
+    - codebase-design
+    - improve-codebase-architecture
+    - git-guardrails-claude-code
+    - implement
+    - implement-spec
+    - migrate-to-shoehorn
+    - pr
+    - prototype
+    - setup-pre-commit
+    - tdd
+    - ask-matt
+    - handoff
+    - setup-matt-pocock-skills
+    - wizard
+    - writing-for-agents
+    - scaffold-exercises
+    - teach
+  other:
+    - product-brainstorming
+    - code-annotator
+    - anatomy
+    - archify
+    - design-taste-frontend
+    - explore-recipes
+    - visual-explainer
+    - find-skills
+    - nopua
+    - write-a-skill
+    - i-have-adhd
+  dsh_project_only:
+    - record-browser-gif
+    - agent-experience
+    - cordis-styling-nitpicking
+    - dsh-archive-agent-notes
+    - dsh-ci-test-reliability
+    - dsh-client-ui-ux
+    - dsh-code-review
+    - dsh-create-upgrade-guide
+    - dsh-doc
+    - dsh-error-handling
+    - dsh-find-simplifications
+    - dsh-merging-stacked-prs
+    - dsh-official-plugin-artwork
+    - dsh-pre-push-checks
+    - dsh-prose-standard
+    - dsh-responsive-ui
+    - dsh-speed-up-perf
+    - dsh-translate-docs
+    - dsh-trim-cot-leakage
+  self_maintained_hold:
+    - codex-appserver-doctor
+    - remote-html-preview
+  codas_excluded:
+    - code-explainer
+    - codegraph
+    - codas-accept
+    - codas-coordinate
+    - codas-design
+    - codas-implement
+    - codas-model
+    - codas-note-archive
+    - codas-ontology
+    - codas-prose
+    - codas-review
+    - codas-trim-cot
 notes:
-  - candidate_is_not_deleted
-  - no_local_install_or_activation_changes
-  - three_self_maintained_skills_untouched
+  - github_selection_only
+  - local_installs_unchanged
+  - retained_git_submodules

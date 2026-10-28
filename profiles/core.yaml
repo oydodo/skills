@@ -1,28 +1,41 @@
-# Desired core profile; documentation/curation only, NOT a client runtime setting.
-version: 1
+# Intended selection, NOT a runtime installation or activation config.
+version: 2
 always_on_instructions:
   - instructions/independent-judgment.md
-conditional_skills:
+core_skills:
   - name: crux-first-reasoning
-    role: reasoning
+    role: judgment
     path: skills/crux-first-reasoning
     trigger: consequential_analysis
   - name: interview-me
     role: clarification
     path: upstream/addyosmani-agent-skills/skills/interview-me
-    trigger: essential_requirement_missing
+    trigger: critical_requirement_missing
   - name: grilling
-    role: challenge
+    role: stress_test
     path: upstream/mattpocock-skills/skills/productivity/grilling
     trigger: explicit_stress_test
   - name: ponytail
-    role: implementation_simplicity
+    role: coding_simplicity
     path: upstream/ponytail/skills/ponytail
     trigger: coding_task
+specialist_skills:
+  - name: domain-modeling
+    role: domain_model
+    path: upstream/mattpocock-skills/skills/engineering/domain-modeling
+    trigger: explicit_modeling
+  - name: diagnosing-bugs
+    role: diagnosis
+    path: upstream/mattpocock-skills/skills/engineering/diagnosing-bugs
+    trigger: hard_bug_or_regression
+  - name: code-review
+    role: review
+    path: upstream/mattpocock-skills/skills/engineering/code-review
+    trigger: review_against_diff_and_spec
   - name: technical-writing
     role: chinese_technical_prose
     path: upstream/technical-writing
-    trigger: chinese_technical_document
+    trigger: chinese_technical_doc
   - name: technical-documentation
     role: developer_docs
     path: upstream/wondelai-skills/technical-documentation
@@ -32,7 +45,6 @@ conditional_skills:
     path: upstream/technical-language-skill
     trigger: english_technical_rewrite
 routing:
-  simple_requests: no_forced_skill
-  choose_primary_skill_per_phase: true
-  prefer_direct_execution_to_unnecessary_interview: true
+  simple_requests: direct_execution
+  interview_only_when_necessary: true
   dsh_skills: project_only

@@ -1,34 +1,28 @@
 # Skills
 
-个人 AI Skills 工作集：**自研核心、复用上游、按需剪枝**。第三方仓库用 Git submodule 固定版本，不复制源码。
+自研核心 + 精选上游。**目标工作集：10 个 Skill（Matt 仅 4/31）**。
 
-## 核心
-
-| 作用 | 组件 |
-| --- | --- |
-| 全局独立判断 | [independent-judgment](instructions/independent-judgment.md) |
-| 找关键问题 | [crux-first-reasoning](skills/crux-first-reasoning/SKILL.md) |
-| 澄清需求 / 挑战方案 | `interview-me` / `grilling` |
-| 最小而完整的编码 | `ponytail` |
-| 中文技术写作 / 开发文档 / 技术英语 | `technical-writing` / `technical-documentation` / `technical-language` |
-
-[触发与职责](core/README.md) · [核心配置](profiles/core.yaml)
-
-**核心配置尚未应用到本机**：全局指令需单独配置，Skill 按任务触发。
-
-## 获取
-
-```bash
-git clone https://github.com/oydodo/skills.git
-cd skills
-
-# 按需初始化指定上游（示例）
-git submodule update --init upstream/mattpocock-skills
-
-# DSH：submodule + sparse checkout，仅检出 .agents/skills/
-bash scripts/checkout-dsh-skills.sh
+```mermaid
+flowchart TB
+    S["Skills"]
+    S --> G["全局规则"]
+    G --> IJ["independent-judgment"]
+    S --> C["核心 · 4"]
+    C --> CR["crux-first-reasoning · 判断"]
+    C --> IV["interview-me · 澄清"]
+    C --> GR["grilling · 挑战"]
+    C --> PT["ponytail · 简化编码"]
+    S --> T["专项 · 6"]
+    T --> E["工程 · domain-modeling / diagnosing-bugs / code-review"]
+    T --> W["表达 · technical-writing / technical-documentation / technical-language"]
+    S --> X["未选中 · 71 个本机目录"]
+    X --> M["Matt 其余 27"]
+    X --> D["DSH 19 · 项目专用"]
+    X --> O["其他 25 · 候选 / 自研 / Codas"]
 ```
 
-## 清单
+**只有全局规则常驻；Skill 按任务触发。** 上游仍由 Git submodule 追踪；未选中不等于删除。
 
-[Skill 与上游路径](registry/skills.yaml) · [分类与剪枝状态](registry/curation.yaml) · [剪枝依据](registry/pruning.md) · [本机盘点](registry/installed-snapshot.md)
+[精选清单](registry/skills.yaml) · [完整剪枝分组](registry/curation.yaml) · [剪枝依据](registry/pruning.md)
+
+> 本机仍安装原有 80 个目录。此处是目标选用清单，**尚未实际停用本机 Skill**。
