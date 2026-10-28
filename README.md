@@ -1,31 +1,75 @@
 # Skills
 
-个人 AI Skills 的统一目录与自研 Skill 维护仓库。
+个人 AI Skills 的统一清单与自研 Skill 维护仓库。
 
-> **原则：自研 Skill 在这里维护；第三方开源 Skill 只链接上游，不复制源码、不建立 Git submodule、不维护 fork。**
+**管理原则：自研 Skill 在这里维护；第三方开源 Skill 通过 Git submodule 指向原仓库，只更新引用版本，不复制、修改或 fork 上游源码。**
 
-## 内容
+## 仓库结构
 
-- [`skills/crux-first-reasoning/`](skills/crux-first-reasoning/): 自研的关键问题优先分析 Skill。
-- [`instructions/independent-judgment.md`](instructions/independent-judgment.md): 跨会话抗迎合、立场稳定与证据校准的建议全局指令。
-- [`registry/skills.yaml`](registry/skills.yaml): 已确认来源的 Skill 清单，区分自研和第三方。
-- [`registry/installed-snapshot.md`](registry/installed-snapshot.md): 本机已安装 Skill 名称快照；未核实来源的条目不会猜测或复制。
-- [`skills/crux-first-reasoning/references/evaluation.md`](skills/crux-first-reasoning/references/evaluation.md): 行为验收样例。
+```text
+skills/
+├── .gitmodules                         # 第三方仓库 submodule 定义
+├── skills/crux-first-reasoning/        # 自研 Skill，直接维护
+├── upstream/                           # 第三方源码的 Gitlinks，不是复制品
+│   ├── technical-writing/
+│   ├── technical-language-skill/
+│   └── wondelai-skills/
+├── instructions/independent-judgment.md
+├── registry/skills.yaml               # 已采用 Skill 与准确路径
+├── registry/installed-snapshot.md     # 本机目录盘点，未验证的不复制
+└── tests/README.md
+```
 
-## 使用方式
+## 已登记 Skill
 
-**自研 Skill**：从本仓库的 `skills/<name>/` 安装。修改原文件、提交 Git 历史，统一在这里维护。
+| Skill | 维护方式 | 使用路径 |
+| --- | --- | --- |
+| `crux-first-reasoning` | 自研 | [skills/crux-first-reasoning](skills/crux-first-reasoning/) |
+| `technical-writing` | [上游 submodule](https://github.com/luoling8192/technical-writing) | `upstream/technical-writing/` |
+| `technical-documentation` | [上游 submodule](https://github.com/wondelai/skills/tree/main/technical-documentation) | **仅** `upstream/wondelai-skills/technical-documentation/` |
+| `technical-language` | [上游 submodule](https://github.com/jjsnack/technical-language-skill) | `upstream/technical-language-skill/` |
 
-**第三方 Skill**：在 [registry](registry/skills.yaml) 中打开原始 GitHub 仓库及对应子目录，直接从上游安装或更新。上游作者负责源码维护，本仓库只管理采用记录与自有配置。多 Skill 仓库只安装选定子目录。
+准确来源见 [registry/skills.yaml](registry/skills.yaml)。还有其他本机 Skill 的名称盘点，但来源尚未核实，因此未盲目引入。
 
-**全局规则**：本仓库保存的是可复用文本。需要手动配置到 ChatGPT 自定义指令或 Agent 的全局指令文件；仅上传仓库不会自动生效。
+## 克隆与更新
 
-## 维护约定
+首次克隆（必须初始化 submodule，否则第三方目录为空）：
 
-1. 新增第三方 Skill 时记录上游仓库 URL 与准确的 Skill 子路径，**不复制、改写或 fork 上游代码**。
-2. 需要修改第三方 Skill 时，优先向上游提交 issue/PR；确需私有定制时，另建自研 Skill 并注明来源。
-3. 自研 Skill 变更遵守 `SKILL.md` 元数据及轻量行为评估，避免越加越复杂。
-4. 不提交 API 密钥、私人凭据、内部机密或未经审查的本机文件。
-5. GitHub 以仓库版本为准；本机已有约 80 个 Skill 仅做名称盘点，不会自动同步或上传源码。
+```bash
+git clone --recurse-submodules https://github.com/oydodo/skills.git
+cd skills
+```
 
-仓库默认设为 **Private**。若未来公开，请先审查所有自有文档与清单内容。
+已有克隆：
+
+```bash
+git submodule update --init --recursive
+```
+
+只更新指定第三方仓库的引用：
+
+```bash
+git submodule update --remote upstream/technical-writing
+git add upstream/technical-writing
+git commit -m "chore: bump technical-writing upstream"
+git push
+```
+
+Git submodule **锁定具体 commit**，上游更新不会自动改变本仓库版本。同步上游需要显式提交新 Gitlink，便于审查和回退。
+
+### 如何安装给 Agent 使用
+
+按照 [registry](registry/skills.yaml) 中的 `skill_path` 选择实际目录。对多 Skill 上游仓库（例如 `wondelai/skills`），虽然 submodule 检出整个仓库，**只采用登记的子目录**。不要把完整上游仓库当成一个 Skill 安装。
+
+可把所需 Skill 目录软链接到 `~/.agents/skills/<skill-name>`，或使用客户端提供的 Skills 安装能力。已有同名目录时，先确认其来源和本地改动，不要覆盖。
+
+## 全局行为规范
+
+[Independent Judgment](instructions/independent-judgment.md) 属于全局指令，需要单独配置至目标客户端。它负责抗迎合与证据校准；[Crux-First Reasoning](skills/crux-first-reasoning/SKILL.md) 负责复杂问题的关键因素判断；已有写作 Skill 负责输出语言。
+
+## 安全与维护
+
+- 此仓库当前为 **Private**。公开前审查所有条目。
+- 不提交密钥、私人文件、公司内部资料、未经审查的本机 Skill 源码。
+- 第三方仅保留上游来源和 Gitlink；修改上游源码优先向作者提出 PR。
+- 通过 [tests](tests/README.md) 对抗迎合、立场更新和问题本质判断做人工 A/B 验证，**不宣称已经证实有效**。

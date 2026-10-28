@@ -1,0 +1,12 @@
+[submodule "upstream/technical-writing"]
+	path = upstream/technical-writing
+	url = https://github.com/luoling8192/technical-writing.git
+	branch = main
+[submodule "upstream/technical-language-skill"]
+	path = upstream/technical-language-skill
+	url = https://github.com/jjsnack/technical-language-skill.git
+	branch = main
+[submodule "upstream/wondelai-skills"]
+	path = upstream/wondelai-skills
+	url = https://github.com/wondelai/skills.git
+	branch = main
