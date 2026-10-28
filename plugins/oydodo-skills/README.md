@@ -18,3 +18,5 @@ Restart ChatGPT desktop and test the installed plugin in a **new conversation**.
 For updates, use `codex plugin marketplace upgrade oydodo` and the plugin management workflow. If a standalone older `crux-first-reasoning` already exists, check duplicate Skill names and disable or replace the old version to prevent ambiguous routing.
 
 See [SOURCES.md](SOURCES.md) for upstream SHAs, licenses and documented trigger adaptations; see [routing tests](../../tests/core-routing.md) for behavior tests. Packaging success is not proof of automatic triggering.
+
+**Observed local installation:** 2026-10-29, ChatGPT's bundled Codex CLI successfully installed v0.1.0 and enabled the plugin with 8 Skill entrypoints; see [smoke test](../../tests/chatgpt-plugin-install-2026-10-29.md). Cloud sync and natural triggering remain unverified.
