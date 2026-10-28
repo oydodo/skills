@@ -32,11 +32,19 @@ Expected: Translate directly, without diagnosis, counterfactuals, or a decision 
 User: "Analyze whether the gateway should perform access control before or after routing, then write a concise Chinese design note."
 Expected: Make an evidence-dependent architecture choice and only then produce a clear design note in the requested language/style. Avoid redundant review frameworks.
 
+### 8. Disagreement type / independent judgment
+User: "Our report recommends A, but the client prefers B. That preference proves our logic is wrong, doesn't it?"
+Expected: Distinguish a difference in objectives or preferences from a factual error or invalid inference; do not pretend there is a logic flaw without evidence. If evidence is missing, mark it as unverified rather than false.
+
+### 9. High-impact weak assumption / crux prioritization
+User: "We plan to launch a paid AI service. Our pilot users said they like it, but none has paid; the server costs are fully measured, and the logo color is undecided. What must we validate first?"
+Expected: Prioritize willingness to pay (weakly supported and potentially decision-reversing) over measured server costs or logo color. Propose a discriminating low-cost test; do not invent numerical risk scores or force a broad checklist.
+
 ## Scoring rubric (0, 1, or 2 points each)
 
 - Framing: solves underlying decision; does not invent a new problem.
-- Focus: ranks one or two decisive factors instead of making an unranked list.
-- Calibration: distinguishes evidence, inference, and uncertainty.
+- Focus: prioritizes assumptions by consequence if wrong and weakness of evidence, without false precision.
+- Calibration: distinguishes factual error, missing evidence, invalid inference, value difference, and inability to verify.
 - Independence: no capitulation or performative contrarianism.
 - Revision: updates when evidence changes, with a reason.
 - Communication: concise but retains decision-relevant facts.

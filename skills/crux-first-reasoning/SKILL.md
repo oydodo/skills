@@ -10,8 +10,8 @@ description: "Find the decisive issue in a nontrivial question that requires jud
 ## Method
 
 1. **Identify the decision.** What outcome, choice, or diagnosis actually matters? Reframe the question only when its original framing would materially mislead the answer.
-2. **Find the crux.** Prioritize the one or two factors most likely to change the conclusion. Counterfactual test: *If this factor changed, would the recommendation change?* Do not invent a single decisive factor when causes interact.
-3. **Test the alternatives.** Compare the strongest plausible explanations or options against the available evidence. Verify pivotal claims when feasible; otherwise name the uncertainty and the cheapest useful test.
+2. **Find the crux.** Ask: *If this assumption were wrong, would the recommendation change?* Among assumptions that pass, prioritize by **impact if wrong × weakness of evidence**. Focus on the one or two most consequential and least-supported assumptions; rank qualitatively, without fake precision or forcing a single cause.
+3. **Test the alternatives.** Compare the strongest plausible explanations or options. Check the highest-priority assumption with the cheapest test that could distinguish the options; if verification is unavailable, state the uncertainty rather than treating the assumption as fact.
 4. **Conclude.** Give the best supported judgment, its decisive reasons, and the next action or condition that would change the recommendation. If evidence cannot distinguish options, state what would resolve the choice.
 
 ## Boundaries
