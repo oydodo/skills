@@ -1,13 +1,39 @@
-# Intended architecture only; not a runtime activation setting.
-version: 3
+# Desired workset only; not an installer or activation configuration.
+version: 4
 always_on_instructions:
   - instructions/independent-judgment.md
-reasoning_skills:
+cognition_skills:
+  - name: interview-me
+    role: clarification
+    path: upstream/addyosmani-agent-skills/skills/interview-me
+    trigger: critical_requirement_missing
   - name: crux-first-reasoning
     role: judgment
     path: skills/crux-first-reasoning
     trigger: consequential_analysis
-expression_skills:
+  - name: grilling
+    role: stress_test
+    path: upstream/mattpocock-skills/skills/productivity/grilling
+    trigger: explicit_stress_test
+task_skills:
+  - name: domain-modeling
+    role: domain_model
+    path: upstream/mattpocock-skills/skills/engineering/domain-modeling
+    trigger: explicit_modeling
+  - name: diagnosing-bugs
+    role: diagnosis
+    path: upstream/mattpocock-skills/skills/engineering/diagnosing-bugs
+    trigger: hard_bug_or_regression
+  - name: ponytail
+    role: coding_simplicity
+    path: upstream/ponytail/skills/ponytail
+    trigger: coding_task
+verification_skills:
+  - name: code-review
+    role: review
+    path: upstream/mattpocock-skills/skills/engineering/code-review
+    trigger: review_against_diff_and_spec
+communication_skills:
   - name: technical-writing
     role: chinese_technical_prose
     path: upstream/technical-writing
@@ -20,32 +46,9 @@ expression_skills:
     role: technical_english
     path: upstream/technical-language-skill
     trigger: english_technical_rewrite
-auxiliary_skills:
-  - name: interview-me
-    role: clarification
-    path: upstream/addyosmani-agent-skills/skills/interview-me
-    trigger: critical_requirement_missing
-  - name: grilling
-    role: stress_test
-    path: upstream/mattpocock-skills/skills/productivity/grilling
-    trigger: explicit_stress_test
-  - name: ponytail
-    role: coding_simplicity
-    path: upstream/ponytail/skills/ponytail
-    trigger: coding_task
-  - name: domain-modeling
-    role: domain_model
-    path: upstream/mattpocock-skills/skills/engineering/domain-modeling
-    trigger: explicit_modeling
-  - name: diagnosing-bugs
-    role: diagnosis
-    path: upstream/mattpocock-skills/skills/engineering/diagnosing-bugs
-    trigger: hard_bug_or_regression
-  - name: code-review
-    role: review
-    path: upstream/mattpocock-skills/skills/engineering/code-review
-    trigger: review_against_diff_and_spec
 routing:
+  skip_unneeded_layers: true
   simple_requests: direct_execution
-  interview_only_when_necessary: true
-  dsh_skills: project_only
+  require_user_request_for_grilling: true
+  code_review_is_not_a_substitute_for_tests: true
+  project_specific_skills: not_global

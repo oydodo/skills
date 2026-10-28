@@ -1,4 +1,4 @@
-# Core v1 行为验收（待实测）
+# 分层路由行为验收（待实测）
 
 **方法**：同模型、同任务，对比“当前全量环境”和“目标核心环境”；记录是否正确触发、答案质量、是否无端访谈、是否出现过度工程、耗时/Token。下面是验收脚本，不是已通过的测试结果。
 
@@ -12,7 +12,9 @@
 | “把这段中文技术方案改成正式的领导汇报稿。” | technical-writing | 技术英语、开发者文档 |
 | “为这个 API 生成开发者 README。” | technical-documentation | technical-language（除非明确要求英语风格校正） |
 | “把这段英文发布说明改成简明技术英语。” | technical-language | 中文写作 |
-| “翻译 rollback plan。” | 无需额外 Skill，直接翻译 | 所有访谈/复杂推理 Skill |
+| “翻译 rollback plan。” | L0 行为规则；直接翻译，无需额外 Skill | 访谈/复杂推理/工程 Skill |
+| “审查现有 PR 的实现是否符合规范和需求。” | L3 code-review，可直接执行 | 强制先访谈、重新设计或进行无关写作 |
+| “请只润色这段技术英文。” | L4 technical-language，可直接执行 | 要求先经过 L1–L3 |
 | “我们正在维护 DSH，评审这个 DSH PR。” | DSH 项目专用 Skill（有仓库证据时） | Codas 相关与不相关项目 Skill |
 
 ## 人工观察项
