@@ -1,33 +1,21 @@
 # Skills
 
-自研核心 + 精选上游。**目标工作集：10 个 Skill（Matt 仅 4/31）**。
+**先保证判断正确，再提高分析深度，最后优化表达。**
 
 ```mermaid
 flowchart TB
-    subgraph L0["L0 · 全局规则｜始终生效"]
-        IJ["independent-judgment"]
-    end
+    J["第一层 · 全局行为约束（Always-on）<br/>Independent Judgment<br/>证据优先 · 抗迎合 · 立场稳定 · 认知诚实"]
+    R["第二层 · 思维能力（按任务触发）<br/>Crux-First Reasoning<br/>问题重构 · 关键因素 · 独立论证 · 判断提炼"]
+    W["第三层 · 语言表达（按任务触发）<br/>Technical Writing / Documentation / Language<br/>准确 · 简洁 · 清晰 · 规范"]
 
-    subgraph L1["L1 · 核心能力｜按需调用"]
-        C["核心 4"]
-        C --> R["判断｜crux-first-reasoning"]
-        C --> I["澄清｜interview-me"]
-        C --> G["挑战｜grilling"]
-        C --> P["最简实现｜ponytail"]
-    end
-
-    subgraph L2["L2 · 专项能力｜按需调用"]
-        S["专项 6"]
-        S --> E["工程｜domain-modeling / diagnosing-bugs / code-review"]
-        S --> W["表达｜technical-writing / technical-documentation / technical-language"]
-    end
-
-    IJ -->|"约束"| C
-    C -. "任务需要时扩展" .-> S
+    J -->|"独立判断是前提"| R
+    R -->|"先形成判断，再优化表达"| W
 ```
 
-**层次表示约束与能力扩展，不是强制执行顺序。** 只有全局规则常驻，其他 Skill 按需触发。
+**三层是能力依赖，不是强制流程。** 只有 Independent Judgment 常驻，其余按需触发。
 
-[精选清单](registry/skills.yaml) · [完整剪枝分组](registry/curation.yaml) · [剪枝依据](registry/pruning.md)
+辅助 Skills（不属于三层主干）：`interview-me`、`grilling`、`ponytail`、`domain-modeling`、`diagnosing-bugs`、`code-review`。
 
-> 本机仍安装原有 80 个目录。此处是目标选用清单，**尚未实际停用本机 Skill**。
+当前精选 **10 个 Skill**（Matt 4/31）。本机 80 个目录尚未停用。
+
+[精选清单](registry/skills.yaml) · [剪枝分类](registry/curation.yaml) · [核心设计](core/README.md)
