@@ -9,3 +9,5 @@ Compare the same model and prompts in three setups:
 - C: B + `skills/crux-first-reasoning/`.
 
 Score problem framing, decision-relevant focus, calibration, independence, evidence-driven revision, and clarity. Record whether improvements persist across multiple rounds rather than comparing just response length. Do not claim validation before testing.
+
+Latest exploratory report: [ChatGPT dogfood — 2026-10-28](chatgpt-dogfood-2026-10-28.md). Package checks are separate from account installation and routing A/B tests.
