@@ -1,37 +1,13 @@
-# Intended selection, NOT a runtime installation or activation config.
-version: 2
+# Intended architecture only; not a runtime activation setting.
+version: 3
 always_on_instructions:
   - instructions/independent-judgment.md
-core_skills:
+reasoning_skills:
   - name: crux-first-reasoning
     role: judgment
     path: skills/crux-first-reasoning
     trigger: consequential_analysis
-  - name: interview-me
-    role: clarification
-    path: upstream/addyosmani-agent-skills/skills/interview-me
-    trigger: critical_requirement_missing
-  - name: grilling
-    role: stress_test
-    path: upstream/mattpocock-skills/skills/productivity/grilling
-    trigger: explicit_stress_test
-  - name: ponytail
-    role: coding_simplicity
-    path: upstream/ponytail/skills/ponytail
-    trigger: coding_task
-specialist_skills:
-  - name: domain-modeling
-    role: domain_model
-    path: upstream/mattpocock-skills/skills/engineering/domain-modeling
-    trigger: explicit_modeling
-  - name: diagnosing-bugs
-    role: diagnosis
-    path: upstream/mattpocock-skills/skills/engineering/diagnosing-bugs
-    trigger: hard_bug_or_regression
-  - name: code-review
-    role: review
-    path: upstream/mattpocock-skills/skills/engineering/code-review
-    trigger: review_against_diff_and_spec
+expression_skills:
   - name: technical-writing
     role: chinese_technical_prose
     path: upstream/technical-writing
@@ -44,6 +20,31 @@ specialist_skills:
     role: technical_english
     path: upstream/technical-language-skill
     trigger: english_technical_rewrite
+auxiliary_skills:
+  - name: interview-me
+    role: clarification
+    path: upstream/addyosmani-agent-skills/skills/interview-me
+    trigger: critical_requirement_missing
+  - name: grilling
+    role: stress_test
+    path: upstream/mattpocock-skills/skills/productivity/grilling
+    trigger: explicit_stress_test
+  - name: ponytail
+    role: coding_simplicity
+    path: upstream/ponytail/skills/ponytail
+    trigger: coding_task
+  - name: domain-modeling
+    role: domain_model
+    path: upstream/mattpocock-skills/skills/engineering/domain-modeling
+    trigger: explicit_modeling
+  - name: diagnosing-bugs
+    role: diagnosis
+    path: upstream/mattpocock-skills/skills/engineering/diagnosing-bugs
+    trigger: hard_bug_or_regression
+  - name: code-review
+    role: review
+    path: upstream/mattpocock-skills/skills/engineering/code-review
+    trigger: review_against_diff_and_spec
 routing:
   simple_requests: direct_execution
   interview_only_when_necessary: true
