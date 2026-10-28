@@ -1,9 +1,11 @@
-# Non-destructive first cut: local snapshot 80, selection 9 local + 1 repo-only.
-version: 5
+# Non-destructive curation: 80 local skills; 6 selected locally, 2 maintained in repository.
+version: 6
 installed_snapshot: 80
-selected_count: 7
+selected_count: 8
 selected_local_count: 6
 selected:
+  foundation:
+    - independent-judgment
   cognition:
     - interview-me
     - crux-first-reasoning

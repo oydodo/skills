@@ -4,7 +4,7 @@
 
 | 测试输入 | 预期触发 | 预期不触发 |
 | --- | --- | --- |
-| “这个 API 上线后变慢了，我们必须换数据库吗？” | crux-first-reasoning：先查关键证据 | grilling、interview-me 的长轮次访谈 |
+| “这个 API 上线后变慢了，我们必须换数据库吗？” | independent-judgment（不认同未证实前提）与 crux-first-reasoning（识别关键证据） | grilling、interview-me 的长轮次访谈 |
 | “帮我比较两种跨 Agent 状态管理的架构，给出选择。” | crux-first-reasoning | 三种写作 Skill 同时启用 |
 | “我想做一个系统，但是不知道目标用户，帮我通过访谈定义。” | interview-me | 直接开工编码、grilling |
 | “强力挑战这个计划的漏洞，逐轮问我。” | grilling | interview-me 或直接生成交付 |
@@ -12,7 +12,7 @@
 | “把这段中文技术方案改成正式的领导汇报稿。” | technical-writing | 技术英语、开发者文档 |
 | “为这个 API 生成开发者 README。” | technical-documentation | technical-language（除非明确要求英语风格校正） |
 | “把这段英文发布说明改成简明技术英语。” | technical-language | 中文写作 |
-| “翻译 rollback plan。” | L0 行为规则；直接翻译，无需额外 Skill | 访谈/复杂推理/工程 Skill |
+| “翻译 rollback plan。” | 直接翻译，无需 Skill | 访谈、无端复杂推理 |
 | “审查现有 PR 的实现是否符合规范和需求。” | 直接按规范与需求审查，不依赖专用 Skill | 强制先访谈、重新设计或进行无关写作 |
 | “请只润色这段技术英文。” | technical-language，可直接执行 | 强制先走复杂推理或编码流程 |
 | “我们正在维护 DSH，评审这个 DSH PR。” | DSH 项目专用 Skill（有仓库证据时） | Codas 相关与不相关项目 Skill |

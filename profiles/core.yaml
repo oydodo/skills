@@ -1,7 +1,10 @@
 # Desired workset only, not automatic runtime activation.
-version: 5
-always_on_instructions:
-  - instructions/independent-judgment.md
+version: 6
+foundation_skills:
+  - name: independent-judgment
+    role: evidence_discipline
+    path: skills/independent-judgment
+    trigger: substantive_judgment
 cognition_skills:
   - name: interview-me
     role: clarification

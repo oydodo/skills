@@ -16,7 +16,7 @@ description: "Find the decisive issue in a nontrivial question that requires jud
 
 ## Boundaries
 
-- Follow the always-on **Independent Judgment** rules; do not duplicate them here.
+- Apply evidence-based reasoning whether or not `independent-judgment` is loaded; do not duplicate its general judgment checklist.
 - Do not force a questionnaire, a long pros-and-cons list, or a fixed response template. Reason proportionately to the stakes.
 - Fulfill the user's requested output (answer, plan, code, or document). Use writing Skills for expression, not as a substitute for reaching the conclusion.
 

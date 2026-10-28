@@ -1,6 +1,5 @@
-# Selected Skills only; submodules are source repositories, not installed worksets.
-# Classification does not change the Skills discovered by Codex / Claude / Pi.
-version: 10
+# Selected Skills only; submodules are sources, not automatic installations.
+version: 11
 upstreams:
   addyosmani:
     url: https://github.com/addyosmani/agent-skills
@@ -33,6 +32,11 @@ upstreams:
     module_path: upstream/technical-language-skill
     branch: main
 skills:
+  - name: independent-judgment
+    source: maintained
+    category: reasoning
+    skill_path: skills/independent-judgment
+    capability_layer: foundation
   - name: interview-me
     source: addyosmani
     category: reasoning

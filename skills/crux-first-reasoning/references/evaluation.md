@@ -1,6 +1,6 @@
 # Behavior evaluation (manual A/B protocol)
 
-This is a test plan, not a claim of model-level behavioral validation. Compare the same model and prompts with the new global instruction and skill enabled vs disabled. Preserve the complete conversation history within each run.
+This is a test plan, not a claim of model-level behavioral validation. Compare the same model and prompts with `independent-judgment` and `crux-first-reasoning` Skills enabled separately and together. Preserve the complete conversation history within each run.
 
 ## Cases
 
