@@ -16,9 +16,28 @@ skills/
 │   └── wondelai-skills/
 ├── instructions/independent-judgment.md
 ├── registry/skills.yaml               # 已采用 Skill 与准确路径
-├── registry/installed-snapshot.md     # 本机目录盘点，未验证的不复制
+├── registry/installed-snapshot.md     # 本机 80 个目录按 10 类分类
 └── tests/README.md
 ```
+
+## 领域分类与本机清单
+
+本机已安装的 80 个 Skill 目录按主要用途分为 10 类，完整名称见 [分类快照](registry/installed-snapshot.md)。
+
+| 领域 | 目录数 | 管理说明 |
+| --- | ---: | --- |
+| 思考与需求澄清 | 9 | `reasoning` |
+| 规划与协作 | 4 | `planning` |
+| 软件架构与建模 | 4 | `architecture` |
+| 编码、测试与 Git | 14 | `development` |
+| 文档与技术语言 | 3 | `writing` |
+| 界面设计与可视化 | 7 | `visual` |
+| Agent 与 Skill 管理 | 9 | `agent` |
+| 教学与个人效率 | 3 | `education` |
+| Codas 项目专用 | 10 | `project-codas` |
+| DSH 项目专用 | 17 | `project-dsh` |
+
+分类在登记表与文档中维护，**不为分类改变本机 Skill 路径或已存在的 Git submodule 路径**，避免安装断链。Codas 与 DSH 保留项目级隔离；以后可对单个 Skill 再增加功能标签。
 
 ## 已登记 Skill
 
