@@ -2,8 +2,12 @@
 # DSH is a pinned, shallow partial Git clone with a sparse worktree containing only
 # the .agents/skills/ subtree. Execute scripts/checkout-dsh-skills.sh first.
 # Only the listed skill_path values are selected; a local inventory is not an install.
-version: 3
+version: 4
 upstreams:
+  ponytail:
+    url: https://github.com/DietrichGebert/ponytail
+    module_path: upstream/ponytail
+    branch: main
   mattpocock:
     url: https://github.com/mattpocock/skills
     module_path: upstream/mattpocock-skills
@@ -112,6 +116,10 @@ skills:
     source: mattpocock
     category: development
     skill_path: upstream/mattpocock-skills/skills/misc/migrate-to-shoehorn
+  - name: ponytail
+    source: ponytail
+    category: development
+    skill_path: upstream/ponytail/skills/ponytail
   - name: pr
     source: mattpocock
     category: development

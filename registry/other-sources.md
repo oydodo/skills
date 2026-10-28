@@ -2,8 +2,8 @@
 
 本机 `~/.agents/skills/` 的 16 个条目（已扣除 Matt Pocock、DSH、三个写作 Skill 和此前排除的 Codas 相关目录）。**这一页是来源审查，不代表已经加入正式 Skill 注册表。**
 
-- **已核实相符的上游实现：6 个。** 匹配依据包括本机 Git remote、Skill 名称及正文或 description；本机版本可能滞后于上游。
-- **尚未确认原始上游：10 个。** 不凭同名仓库推测，也不自动添加 submodule。
+- **已核实相符的上游实现：7 个（其中 1 个已接入 submodule）。** 匹配依据包括本机 Git remote、Skill 名称及正文或 description；本机版本可能滞后于上游。
+- **尚未确认原始上游：9 个。** 不凭同名仓库推测，也不自动添加 submodule。
 - 任何新引入前，检查维护者、实际路径、许可证、与已安装版本是否一致，以及是否包含项目专用内容。
 
 | 本机 Skill | 所属领域 | 上游来源 / 状态 |
@@ -13,7 +13,7 @@
 | `code-annotator` | 编码 | **待核实** |
 | `code-explainer` | 编码 | **待核实**；本机文档带 Codas 设计注释，应在接入前确认项目边界 |
 | `codex-appserver-doctor` | 编码 | **待核实**，可能是环境专用 Skill |
-| `ponytail` | 编码 | **待核实**；找到同名副本，但尚未证明作者来源 |
+| `ponytail` | 编码 | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail/tree/main/skills/ponytail) — **已确认并接入**；上游主仓库，实际采用 `skills/ponytail/`；本机版本未被覆盖 |
 | `anatomy` | 可视化 | [wheresryan22/anatomy](https://github.com/wheresryan22/anatomy) — **已核实**，本机 Git remote 指向该仓库 |
 | `archify` | 可视化 | [tt-a1i/archify/archify](https://github.com/tt-a1i/archify/tree/main/archify) — **已核实**，匹配名称与功能 |
 | `design-taste-frontend` | 可视化 | **待核实**，无法根据相似项目确定原作者 |

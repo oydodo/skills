@@ -11,7 +11,7 @@
 | [Matt Pocock](https://github.com/mattpocock/skills) | 31 | 一个 submodule，逐项选取路径 |
 | [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness/tree/master/.agents/skills) | 19 | 稀疏检出，仅获取 `.agents/skills/` |
 | 3 个既有来源 | 3 | 保留原 submodule |
-| 其他来源待审核 | 16 | [6 个来源已核实、10 个待核实](other-sources.md)；均暂不引入源码 |
+| 其他来源 | 16 | [7 个来源已核实、9 个待核实](other-sources.md)；其中 `ponytail` 已接入 submodule |
 | **合计** | **69** | |
 
 ## 领域汇总
@@ -67,7 +67,7 @@
 - `implement` — Matt
 - `implement-spec` — Matt
 - `migrate-to-shoehorn` — Matt
-- `ponytail` — 待审核
+- `ponytail` — 已核实上游且已接入
 - `pr` — Matt
 - `prototype` — Matt
 - `setup-pre-commit` — Matt

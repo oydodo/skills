@@ -14,3 +14,7 @@
 	path = upstream/mattpocock-skills
 	url = https://github.com/mattpocock/skills.git
 	branch = main
+[submodule "upstream/ponytail"]
+	path = upstream/ponytail
+	url = https://github.com/DietrichGebert/ponytail.git
+	branch = main

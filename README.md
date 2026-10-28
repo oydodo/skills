@@ -28,11 +28,12 @@
 | [Technical Writing](https://github.com/luoling8192/technical-writing) | 1 | `upstream/technical-writing` | submodule |
 | [Technical Documentation](https://github.com/wondelai/skills/tree/main/technical-documentation) | 1 | `upstream/wondelai-skills/technical-documentation` | submodule（**只使用此子目录**） |
 | [Technical Language](https://github.com/jjsnack/technical-language-skill) | 1 | `upstream/technical-language-skill` | submodule |
-| 其他来源待审核 | 16 | [逐项来源审查](registry/other-sources.md) | 6 个已核实上游、10 个仍待确认；均未引入 |
+| [Ponytail](https://github.com/DietrichGebert/ponytail/tree/main/skills/ponytail) | 1 | `upstream/ponytail/skills/ponytail` | submodule，仅采用此子目录 |
+| 其他来源（含 Ponytail） | 16 | [逐项来源审查](registry/other-sources.md) | 7 个已核实（1 个已接入）；9 个待确认 |
 
 **注意：上游同名 Skill 只代表来源路径得到确认，不证明本机版本与所固定的 Git commit 相同。** 仓库保留 `upstream` 子模块，实际使用哪一项由 `registry/skills.yaml` 中的 `skill_path` 指定。
 
-> 其他来源的 16 个本机 Skill 已独立列于 [来源审查表](registry/other-sources.md)；已核实来源不等于当前已接入。
+> 其他来源的 16 个本机 Skill 已独立列于 [来源审查表](registry/other-sources.md)；`ponytail` 已确认并接入，其余已核实来源尚待单独评估。
 
 ## 自研内容
 
