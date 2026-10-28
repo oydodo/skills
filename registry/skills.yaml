@@ -2,8 +2,12 @@
 # DSH is a pinned, shallow partial Git clone with a sparse worktree containing only
 # the .agents/skills/ subtree. Execute scripts/checkout-dsh-skills.sh first.
 # Only the listed skill_path values are selected; a local inventory is not an install.
-version: 4
+version: 5
 upstreams:
+  addyosmani:
+    url: https://github.com/addyosmani/agent-skills
+    module_path: upstream/addyosmani-agent-skills
+    branch: main
   ponytail:
     url: https://github.com/DietrichGebert/ponytail
     module_path: upstream/ponytail
@@ -44,6 +48,10 @@ skills:
     source: mattpocock
     category: reasoning
     skill_path: upstream/mattpocock-skills/skills/engineering/grill-with-docs
+  - name: interview-me
+    source: addyosmani
+    category: reasoning
+    skill_path: upstream/addyosmani-agent-skills/skills/interview-me
   - name: grilling
     source: mattpocock
     category: reasoning

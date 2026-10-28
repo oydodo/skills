@@ -18,3 +18,7 @@
 	path = upstream/ponytail
 	url = https://github.com/DietrichGebert/ponytail.git
 	branch = main
+[submodule "upstream/addyosmani-agent-skills"]
+	path = upstream/addyosmani-agent-skills
+	url = https://github.com/addyosmani/agent-skills.git
+	branch = main

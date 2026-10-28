@@ -36,7 +36,7 @@
 - `grill-me` — Matt
 - `grill-with-docs` — Matt
 - `grilling` — Matt
-- `interview-me` — 已核实上游，待接入
+- `interview-me` — 已核实上游，已接入
 - `product-brainstorming` — 已核实上游，待接入
 - `research` — Matt
 - `to-questionnaire` — Matt
@@ -130,4 +130,4 @@
 
 - 该文件是本机盘点的**筛选视图**，不是安装指令；其他来源的 15 个仍在筛选清单中，其中 ponytail 已作为 submodule 接入；没有复制其他目录源码，来源审查见 [other-sources.md](other-sources.md)。
 - 本仓库对第三方 Git submodule 或稀疏克隆的固定 SHA 作版本管理；多 Skill 仓库仅采用列出的 Skill 路径。
-- [正式登记的选用路径](skills.yaml) 包含 53 个来源已确认并实际接入的本机 Skill，以及 1 个本仓库自研 Skill。
+- [正式登记的选用路径](skills.yaml) 包含 55 个来源已确认并实际接入的本机 Skill，以及 1 个本仓库自研 Skill。

@@ -2,6 +2,17 @@
 
 个人 AI Skills 的统一管理仓库。自研 Skill 在此维护；第三方开源 Skill 优先以 **Git submodule** 追踪，DSH 例外采用固定版本的 **稀疏部分克隆**（只取 Skill 目录）。使用 [registry/skills.yaml](registry/skills.yaml) 精确声明已采用的子目录。
 
+## 我们的 Core v1 · 精简、分工、可验证
+
+**1 条始终生效的独立判断准则 + 7 个按任务触发的 Skill**，其中 `crux-first-reasoning` 自研，其余直接使用上游。核心不是新的超级 Skill，不强迫每次运行整个流程。
+
+- [核心职责和触发路由](core/README.md)
+- [声明式核心 Profile](profiles/core.yaml)（**尚未自动应用到本机**）
+- [第一轮剪枝分析](registry/pruning.md) · [68 个目录分流](registry/curation.yaml)
+- [行为验收样例](tests/core-routing.md)
+
+**初步分流**：6 个本机核心 / 34 个按需 / 19 个 DSH 项目专用 / 7 个剪枝候选 / 2 个自研暂停；自研 `crux-first-reasoning` 在 GitHub 中单列。**候选未删除，本机环境未改变**。
+
 ## 领域分类
 
 | 领域 | 本机选用目录数 |
@@ -29,11 +40,12 @@
 | [Technical Documentation](https://github.com/wondelai/skills/tree/main/technical-documentation) | 1 | `upstream/wondelai-skills/technical-documentation` | submodule（**只使用此子目录**） |
 | [Technical Language](https://github.com/jjsnack/technical-language-skill) | 1 | `upstream/technical-language-skill` | submodule |
 | [Ponytail](https://github.com/DietrichGebert/ponytail/tree/main/skills/ponytail) | 1 | `upstream/ponytail/skills/ponytail` | submodule，仅采用此子目录 |
-| 其他来源（含 Ponytail） | 15 | [逐项来源审查（保留 1 项已排除记录）](registry/other-sources.md) | 13 个已核实（1 个已接入）；2 个本地定制未找到公开上游 |
+| [Interview Me](https://github.com/addyosmani/agent-skills/tree/main/skills/interview-me) | 1 | `upstream/addyosmani-agent-skills/skills/interview-me` | submodule，仅采用此子目录 |
+| 其他来源（含 Ponytail） | 15 | [逐项来源审查（保留 1 项已排除记录）](registry/other-sources.md) | 13 个已核实（2 个已接入）；2 个本地定制未找到公开上游 |
 
 **注意：上游同名 Skill 只代表来源路径得到确认，不证明本机版本与所固定的 Git commit 相同。** 仓库保留 `upstream` 子模块，实际使用哪一项由 `registry/skills.yaml` 中的 `skill_path` 指定。
 
-> 其他来源的 16 个本机 Skill 已独立列于 [来源审查表](registry/other-sources.md)；`ponytail` 已确认并接入，其余已核实来源尚待单独评估。
+> 其他来源的 16 个本机 Skill 已独立列于 [来源审查表](registry/other-sources.md)；`ponytail` 和 `interview-me` 已确认并接入，其余已核实来源尚待单独评估。
 
 ## 自研内容
 

@@ -2,14 +2,14 @@
 
 对之前列出的 **16 个候选目录**逐项检索本机 SKILL.md、公开仓库和历史版本；本表保留一个已排除项以追溯原因。
 
-- **13 个可追溯公开上游**：包括直接匹配、明确的衍生改写或公开历史版本。其中 `ponytail` 已通过 Git submodule 接入；其余均仅记录来源，**不等于已安装新版本或加入主仓库**。
+- **13 个可追溯公开上游**：包括直接匹配、明确的衍生改写或公开历史版本。其中 `ponytail` 和 `interview-me` 已通过 Git submodule 接入；其余均仅记录来源，**不等于已安装新版本或加入主仓库**。
 - **3 个未找到可验证的公开上游**：都含本机定制特征；不能据此推断“互联网上不存在源码”。
 - **1 个排除项**：`code-explainer` 带 Codas authority/codegraph 专用约束，依此前“去掉 Codas Skill”的要求从主清单排除，但保留于本来源审计表。
 - 不把同名但用途不同的 Skill 认定为原始来源。不在本仓库上传第三方源码或含本地机密的定制脚本。
 
 | Skill | 领域 | 核实结论 | 对应来源 / 补充说明 |
 | --- | --- | --- | --- |
-| `interview-me` | 思考与需求 | **来源确认** | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills/tree/main/skills/interview-me)：本机正文与该 Skill 一致 |
+| `interview-me` | 思考与需求 | **来源确认 / 已接入** | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills/tree/main/skills/interview-me)：本机正文与该 Skill 一致 |
 | `product-brainstorming` | 思考与需求 | **来源确认** | [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins/tree/main/product-management/skills/product-brainstorming)：描述、正文一致 |
 | `code-annotator` | 编码 | **衍生来源确认** | [rohitg00/awesome-claude-code-toolkit](https://github.com/rohitg00/awesome-claude-code-toolkit/blob/main/plugins/code-explainer/commands/annotate.md)：本机剥离 frontmatter 后正文逐字一致；原始形式是命令文件，不是独立 Skill |
 | `code-explainer` | 编码 | **本地 Codas 定制 / 已排除** | 本机 Skill 包含 `codas:design-contract`、`codas authority`、`codegraph` 专用命令；未找到对应公开上游；不再计入通用管理清单 |
