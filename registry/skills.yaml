@@ -4,22 +4,26 @@ version: 1
 skills:
   - name: crux-first-reasoning
     type: maintained
+    category: reasoning
     skill_path: skills/crux-first-reasoning
     purpose: Key problem identification, evidence-based independent decisions
   - name: technical-writing
     type: submodule
+    category: writing
     upstream: https://github.com/luoling8192/technical-writing
     module_path: upstream/technical-writing
     skill_path: upstream/technical-writing
     purpose: Chinese technical writing
   - name: technical-documentation
     type: submodule
+    category: writing
     upstream: https://github.com/wondelai/skills
     module_path: upstream/wondelai-skills
     skill_path: upstream/wondelai-skills/technical-documentation
     purpose: Developer documentation style
   - name: technical-language
     type: submodule
+    category: writing
     upstream: https://github.com/jjsnack/technical-language-skill
     module_path: upstream/technical-language-skill
     skill_path: upstream/technical-language-skill
