@@ -11,7 +11,7 @@
 | [Matt Pocock](https://github.com/mattpocock/skills) | 31 | 一个 submodule，逐项选取路径 |
 | [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness/tree/master/.agents/skills) | 19 | 稀疏检出，仅获取 `.agents/skills/` |
 | 3 个既有来源 | 3 | 保留原 submodule |
-| 来源待核实 | 16 | 仅列清单，暂不引入源码 |
+| 其他来源待审核 | 16 | [6 个来源已核实、10 个待核实](other-sources.md)；均暂不引入源码 |
 | **合计** | **69** | |
 
 ## 领域汇总
@@ -36,8 +36,8 @@
 - `grill-me` — Matt
 - `grill-with-docs` — Matt
 - `grilling` — Matt
-- `interview-me` — 待核实
-- `product-brainstorming` — 待核实
+- `interview-me` — 待审核
+- `product-brainstorming` — 待审核
 - `research` — Matt
 - `to-questionnaire` — Matt
 - `wait-what` — Matt
@@ -58,16 +58,16 @@
 
 ### 4. 编码、测试与 Git (14)
 
-- `code-annotator` — 待核实
-- `code-explainer` — 待核实
+- `code-annotator` — 待审核
+- `code-explainer` — 待审核
 - `code-review` — Matt
-- `codex-appserver-doctor` — 待核实
+- `codex-appserver-doctor` — 待审核
 - `diagnosing-bugs` — Matt
 - `git-guardrails-claude-code` — Matt
 - `implement` — Matt
 - `implement-spec` — Matt
 - `migrate-to-shoehorn` — Matt
-- `ponytail` — 待核实
+- `ponytail` — 待审核
 - `pr` — Matt
 - `prototype` — Matt
 - `setup-pre-commit` — Matt
@@ -81,29 +81,29 @@
 
 ### 6. 界面设计与可视化 (7)
 
-- `anatomy` — 待核实
-- `archify` — 待核实
-- `design-taste-frontend` — 待核实
-- `explore-recipes` — 待核实
+- `anatomy` — 已核实上游，待接入
+- `archify` — 已核实上游，待接入
+- `design-taste-frontend` — 待审核
+- `explore-recipes` — 待审核
 - `record-browser-gif` — DSH
-- `remote-html-preview` — 待核实
-- `visual-explainer` — 待核实
+- `remote-html-preview` — 待审核
+- `visual-explainer` — 已核实上游，待接入
 
 ### 7. Agent 与 Skill 管理 (9)
 
 - `agent-experience` — DSH
 - `ask-matt` — Matt
-- `find-skills` — 待核实
+- `find-skills` — 已核实上游，待接入
 - `handoff` — Matt
-- `nopua` — 待核实
+- `nopua` — 已核实上游，待接入
 - `setup-matt-pocock-skills` — Matt
 - `wizard` — Matt
-- `write-a-skill` — 待核实
+- `write-a-skill` — 待审核
 - `writing-for-agents` — Matt
 
 ### 8. 教学与个人效率 (3)
 
-- `i-have-adhd` — 待核实
+- `i-have-adhd` — 已核实上游，待接入
 - `scaffold-exercises` — Matt
 - `teach` — Matt
 
@@ -129,6 +129,6 @@
 
 ## 维护边界
 
-- 该文件是本机盘点的**筛选视图**，不是安装指令；未核实的 16 个目录不添加 submodule，也不复制源文件。
+- 该文件是本机盘点的**筛选视图**，不是安装指令；其他来源的 16 个目录均未添加 submodule 或复制源码，来源审查见 [other-sources.md](other-sources.md)。
 - 本仓库对第三方 Git submodule 或稀疏克隆的固定 SHA 作版本管理；多 Skill 仓库仅采用列出的 Skill 路径。
 - [正式登记的选用路径](skills.yaml) 包含 53 个来源已确认的本机 Skill，以及 1 个本仓库自研 Skill。
