@@ -9,15 +9,15 @@
 | 思考与需求澄清 | 9 |
 | 规划与协作 | 4 |
 | 软件架构与建模 | 3 |
-| 编码、测试与 Git | 14 |
+| 编码、测试与 Git | 13 |
 | 文档与技术语言 | 3 |
 | 界面设计与可视化 | 7 |
 | Agent 与 Skill 管理 | 9 |
 | 教学与个人效率 | 3 |
 | DSH 项目专用 | 17 |
-| **合计** | **69** |
+| **合计** | **68** |
 
-[查看全部本机分类清单](registry/installed-snapshot.md)（原有 80 个目录中，Codas 项目相关的 11 个已从本仓库管理范围排除；不会改动本机安装）。
+[查看全部本机分类清单](registry/installed-snapshot.md)（原有 80 个目录中，Codas 项目相关的 12 个已从本仓库管理范围排除；不会改动本机安装）。
 
 ## 按上游仓库管理
 
@@ -29,7 +29,7 @@
 | [Technical Documentation](https://github.com/wondelai/skills/tree/main/technical-documentation) | 1 | `upstream/wondelai-skills/technical-documentation` | submodule（**只使用此子目录**） |
 | [Technical Language](https://github.com/jjsnack/technical-language-skill) | 1 | `upstream/technical-language-skill` | submodule |
 | [Ponytail](https://github.com/DietrichGebert/ponytail/tree/main/skills/ponytail) | 1 | `upstream/ponytail/skills/ponytail` | submodule，仅采用此子目录 |
-| 其他来源（含 Ponytail） | 16 | [逐项来源审查](registry/other-sources.md) | 7 个已核实（1 个已接入）；9 个待确认 |
+| 其他来源（含 Ponytail） | 15 | [逐项来源审查（保留 1 项已排除记录）](registry/other-sources.md) | 13 个已核实（1 个已接入）；2 个本地定制未找到公开上游 |
 
 **注意：上游同名 Skill 只代表来源路径得到确认，不证明本机版本与所固定的 Git commit 相同。** 仓库保留 `upstream` 子模块，实际使用哪一项由 `registry/skills.yaml` 中的 `skill_path` 指定。
 
