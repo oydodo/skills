@@ -2,14 +2,14 @@
 
 > 快照时间：2026-10-28；实际本机仍有 **80 个** Skill 目录；以下是管理仓库的筛选清单，按要求排除了 **11 个 Codas 专用/相关目录**（10 个 `codas-*` 和 `codegraph`），剩余 **69 个**。没有删除或移动任何本机文件。
 >
-> 来源归类来自上游仓库对应的 `SKILL.md` 路径。名称与来源匹配不代表本地文件一定等于当前上游版本；Git submodule 会固定具体提交。
+> 来源归类来自上游仓库对应的 `SKILL.md` 路径。名称与来源匹配不代表本地文件一定等于当前上游版本；Git submodule 或 DSH 的固定 SHA 记录具体版本。
 
 ## 来源汇总
 
 | 来源 | 本机目录数 | 处理方式 |
 | --- | ---: | --- |
 | [Matt Pocock](https://github.com/mattpocock/skills) | 31 | 一个 submodule，逐项选取路径 |
-| [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) | 19 | 一个 submodule，逐项选取路径 |
+| [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness/tree/master/.agents/skills) | 19 | 稀疏检出，仅获取 `.agents/skills/` |
 | 3 个既有来源 | 3 | 保留原 submodule |
 | 来源待核实 | 16 | 仅列清单，暂不引入源码 |
 | **合计** | **69** | |
@@ -130,5 +130,5 @@
 ## 维护边界
 
 - 该文件是本机盘点的**筛选视图**，不是安装指令；未核实的 16 个目录不添加 submodule，也不复制源文件。
-- 本仓库仅对子模块固定提交与所选 Skill 路径作版本管理；多 Skill 仓库不会默认采用全部 Skill。
+- 本仓库对第三方 Git submodule 或稀疏克隆的固定 SHA 作版本管理；多 Skill 仓库仅采用列出的 Skill 路径。
 - [正式登记的选用路径](skills.yaml) 包含 53 个来源已确认的本机 Skill，以及 1 个本仓库自研 Skill。

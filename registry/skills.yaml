@@ -1,7 +1,8 @@
-# Curated Skills registry. A submodule pins a source-repository commit;
-# only individual skill_path values listed below are adopted.
-# 'unverified' records are a local inventory only, not installed from this repo.
-version: 2
+# Curated Skills registry. Other upstreams are Git submodules.
+# DSH is a pinned, shallow partial Git clone with a sparse worktree containing only
+# the .agents/skills/ subtree. Execute scripts/checkout-dsh-skills.sh first.
+# Only the listed skill_path values are selected; a local inventory is not an install.
+version: 3
 upstreams:
   mattpocock:
     url: https://github.com/mattpocock/skills
@@ -9,7 +10,10 @@ upstreams:
     branch: main
   deepseek-harness:
     url: https://github.com/deepseek-ai/deepseek-harness
-    module_path: upstream/deepseek-harness
+    method: pinned-partial-sparse-clone
+    source_subdir: .agents/skills
+    checkout_path: upstream/dsh-skills
+    revision_file: registry/dsh-upstream.sha
     branch: master
   luoling:
     url: https://github.com/luoling8192/technical-writing
@@ -139,11 +143,11 @@ skills:
   - name: record-browser-gif
     source: deepseek-harness
     category: visual
-    skill_path: upstream/deepseek-harness/.agents/skills/record-browser-gif
+    skill_path: upstream/dsh-skills/.agents/skills/record-browser-gif
   - name: agent-experience
     source: deepseek-harness
     category: agent
-    skill_path: upstream/deepseek-harness/.agents/skills/agent-experience
+    skill_path: upstream/dsh-skills/.agents/skills/agent-experience
   - name: ask-matt
     source: mattpocock
     category: agent
@@ -175,68 +179,68 @@ skills:
   - name: cordis-styling-nitpicking
     source: deepseek-harness
     category: project-dsh
-    skill_path: upstream/deepseek-harness/.agents/skills/cordis-styling-nitpicking
+    skill_path: upstream/dsh-skills/.agents/skills/cordis-styling-nitpicking
   - name: dsh-archive-agent-notes
     source: deepseek-harness
     category: project-dsh
-    skill_path: upstream/deepseek-harness/.agents/skills/dsh-archive-agent-notes
+    skill_path: upstream/dsh-skills/.agents/skills/dsh-archive-agent-notes
   - name: dsh-ci-test-reliability
     source: deepseek-harness
     category: project-dsh
-    skill_path: upstream/deepseek-harness/.agents/skills/dsh-ci-test-reliability
+    skill_path: upstream/dsh-skills/.agents/skills/dsh-ci-test-reliability
   - name: dsh-client-ui-ux
     source: deepseek-harness
     category: project-dsh
-    skill_path: upstream/deepseek-harness/.agents/skills/dsh-client-ui-ux
+    skill_path: upstream/dsh-skills/.agents/skills/dsh-client-ui-ux
   - name: dsh-code-review
     source: deepseek-harness
     category: project-dsh
-    skill_path: upstream/deepseek-harness/.agents/skills/dsh-code-review
+    skill_path: upstream/dsh-skills/.agents/skills/dsh-code-review
   - name: dsh-create-upgrade-guide
     source: deepseek-harness
     category: project-dsh
-    skill_path: upstream/deepseek-harness/.agents/skills/dsh-create-upgrade-guide
+    skill_path: upstream/dsh-skills/.agents/skills/dsh-create-upgrade-guide
   - name: dsh-doc
     source: deepseek-harness
     category: project-dsh
-    skill_path: upstream/deepseek-harness/.agents/skills/dsh-doc
+    skill_path: upstream/dsh-skills/.agents/skills/dsh-doc
   - name: dsh-error-handling
     source: deepseek-harness
     category: project-dsh
-    skill_path: upstream/deepseek-harness/.agents/skills/dsh-error-handling
+    skill_path: upstream/dsh-skills/.agents/skills/dsh-error-handling
   - name: dsh-find-simplifications
     source: deepseek-harness
     category: project-dsh
-    skill_path: upstream/deepseek-harness/.agents/skills/dsh-find-simplifications
+    skill_path: upstream/dsh-skills/.agents/skills/dsh-find-simplifications
   - name: dsh-merging-stacked-prs
     source: deepseek-harness
     category: project-dsh
-    skill_path: upstream/deepseek-harness/.agents/skills/dsh-merging-stacked-prs
+    skill_path: upstream/dsh-skills/.agents/skills/dsh-merging-stacked-prs
   - name: dsh-official-plugin-artwork
     source: deepseek-harness
     category: project-dsh
-    skill_path: upstream/deepseek-harness/.agents/skills/dsh-official-plugin-artwork
+    skill_path: upstream/dsh-skills/.agents/skills/dsh-official-plugin-artwork
   - name: dsh-pre-push-checks
     source: deepseek-harness
     category: project-dsh
-    skill_path: upstream/deepseek-harness/.agents/skills/dsh-pre-push-checks
+    skill_path: upstream/dsh-skills/.agents/skills/dsh-pre-push-checks
   - name: dsh-prose-standard
     source: deepseek-harness
     category: project-dsh
-    skill_path: upstream/deepseek-harness/.agents/skills/dsh-prose-standard
+    skill_path: upstream/dsh-skills/.agents/skills/dsh-prose-standard
   - name: dsh-responsive-ui
     source: deepseek-harness
     category: project-dsh
-    skill_path: upstream/deepseek-harness/.agents/skills/dsh-responsive-ui
+    skill_path: upstream/dsh-skills/.agents/skills/dsh-responsive-ui
   - name: dsh-speed-up-perf
     source: deepseek-harness
     category: project-dsh
-    skill_path: upstream/deepseek-harness/.agents/skills/dsh-speed-up-perf
+    skill_path: upstream/dsh-skills/.agents/skills/dsh-speed-up-perf
   - name: dsh-translate-docs
     source: deepseek-harness
     category: project-dsh
-    skill_path: upstream/deepseek-harness/.agents/skills/dsh-translate-docs
+    skill_path: upstream/dsh-skills/.agents/skills/dsh-translate-docs
   - name: dsh-trim-cot-leakage
     source: deepseek-harness
     category: project-dsh
-    skill_path: upstream/deepseek-harness/.agents/skills/dsh-trim-cot-leakage
+    skill_path: upstream/dsh-skills/.agents/skills/dsh-trim-cot-leakage
