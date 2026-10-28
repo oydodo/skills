@@ -99,4 +99,4 @@ codex plugin marketplace add oydodo/skills
 codex plugin add oydodo-skills@oydodo
 ```
 
-首次添加来源后仅需安装一个 Plugin。**2026-10-29 已在 Mac 上验证 CLI 安装成功、8 个文件入口齐备且插件启用**；桌面新会话的自动触发仍待实测，详见[安装验收记录](tests/chatgpt-plugin-install-2026-10-29.md)。重启 ChatGPT 桌面版并在新会话验证。**这是本地 Marketplace 发行方式**，不能假定自动同步到 Web/iOS。第三方固定版本、有限触发描述适配和许可见 [来源与改动](plugins/oydodo-skills/SOURCES.md)。
+首次添加来源后仅需安装一个 Plugin。**2026-10-29 已在 Mac 上验证 CLI 安装成功、8 个文件入口齐备且插件启用**；桌面新会话的自动触发仍待实测，详见[安装验收记录](tests/chatgpt-plugin-install-2026-10-29.md)。重启 ChatGPT 桌面版并在新会话验证。**Mac 本地 CLI 安装已验证**；如果需要 ChatGPT Web/iOS，可由工作区管理员通过 [Admin → Plugins → Import marketplace](https://learn.chatgpt.com/docs/enterprise/plugin-management) 导入同一 GitHub 仓库，并对相关角色设置 Installed。该账户级操作尚未执行，不能认为已同步。第三方固定版本、有限触发描述适配和许可见 [来源与改动](plugins/oydodo-skills/SOURCES.md)。

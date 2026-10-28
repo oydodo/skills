@@ -20,3 +20,16 @@ For updates, use `codex plugin marketplace upgrade oydodo` and the plugin manage
 See [SOURCES.md](SOURCES.md) for upstream SHAs, licenses and documented trigger adaptations; see [routing tests](../../tests/core-routing.md) for behavior tests. Packaging success is not proof of automatic triggering.
 
 **Observed local installation:** 2026-10-29, ChatGPT's bundled Codex CLI successfully installed v0.1.0 and enabled the plugin with 8 Skill entrypoints; see [smoke test](../../tests/chatgpt-plugin-install-2026-10-29.md). Cloud sync and natural triggering remain unverified.
+
+## ChatGPT Web / iOS via workspace GitHub import
+
+For account-level deployment across ChatGPT surfaces (not just local desktop), a **workspace admin** can import this repository's marketplace:
+
+1. Open **Admin → Plugins → Add → Import marketplace**.
+2. Set **Source** to `https://github.com/oydodo/skills`; leave **Path** blank because `.agents/plugins/marketplace.json` is at the repository root. Use branch `main` for updates.
+3. Import and review the **single** `oydodo-skills` plugin. Set its **Installation policy** to **Installed** for the intended eligible roles, or let users install this single plugin from the workspace directory.
+4. Open a new ChatGPT conversation and confirm that the eight skills are available. Workspace policy and product eligibility still apply.
+
+The plugin bundles no MCP servers, so it does not opt into the MCP-related **Desktop only** restriction. GitHub workspace marketplaces can sync updates automatically (typically daily). The workspace admin import and web/iOS activation **have not been performed or verified**.
+
+Official docs: [Plugin management — GitHub import](https://learn.chatgpt.com/docs/enterprise/plugin-management).
