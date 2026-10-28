@@ -1,21 +1,22 @@
 # Non-destructive first cut: local snapshot 80, selection 9 local + 1 repo-only.
-version: 2
+version: 3
 installed_snapshot: 80
 selected_count: 10
 selected_local_count: 9
 selected:
-  core:
+  reasoning:
     - crux-first-reasoning
-    - interview-me
-    - grilling
-    - ponytail
-  specialist:
-    - domain-modeling
-    - diagnosing-bugs
-    - code-review
+  expression:
     - technical-writing
     - technical-documentation
     - technical-language
+  auxiliary:
+    - interview-me
+    - grilling
+    - ponytail
+    - domain-modeling
+    - diagnosing-bugs
+    - code-review
 not_selected:
   matt:
     - grill-me
