@@ -15,3 +15,5 @@ Latest exploratory report: [ChatGPT dogfood — 2026-10-28](chatgpt-dogfood-2026
 Mac install smoke test: [ChatGPT desktop Plugin install — 2026-10-29](chatgpt-plugin-install-2026-10-29.md). It verifies 8 bundled entrypoints and enabled config, not cloud sync or auto-routing.
 
 Runtime smoke test after workspace import: [ChatGPT Plugin runtime, 2026-10-29](chatgpt-plugin-runtime-2026-10-29.md). Verifies ChatGPT 8/8 discovery, 14/14 supporting files and helper script; documents the unresolved legacy-name conflict and untested prompt routing.
+
+Actual automatic-trigger dogfood: [2026-10-29 end-to-end routing](chatgpt-plugin-auto-trigger-2026-10-29.md). Six Plugin Skill names confirmed by executed Skill-file reads, one negative control, and local-installation shadowing for the two writing categories.
