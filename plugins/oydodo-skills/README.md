@@ -19,7 +19,7 @@ For updates, use `codex plugin marketplace upgrade oydodo` and the plugin manage
 
 See [SOURCES.md](SOURCES.md) for upstream SHAs, licenses and documented trigger adaptations; see [routing tests](../../tests/core-routing.md) for behavior tests. Packaging success is not proof of automatic triggering.
 
-**Observed local installation:** 2026-10-29, ChatGPT's bundled Codex CLI successfully installed v0.1.0 and enabled the plugin with 8 Skill entrypoints; see [smoke test](../../tests/chatgpt-plugin-install-2026-10-29.md). Cloud sync and natural triggering remain unverified.
+**Installation and routing history:** See the [install test](../../tests/chatgpt-plugin-install-2026-10-29.md) and [natural-trigger test](../../tests/chatgpt-plugin-auto-trigger-2026-10-29.md). Results concern the tested release and environment.
 
 ## ChatGPT Web / iOS via workspace GitHub import
 
@@ -30,7 +30,7 @@ For account-level deployment across ChatGPT surfaces (not just local desktop), a
 3. Import and review the **single** `oydodo-skills` plugin. Set its **Installation policy** to **Installed** for the intended eligible roles, or let users install this single plugin from the workspace directory.
 4. Open a new ChatGPT conversation and confirm that the eight skills are available. Workspace policy and product eligibility still apply.
 
-The plugin bundles no MCP servers, so it does not opt into the MCP-related **Desktop only** restriction. GitHub workspace marketplaces can sync updates automatically (typically daily). The workspace admin import and web/iOS activation **have not been performed or verified**.
+The plugin bundles no MCP servers, so it does not opt into the MCP-related **Desktop only** restriction. GitHub workspace marketplaces can sync updates automatically (typically daily). The user subsequently confirmed ChatGPT Web import, and a Web conversation demonstrated `grilling` activation. Future sync cadence and iOS support still depend on workspace policy and product availability.
 
 Official docs: [Plugin management — GitHub import](https://learn.chatgpt.com/docs/enterprise/plugin-management).
 
@@ -42,13 +42,7 @@ Claude. Claude uses `.claude-plugin/plugin.json` while ChatGPT uses the existing
 
 ### Claude Web (Pro / Max / Team / Enterprise)
 
-1. Download the `oydodo-skills-claude-zip` artifact from the latest successful
-   [Package Claude Plugin GitHub Action](https://github.com/oydodo/skills/actions/workflows/package-claude-plugin.yml);
-   unzip the **GitHub artifact container** once to obtain `oydodo-skills-claude.zip`.
-   Alternatively, clone the repository and run:
-   ```bash
-   python3 scripts/package_claude_plugin.py
-   ```
+1. Download [`oydodo-skills-claude.zip`](https://github.com/oydodo/skills/releases/latest/download/oydodo-skills-claude.zip) directly from the [latest GitHub Release](https://github.com/oydodo/skills/releases). Alternatively, clone this repository, initialize the selected pinned submodules, install PyYAML and run `python3 scripts/package_claude_plugin.py`.
 2. In claude.ai open **Customize → Plugins → Upload custom plugin**, or the
    new **Plugins** sidebar experience if it has reached your account.
 3. Upload **one** `oydodo-skills-claude.zip`. Claude registers the eight Skills
@@ -57,8 +51,7 @@ Claude. Claude uses `.claude-plugin/plugin.json` while ChatGPT uses the existing
 
 **Important:** personal Claude Pro / Max accounts support ZIP upload, but
 installing a ZIP does **not** establish automatic update from public GitHub.
-GitHub Actions automates **creation of the ZIP only**; uploading a new version
-to the personal Claude account is still an explicit action.
+GitHub Actions automatically builds and publishes a versioned ZIP. Uploading a new version to a personal Claude account is still an explicit action.
 
 ### Claude Code — public GitHub marketplace
 
@@ -87,11 +80,25 @@ Docs: [Use plugins in Claude](https://support.claude.com/en/articles/13837440-us
 [Manage plugins for your organization](https://support.claude.com/en/articles/13837433-manage-plugins-for-your-organization),
 [Claude plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces).
 
-### Source-of-truth caveat
+### Automated single-source publishing
 
-Both platform bundles **share** the vendored Skill tree
-`plugins/oydodo-skills/skills/`. The repository's separate top-level
-`skills/` and registry may contain originals/pins; the mirroring of changes
-from top-level sources into the vendored tree is **not yet automated**.
-Until a sync build is added, update the vendored distribution tree when
-publishing changes, or the two platforms can receive stale content.
+**Do not manually edit `plugins/oydodo-skills/skills/` or `licenses/`.**
+The [publishing workflow](../../.github/workflows/publish-plugins.yml)
+regenerates both platform distributions from the curated registry,
+the two self-maintained Skills, and the six pinned upstream Git submodules.
+
+On a selected source change, the workflow:
+
+1. Rebuilds a single shared Skill tree while retaining supporting resources.
+2. Bumps the plugin patch version in all three manifests when contents change.
+3. Commits generated output to `main` for GitHub Marketplace syncing.
+4. Verifies and publishes directly downloadable Claude and ChatGPT ZIP files.
+
+ChatGPT Web can sync the updated GitHub branch under workspace policy.
+**Claude Web personal ZIP uploads do not auto-update**; each newly published ZIP
+must be uploaded by the user. Claude organization GitHub sync needs a
+private/internal source, not configured in this public repository.
+
+[Release and maintenance guide](../../docs/distribution.md) ·
+[Latest release](https://github.com/oydodo/skills/releases/latest) ·
+[Build history](https://github.com/oydodo/skills/actions/workflows/publish-plugins.yml).

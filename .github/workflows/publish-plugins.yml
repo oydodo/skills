@@ -1,0 +1,102 @@
+name: Build and Publish Skill Plugins
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "registry/skills.yaml"
+      - "skills/**"
+      - "upstream/**"
+      - ".gitmodules"
+      - "plugins/oydodo-skills/**"
+      - "scripts/build_plugins.py"
+      - "scripts/package_plugins.py"
+      - "scripts/package_claude_plugin.py"
+      - ".github/workflows/publish-plugins.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-and-publish-skills-main
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build dependency
+        run: python3 -m pip install PyYAML==6.0.2
+
+      - name: Fetch pinned submodules for selected Skills only
+        shell: bash
+        run: |
+          python3 scripts/build_plugins.py --list-submodules > /tmp/oydodo-modules.txt
+          while IFS= read -r module; do
+            git submodule update --init --depth 1 -- "$module"
+          done < /tmp/oydodo-modules.txt
+
+      - name: Compile and validate build tools
+        run: python3 -m compileall -q scripts/build_plugins.py scripts/package_plugins.py scripts/package_claude_plugin.py
+
+      - name: Build shared Skill tree and update versions
+        run: python3 scripts/build_plugins.py --write
+
+      - name: Check generated files and version consistency
+        run: python3 scripts/build_plugins.py --check
+
+      - name: Produce both ChatGPT and Claude ZIPs
+        run: python3 scripts/package_plugins.py --platform all
+
+      - name: Save and push generated release content
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- plugins/oydodo-skills/skills plugins/oydodo-skills/licenses \
+            plugins/oydodo-skills/SOURCES.md plugins/oydodo-skills/plugin.json \
+            plugins/oydodo-skills/.codex-plugin/plugin.json \
+            plugins/oydodo-skills/.claude-plugin/plugin.json
+          if git diff --cached --quiet; then
+            echo "Generated content already synchronized."
+          else
+            git commit -m "chore: sync published skills and bump plugin version"
+            git push origin HEAD:main
+          fi
+
+      - name: Upload both ZIPs as Action artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: oydodo-skills-both-plugins
+          path: |
+            dist/oydodo-skills-claude.zip
+            dist/oydodo-skills-chatgpt.zip
+          if-no-files-found: error
+
+      - name: Publish versioned direct-download GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          VERSION=$(python3 -c 'import json; print(json.load(open("plugins/oydodo-skills/plugin.json"))["version"])')
+          TAG="v$VERSION"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist/oydodo-skills-claude.zip \
+              dist/oydodo-skills-chatgpt.zip --clobber
+          else
+            gh release create "$TAG" dist/oydodo-skills-claude.zip \
+              dist/oydodo-skills-chatgpt.zip \
+              --target "$(git rev-parse HEAD)" \
+              --title "oydodo Skills $TAG" \
+              --notes "One curated Skill source, two compatible Plugin bundles. For ChatGPT workspace GitHub Marketplace, use main. Claude Web personal accounts upload the Claude ZIP manually."
+          fi

@@ -1,5 +1,6 @@
-# Selected Skills only; submodules are sources, not automatic installations.
-version: 11
+# Selected Skills are the only distribution source of truth.
+# Third-party bodies come from pinned upstream gitlinks; descriptions below curate trigger scope.
+version: 12
 upstreams:
   addyosmani:
     url: https://github.com/addyosmani/agent-skills
@@ -72,3 +73,5 @@ skills:
     category: writing
     skill_path: upstream/technical-language-skill
     capability_layer: writing
+    description_override: >-
+      Polish or rewrite English technical language only (README wording, PR descriptions, error messages and release notes) using clear, controlled terms. Apply to prose not code; for a new README, full developer documentation or structural rewrite use technical-documentation; for Chinese technical reports use technical-writing.

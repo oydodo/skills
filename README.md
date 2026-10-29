@@ -100,3 +100,15 @@ codex plugin add oydodo-skills@oydodo
 ```
 
 首次添加来源后仅需安装一个 Plugin。**2026-10-29 已在 Mac 上验证 CLI 安装成功、8 个文件入口齐备且插件启用**；桌面新会话的自动触发仍待实测，详见[安装验收记录](tests/chatgpt-plugin-install-2026-10-29.md)。重启 ChatGPT 桌面版并在新会话验证。**Mac 本地 CLI 安装已验证**；如果需要 ChatGPT Web/iOS，可由工作区管理员通过 [Admin → Plugins → Import marketplace](https://learn.chatgpt.com/docs/enterprise/plugin-management) 导入同一 GitHub 仓库，并对相关角色设置 Installed。该账户级操作尚未执行，不能认为已同步。第三方固定版本、有限触发描述适配和许可见 [来源与改动](plugins/oydodo-skills/SOURCES.md)。
+
+## 统一自动构建与发布（ChatGPT + Claude）
+
+**唯一维护入口**：自研 Skill 修改 `skills/`；第三方升级调整 `upstream/` 的 Git submodule 固定提交；精选清单与触发描述修改 `registry/skills.yaml`。**不要直接编辑生成目录** `plugins/oydodo-skills/skills/`。
+
+推送到 `main` 后，[发布流水线](.github/workflows/publish-plugins.yml)自动重新生成统一 Skill 树、保存第三方许可证、校验两个 Plugin、递增版本并提交到 GitHub Marketplace 目录，同时发布 [ChatGPT / Claude 双 ZIP](https://github.com/oydodo/skills/releases/latest)。
+
+- **ChatGPT Web**：已导入的 GitHub Marketplace 可同步 `main` 的新版本，受平台同步和审批策略影响。
+- **Claude Web 个人账户**：ZIP 自动生成，但仍需要手动上传新版；上传并未自动化。
+- **Claude 团队工作区**：若需 GitHub 自动同步，应另配符合要求的私有 Marketplace 镜像；当前未配置。
+
+操作说明见 [分发与发布指南](docs/distribution.md)。
