@@ -1,11 +1,11 @@
 # 精选与剪枝
 
-**精选 9 个 Skill**：新增 L0 `philosophical-foundation`（哲学基础）；`independent-judgment`（判断纪律）与 `crux-first-reasoning`（关键推理）仍各自独立，其余 6 项为场景能力。任何 Skill 都不假设 Always-on。
+**精选 10 个 Skill**：L0 `philosophical-foundation`、判断核心 `independent-judgment` / `crux-first-reasoning` 保持独立；新增基于 Matt Pocock 方法改编的 `wayfinder`（跨会话决策导航），另有 6 项场景能力。任何 Skill 都不假设 Always-on。
 
 | 状态 | 数量 | 说明 |
 | --- | ---: | --- |
-| 精选 Skill | 9 | 哲学基础 1 / 判断 1 / 认知 3 / 编码 1 / 表达 3；其中 3 项由本仓库维护 |
-| Matt 未选中 | 30 | **仅保留 `grilling`**；未选中不等于删除 |
+| 精选 Skill | 10 | 哲学 1 / 判断 1 / 认知 3 / 决策导航 1 / 编码 1 / 表达 3；其中 4 项由本仓库维护 |
+| Matt 未选中 | 29 | 原样接入 `grilling`，`wayfinder` 的方法经适配后由本仓库维护；未选中不等于删除 |
 | DSH 项目专用 | 19 | 不进入通用工作集 |
 | 其他未选中 | 11 | 暂不加入，按真实需求再评估 |
 | 自研暂停 | 2 | `codex-appserver-doctor`、`remote-html-preview` 暂不处理 |
@@ -19,6 +19,6 @@
 
 三者仍保留在上游 submodule 和候选清单，可按实际需求重新选用。
 
-**停用原则**：先验证 9 个精选 Skill 的调用效果，再可逆地缩减本机发现范围。此处仅修改仓库目标配置；本机原有 80 个目录未改变。
+**停用原则**：先验证 10 个精选 Skill 的调用效果，再可逆地缩减本机发现范围。此处仅修改仓库目标配置；本机原有 80 个目录未改变。
 
 [精选清单](skills.yaml) · [80 项分类](curation.yaml) · [路由测试](../tests/core-routing.md)

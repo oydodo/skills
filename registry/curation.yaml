@@ -1,7 +1,7 @@
-# Non-destructive curation: 80 local skills; 6 selected locally, 3 maintained in repository.
-version: 7
+# Non-destructive curation: 80 local skills; 6 selected locally, 4 maintained in repository.
+version: 8
 installed_snapshot: 80
-selected_count: 9
+selected_count: 10
 selected_local_count: 6
 selected:
   philosophy:
@@ -12,6 +12,8 @@ selected:
     - interview-me
     - crux-first-reasoning
     - grilling
+  navigation:
+    - wayfinder
   coding:
     - ponytail
   writing:
@@ -28,7 +30,6 @@ not_selected:
     - research
     - to-questionnaire
     - wait-what
-    - wayfinder
     - retro
     - to-spec
     - to-tickets
@@ -99,6 +100,7 @@ not_selected:
     - codas-review
     - codas-trim-cot
 notes:
+  - wayfinder_adapted_from_matt_and_maintained_locally
   - github_selection_only
   - local_installs_unchanged
   - retained_git_submodules

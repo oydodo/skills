@@ -21,19 +21,21 @@
 
 ```mermaid
 flowchart TB
-    ROOT["精选工作集 · 9 个 Skill"]
+    ROOT["精选工作集 · 10 个 Skill"]
 
     ROOT --> L0["L0 · 哲学基础"]
     ROOT --> L0J["L1 · 判断准则"]
     ROOT --> L1["L2 · 理解与分析"]
-    ROOT --> L2C["L3a · 编码简化"]
-    ROOT --> L2W["L3b · 技术表达"]
+    ROOT --> NAV["L3 · 长期决策导航"]
+    ROOT --> L2C["L4a · 编码简化"]
+    ROOT --> L2W["L4b · 技术表达"]
 
     L0 --> PF["philosophical-foundation"]
     L0J --> IJ["independent-judgment"]
     L1 --> CR["crux-first-reasoning"]
     L1 --> IM["interview-me"]
     L1 --> GR["grilling"]
+    NAV --> WF["wayfinder"]
     L2C --> PT["ponytail"]
     L2W --> TW["technical-writing"]
     L2W --> TD["technical-documentation"]
@@ -55,38 +57,39 @@ flowchart TB
 
 例如，用户说“接口变慢了，把数据库全部换掉”。前者提醒 Agent：**用户提出的解决办法尚未被证实**；后者只有在需要进一步诊断和权衡时，才分析哪项证据最能决定是否应更换数据库。两者可配合，也可以独立使用。
 
-### 六个场景 Skill 为什么保留
+### 七个专项 Skill 为什么保留
 
 | Skill | 解决的问题 | 何时调用 |
 | --- | --- | --- |
 | `interview-me` | 关键需求不明确，贸然执行容易理解错目标 | 缺失信息确实影响下一步时 |
 | `grilling` | 需要系统性挑战已有观点或方案 | 用户明确要求压力测试时 |
+| `wayfinder` | 多会话目标路径未知，静态任务清单无法承载逐步涌现的决策 | 建立或推进决策地图、前沿与迷雾时 |
 | `ponytail` | 工程实现容易引入不必要的复杂性 | 编码时追求最小但完整的实现 |
 | `technical-writing` | 中文技术文稿有结论却缺少背景、证据和设计依据 | 写技术方案、架构说明、评审材料时 |
 | `technical-documentation` | 开发文档难以帮助读者理解或完成任务 | README、API 文档、教程等开发者文档 |
 | `technical-language` | 英文技术表达不准确、不自然或不一致 | 技术英语编辑与改写时 |
 
-这六项提供专项方法，不改变通用判断准则。例如写一篇已有明确事实依据的 README，可以直接使用文档写作能力，不必先启动访谈或复杂推理。
+这七项提供专项方法，不改变通用判断准则。例如写一篇已有明确事实依据的 README，可以直接使用文档写作能力，不必先启动访谈或复杂推理。
 
 ## 怎么筛选，而不是继续堆积
 
 一个 Skill 进入精选清单，应当满足三个条件：有**独特且重复出现**的用途，触发边界明确，以及相较于不加载该 Skill 有可以检验的价值。我们不按上游仓库整体引入，也不因为一个流程看起来专业就默认启用。
 
-因此，`domain-modeling`、`diagnosing-bugs`、`code-review` 等专项 Skill 暂未入选，并非我们不需要建模、调试或代码审查，而是这些任务不一定需要另加通用 Skill 才能完成。它们仍留在候选清单中，可以根据实际效果再评估。Matt Pocock 的 31 项中，目前也只精选 `grilling` 一项。
+因此，`domain-modeling`、`diagnosing-bugs`、`code-review` 等专项 Skill 暂未入选，并非我们不需要建模、调试或代码审查，而是这些任务不一定需要另加通用 Skill 才能完成。它们仍留在候选清单中，可以根据实际效果再评估。Matt Pocock 的 `grilling` 原样精选，`wayfinder` 则只保留其决策导航方法并进行 Web 跨平台适配；没有引入其整套 Issue Tracker 或子 Agent 编排。
 
 ## 预期获得什么，以及目前做到哪里
 
 这套组织方式希望产生三个效果：减少不必要的 Skill 触发和流程负担；让用户提出错误前提时，Agent 能保持独立判断；让复杂分析优先关注真正影响选择的因素，同时保持交付物对读者友好。
 
-**这些是设计目标，不是已经验证的性能结论。** 目前精选 **9 个候选 Skill**：本机快照中已有 6 个，另外 3 个自研 Skill 位于本仓库。原有 **80 个本机目录尚未停用或删除**；Skill 的版本管理也不意味着它已在各客户端自动安装或每次被调用。后续应通过同任务的 A/B 行为测试，检验触发准确性、结果质量及额外开销。
+**这些是设计目标，不是已经验证的性能结论。** 目前精选 **10 个候选 Skill**：本机快照中已有 6 个，另外 4 个由本仓库维护（其中 Wayfinder 是上游方法适配版）。原有 **80 个本机目录尚未停用或删除**；Skill 的版本管理也不意味着它已在各客户端自动安装或每次被调用。后续应通过同任务的 A/B 行为测试，检验触发准确性、结果质量及额外开销。
 
 ## 仓库中的文件分别做什么
 
 | 位置 | 作用 |
 | --- | --- |
-| [`skills/`](skills/) | 维护三个自研 Skill（哲学基础及两个判断核心）的正文、参考资料与测试 |
+| [`skills/`](skills/) | 维护四个 Skill（哲学基础、两个判断核心及 Wayfinder 适配版）的正文、参考资料与测试 |
 | [`upstream/`](upstream/) | 通过 Git submodule 固定第三方来源；**来源库不等于全量启用** |
-| [`registry/skills.yaml`](registry/skills.yaml) | 当前 9 个精选候选 Skill 及其来源路径 |
+| [`registry/skills.yaml`](registry/skills.yaml) | 当前 10 个精选候选 Skill 及其来源路径 |
 | [`registry/curation.yaml`](registry/curation.yaml) | 全部盘点对象的精选、未选中、项目专用等状态 |
 | [`profiles/core.yaml`](profiles/core.yaml) | 目标角色与触发条件；**不是客户端自动生效的配置** |
 | [`registry/pruning.md`](registry/pruning.md) | 取舍依据、未选中项和可逆剪枝原则 |
@@ -94,9 +97,9 @@ flowchart TB
 
 本仓库先回答 **“为什么选择这些 Skill，以及它们应该在什么任务上发挥作用”**。实际安装、启用与本机剪枝是下一步独立的工作，不应与精选结论混为一谈。
 
-## 一次安装 9 个 Skill：ChatGPT Plugin
+## 一次安装 10 个 Skill：ChatGPT Plugin
 
-ChatGPT 的单个 Skill 上传入口不能直接识别包含多个 Skill 的仓库；为保留独立触发并免去 9 次手工上传，本仓库提供 [oydodo Skills Plugin](plugins/oydodo-skills/README.md)：一个 Plugin 内打包 **9 个独立的 Skill**，通过 [GitHub Marketplace](.agents/plugins/marketplace.json) 分发，不合并成“万能 Skill”。
+ChatGPT 的单个 Skill 上传入口不能直接识别包含多个 Skill 的仓库；为保留独立触发并免去 10 次手工上传，本仓库提供 [oydodo Skills Plugin](plugins/oydodo-skills/README.md)：一个 Plugin 内打包 **10 个独立的 Skill**，通过 [GitHub Marketplace](.agents/plugins/marketplace.json) 分发，不合并成“万能 Skill”。
 
 在支持 Plugin Marketplace 的 ChatGPT 桌面版 / Codex 环境运行：
 
@@ -105,7 +108,7 @@ codex plugin marketplace add oydodo/skills
 codex plugin add oydodo-skills@oydodo
 ```
 
-首次添加来源后仅需安装一个 Plugin。**2026-10-29 已在 Mac 上验证 CLI 安装成功、8 个文件入口齐备且插件启用**；桌面新会话的自动触发仍待实测，详见[安装验收记录](tests/chatgpt-plugin-install-2026-10-29.md)。重启 ChatGPT 桌面版并在新会话验证。**Mac 本地 CLI 安装已验证**；如果需要 ChatGPT Web/iOS，可由工作区管理员通过 [Admin → Plugins → Import marketplace](https://learn.chatgpt.com/docs/enterprise/plugin-management) 导入同一 GitHub 仓库，并对相关角色设置 Installed。该账户级操作尚未执行，不能认为已同步。第三方固定版本、有限触发描述适配和许可见 [来源与改动](plugins/oydodo-skills/SOURCES.md)。
+首次添加来源后仅需安装一个 Plugin。**2026-10-29 已在 Mac 上验证旧版 8 Skill 插件的 CLI 安装**；桌面新会话的自动触发仍待实测，详见[安装验收记录](tests/chatgpt-plugin-install-2026-10-29.md)。重启 ChatGPT 桌面版并在新会话验证。**Mac 本地 CLI 安装已验证**；如果需要 ChatGPT Web/iOS，可由工作区管理员通过 [Admin → Plugins → Import marketplace](https://learn.chatgpt.com/docs/enterprise/plugin-management) 导入同一 GitHub 仓库，并对相关角色设置 Installed。该账户级操作尚未执行，不能认为已同步。第三方固定版本、有限触发描述适配和许可见 [来源与改动](plugins/oydodo-skills/SOURCES.md)。
 
 ## 统一自动构建与发布（ChatGPT + Claude）
 

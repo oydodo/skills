@@ -1,5 +1,5 @@
 # Selected Skills only; submodules are sources, not automatic installations.
-version: 13
+version: 14
 upstreams:
   addyosmani:
     url: https://github.com/addyosmani/agent-skills
@@ -61,6 +61,11 @@ skills:
     capability_layer: cognition
     description_override: >-
       Grill the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases.
+  - name: wayfinder
+    source: maintained
+    category: planning
+    skill_path: skills/wayfinder
+    capability_layer: navigation
   - name: ponytail
     source: ponytail
     category: development

@@ -1,5 +1,5 @@
 # Desired workset only, not automatic runtime activation.
-version: 7
+version: 8
 philosophy_skills:
   - name: philosophical-foundation
     role: top_level_philosophical_lens
@@ -23,6 +23,11 @@ cognition_skills:
     role: stress_test
     path: upstream/mattpocock-skills/skills/productivity/grilling
     trigger: explicit_stress_test
+navigation_skills:
+  - name: wayfinder
+    role: long_horizon_decision_navigation
+    path: skills/wayfinder
+    trigger: uncertain_multisession_destination
 coding_skills:
   - name: ponytail
     role: coding_simplicity
@@ -48,5 +53,7 @@ routing:
   interview_only_when_essential: true
   grilling_only_when_requested: true
   writing_select_one_primary: true
+  wayfinder_only_for_uncertain_multisession_goals: true
+  wayfinder_do_not_claim_persistence_without_storage_receipt: true
   skip_unneeded_layers: true
   project_specific_skills: not_global
