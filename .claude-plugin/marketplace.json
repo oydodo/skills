@@ -1,0 +1,14 @@
+{
+  "name": "oydodo",
+  "owner": {
+    "name": "oydodo"
+  },
+  "description": "Curated personal skills with a shared ChatGPT and Claude source.",
+  "plugins": [
+    {
+      "name": "oydodo-skills",
+      "source": "./plugins/oydodo-skills",
+      "description": "Eight independent skills for reasoning, engineering and technical communication."
+    }
+  ]
+}

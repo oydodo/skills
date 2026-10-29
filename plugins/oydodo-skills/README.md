@@ -33,3 +33,65 @@ For account-level deployment across ChatGPT surfaces (not just local desktop), a
 The plugin bundles no MCP servers, so it does not opt into the MCP-related **Desktop only** restriction. GitHub workspace marketplaces can sync updates automatically (typically daily). The workspace admin import and web/iOS activation **have not been performed or verified**.
 
 Official docs: [Plugin management — GitHub import](https://learn.chatgpt.com/docs/enterprise/plugin-management).
+
+## Claude Web and Claude Code — one-plugin distribution
+
+The **same eight independent `skills/<name>/SKILL.md` files** are compatible with
+Claude. Claude uses `.claude-plugin/plugin.json` while ChatGPT uses the existing
+`plugin.json` / `.codex-plugin/plugin.json`; no forked Skill content is needed.
+
+### Claude Web (Pro / Max / Team / Enterprise)
+
+1. Download the `oydodo-skills-claude-zip` artifact from the latest successful
+   [Package Claude Plugin GitHub Action](https://github.com/oydodo/skills/actions/workflows/package-claude-plugin.yml);
+   unzip the **GitHub artifact container** once to obtain `oydodo-skills-claude.zip`.
+   Alternatively, clone the repository and run:
+   ```bash
+   python3 scripts/package_claude_plugin.py
+   ```
+2. In claude.ai open **Customize → Plugins → Upload custom plugin**, or the
+   new **Plugins** sidebar experience if it has reached your account.
+3. Upload **one** `oydodo-skills-claude.zip`. Claude registers the eight Skills
+   as a single plugin; you may want to disable old standalone installations
+   with duplicate names. Verify them using `/` or the chat `+` menu.
+
+**Important:** personal Claude Pro / Max accounts support ZIP upload, but
+installing a ZIP does **not** establish automatic update from public GitHub.
+GitHub Actions automates **creation of the ZIP only**; uploading a new version
+to the personal Claude account is still an explicit action.
+
+### Claude Code — public GitHub marketplace
+
+```bash
+claude plugin marketplace add oydodo/skills
+claude plugin install oydodo-skills@oydodo
+```
+
+This uses `../../.claude-plugin/marketplace.json` and is **not** a way to
+import a GitHub marketplace directly into personal Claude Web.
+
+### Claude Team / Enterprise workspace automatic updates
+
+An administrator can synchronize a marketplace from **a private/internal**
+GitHub (or GitLab) mirror and distribute this same Claude-compatible Plugin
+to its members. Anthropic does **not** accept a **public** GitHub repository
+as the direct source of its organization-synced marketplace. This public
+`oydodo/skills` repository must therefore be mirrored to a private source
+for organization GitHub sync. Manual ZIP upload is an alternative.
+
+For GitHub-synced workspaces, automatic sync uses the documented webhook and
+plugin version-update conditions (not every ordinary push); admins may also
+use **Re-sync**. Keep the two platform manifests' version values aligned.
+
+Docs: [Use plugins in Claude](https://support.claude.com/en/articles/13837440-use-plugins-in-claude),
+[Manage plugins for your organization](https://support.claude.com/en/articles/13837433-manage-plugins-for-your-organization),
+[Claude plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces).
+
+### Source-of-truth caveat
+
+Both platform bundles **share** the vendored Skill tree
+`plugins/oydodo-skills/skills/`. The repository's separate top-level
+`skills/` and registry may contain originals/pins; the mirroring of changes
+from top-level sources into the vendored tree is **not yet automated**.
+Until a sync build is added, update the vendored distribution tree when
+publishing changes, or the two platforms can receive stale content.
