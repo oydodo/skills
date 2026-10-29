@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "oydodo-skills",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Eight curated skills for evidence-based judgment, decisive analysis, interviewing, stress-testing, coding simplicity, and technical writing.",
   "author": {
     "name": "oydodo",
