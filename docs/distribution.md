@@ -31,7 +31,15 @@ Artifacts: `dist/oydodo-skills-claude.zip` and `dist/oydodo-skills-chatgpt.zip`.
 | ChatGPT Web workspace | GitHub Marketplace watching `main` | Via workspace GitHub sync, subject to policy |
 | ChatGPT desktop CLI | GitHub Marketplace | Plugin marketplace upgrade procedure |
 | Claude Code | GitHub marketplace | Plugin marketplace update procedure |
-| Claude Web personal | Single Claude ZIP from [latest release](https://github.com/oydodo/skills/releases/latest) | **No**; re-upload the new ZIP manually |
+| Claude Web personal | GitHub marketplace `oydodo/skills` (preferred); [Claude ZIP](https://github.com/oydodo/skills/releases/latest) as fallback | Repository-backed marketplace supports sync; automatic refresh cadence **not yet verified**. ZIP uploads remain manual. |
 | Claude organization | Eligible private/internal repository marketplace | Possible after separate mirror/admin setup; **not configured** |
 
 Do not equate successful ZIP building with actual auto-invocation accuracy. Maintain separate behavioral tests.
+
+## Claude Web personal: recommended GitHub installation
+
+1. In Claude Web, open **Customize → Plugins → Add → Add marketplace → Add from a repository** (labels can vary by rollout).
+2. Enter `oydodo/skills` or `https://github.com/oydodo/skills`, add the marketplace, then add the **single** `oydodo-skills` plugin.
+3. Start a fresh chat and verify the eight independent skills with the `/` menu or chat `+` menu. Avoid keeping duplicate standalone skill names active.
+
+Anthropic [documents personal Git marketplace installation](https://support.claude.com/en/articles/13837440-use-plugins-in-claude). This is preferable to repeatedly uploading ZIP files, but **do not claim every push automatically reaches an installed personal plugin** until the sync cadence has been observed on the actual account. If the marketplace UI is unavailable, upload `oydodo-skills-claude.zip` from the [latest release](https://github.com/oydodo/skills/releases/latest) and manually replace it for updates.
