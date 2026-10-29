@@ -1,5 +1,5 @@
 # Desired workset only, not automatic runtime activation.
-version: 8
+version: 9
 philosophy_skills:
   - name: philosophical-foundation
     role: top_level_philosophical_lens
@@ -23,11 +23,24 @@ cognition_skills:
     role: stress_test
     path: upstream/mattpocock-skills/skills/productivity/grilling
     trigger: explicit_stress_test
+  - name: domain-modeling
+    role: refine_domain_concepts_and_decisions
+    path: upstream/mattpocock-skills/skills/engineering/domain-modeling
+    trigger: active_domain_model_design
 navigation_skills:
   - name: wayfinder
     role: long_horizon_decision_navigation
-    path: skills/wayfinder
+    path: upstream/mattpocock-skills/skills/engineering/wayfinder
     trigger: uncertain_multisession_destination
+investigation_skills:
+  - name: research
+    role: primary_source_research
+    path: upstream/mattpocock-skills/skills/engineering/research
+    trigger: delegated_research_with_written_result
+  - name: prototype
+    role: throwaway_design_probe
+    path: upstream/mattpocock-skills/skills/engineering/prototype
+    trigger: prototype_to_decide
 coding_skills:
   - name: ponytail
     role: coding_simplicity
@@ -51,7 +64,7 @@ routing:
   philosophy_does_not_override_evidence_or_safety: true
   crux_for_consequential_analysis: true
   interview_only_when_essential: true
-  grilling_only_when_requested: true
+  grilling_when_requested_or_by_wayfinder: true
   writing_select_one_primary: true
   wayfinder_only_for_uncertain_multisession_goals: true
   wayfinder_do_not_claim_persistence_without_storage_receipt: true

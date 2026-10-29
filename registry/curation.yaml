@@ -1,8 +1,8 @@
-# Non-destructive curation: 80 local skills; 6 selected locally, 4 maintained in repository.
-version: 8
+# Non-destructive curation: 80 local skills; 10 selected locally, 3 maintained in repository.
+version: 9
 installed_snapshot: 80
-selected_count: 10
-selected_local_count: 6
+selected_count: 13
+selected_local_count: 10
 selected:
   philosophy:
     - philosophical-foundation
@@ -12,8 +12,12 @@ selected:
     - interview-me
     - crux-first-reasoning
     - grilling
+    - domain-modeling
   navigation:
     - wayfinder
+  investigation:
+    - research
+    - prototype
   coding:
     - ponytail
   writing:
@@ -22,12 +26,10 @@ selected:
     - technical-language
 not_selected:
   matt:
-    - domain-modeling
     - diagnosing-bugs
     - code-review
     - grill-me
     - grill-with-docs
-    - research
     - to-questionnaire
     - wait-what
     - retro
@@ -41,7 +43,6 @@ not_selected:
     - implement-spec
     - migrate-to-shoehorn
     - pr
-    - prototype
     - setup-pre-commit
     - tdd
     - ask-matt
@@ -100,7 +101,7 @@ not_selected:
     - codas-review
     - codas-trim-cot
 notes:
-  - wayfinder_adapted_from_matt_and_maintained_locally
+  - wayfinder_and_dependencies_fetched_unmodified_from_pinned_matt_submodule
   - github_selection_only
   - local_installs_unchanged
   - retained_git_submodules

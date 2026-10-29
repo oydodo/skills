@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "oydodo-skills",
   "version": "0.1.4",
-  "description": "Ten curated skills for philosophy, independent judgment, uncertain long-term decision navigation, research-oriented reasoning, practical coding, and technical writing.",
+  "description": "Thirteen curated skills for philosophical judgment, long-term decision navigation, domain modeling, evidence research, prototyping, lean coding and technical writing.",
   "author": {
     "name": "oydodo",
     "url": "https://github.com/oydodo"
@@ -20,7 +20,7 @@
       "interface": {
         "displayName": "oydodo Skills",
         "shortDescription": "Reasoning, coding and writing",
-        "longDescription": "Philosophical foundation; independent judgment; crux-first reasoning; Wayfinder decision maps for uncertain multi-session goals; requirements clarification; plan stress-testing; minimal coding; Chinese technical writing; developer documentation; and English technical editing.",
+        "longDescription": "Philosophical foundation; independent judgment; crux-first reasoning; Wayfinder decision maps; grilling; domain modeling; evidence research; lightweight prototyping; requirements interviews; coding simplicity; and three technical writing skills.",
         "developerName": "oydodo",
         "category": "Productivity",
         "defaultPrompt": [

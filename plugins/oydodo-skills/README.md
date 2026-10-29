@@ -1,6 +1,6 @@
 # oydodo Skills Plugin
 
-**One Plugin, ten distinct Skills.** Individual `skills/<name>/SKILL.md` entrypoints remain intact. This is not a merged umbrella Skill or a mandatory ten-step workflow.
+**One Plugin, thirteen distinct Skills.** Individual `skills/<name>/SKILL.md` entrypoints remain intact. This is not a merged umbrella Skill or a mandatory thirteen-step workflow.
 
 This is a **skills-only** Agent Plugin using root `plugin.json` and a backward-compatible `.codex-plugin/plugin.json`. All required Skill contents and references are vendored: Git submodules are NOT required by consumers. The plugin has no connected MCP server, secrets, or automatically registered hooks.
 
@@ -28,7 +28,7 @@ For account-level deployment across ChatGPT surfaces (not just local desktop), a
 1. Open **Admin → Plugins → Add → Import marketplace**.
 2. Set **Source** to `https://github.com/oydodo/skills`; leave **Path** blank because `.agents/plugins/marketplace.json` is at the repository root. Use branch `main` for updates.
 3. Import and review the **single** `oydodo-skills` plugin. Set its **Installation policy** to **Installed** for the intended eligible roles, or let users install this single plugin from the workspace directory.
-4. Open a new ChatGPT conversation and confirm that the ten Skills are available. Workspace policy and product eligibility still apply.
+4. Open a new ChatGPT conversation and confirm that the thirteen Skills are available. Workspace policy and product eligibility still apply.
 
 The plugin bundles no MCP servers, so it does not opt into the MCP-related **Desktop only** restriction. GitHub workspace marketplaces can sync updates automatically (typically daily). The user subsequently confirmed ChatGPT Web import, and a Web conversation demonstrated `grilling` activation. Future sync cadence and iOS support still depend on workspace policy and product availability.
 
@@ -36,17 +36,17 @@ Official docs: [Plugin management — GitHub import](https://learn.chatgpt.com/d
 
 ## Claude Web and Claude Code — one-plugin distribution
 
-The **same ten independent `skills/<name>/SKILL.md` files** are compatible with
+The **same thirteen independent `skills/<name>/SKILL.md` files** are compatible with
 Claude. Claude uses `.claude-plugin/plugin.json` while ChatGPT uses the existing
 `plugin.json` / `.codex-plugin/plugin.json`; no forked Skill content is needed.
 
 ### Claude Web (Pro / Max / Team / Enterprise)
 
-**Recommended: import the repository marketplace once, not ten individual Skills or repeated ZIPs.**
+**Recommended: import the repository marketplace once, not thirteen individual Skills or repeated ZIPs.**
 
 1. In Claude Web, open **Customize → Plugins → Add → Add marketplace → Add from a repository** (UI labels may differ by rollout).
 2. Enter `oydodo/skills` or `https://github.com/oydodo/skills`; add the marketplace, then add the single `oydodo-skills` plugin.
-3. Open a new Claude chat. Use `/` or the chat `+` menu to inspect the ten Skills. Avoid having duplicate old standalone skills enabled.
+3. Open a new Claude chat. Use `/` or the chat `+` menu to inspect the thirteen Skills. Avoid having duplicate old standalone skills enabled.
 
 The [Claude personal marketplace guide](https://support.claude.com/en/articles/13837440-use-plugins-in-claude) explicitly supports Git repositories on github.com. The repository-backed path simplifies updates, but **the cadence and automatic refresh of personal-marketplace installs have not been verified on this account**. Do not describe every push as an automatic install/update.
 
@@ -83,7 +83,7 @@ Docs: [Use plugins in Claude](https://support.claude.com/en/articles/13837440-us
 **Do not manually edit `plugins/oydodo-skills/skills/` or `licenses/`.**
 The [publishing workflow](../../.github/workflows/publish-plugins.yml)
 regenerates both platform distributions from the curated registry,
-the four self-maintained Skills, and the six pinned upstream Git submodules.
+the three self-maintained Skills, and ten third-party Skills sourced from six pinned Git submodules.
 
 On a selected source change, the workflow:
 

@@ -1,5 +1,5 @@
 # Selected Skills only; submodules are sources, not automatic installations.
-version: 14
+version: 15
 upstreams:
   addyosmani:
     url: https://github.com/addyosmani/agent-skills
@@ -62,10 +62,25 @@ skills:
     description_override: >-
       Grill the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases.
   - name: wayfinder
-    source: maintained
+    source: mattpocock
     category: planning
-    skill_path: skills/wayfinder
+    skill_path: upstream/mattpocock-skills/skills/engineering/wayfinder
     capability_layer: navigation
+  - name: domain-modeling
+    source: mattpocock
+    category: reasoning
+    skill_path: upstream/mattpocock-skills/skills/engineering/domain-modeling
+    capability_layer: cognition
+  - name: research
+    source: mattpocock
+    category: research
+    skill_path: upstream/mattpocock-skills/skills/engineering/research
+    capability_layer: investigation
+  - name: prototype
+    source: mattpocock
+    category: development
+    skill_path: upstream/mattpocock-skills/skills/engineering/prototype
+    capability_layer: investigation
   - name: ponytail
     source: ponytail
     category: development
