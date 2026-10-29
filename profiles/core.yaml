@@ -1,5 +1,10 @@
 # Desired workset only, not automatic runtime activation.
-version: 6
+version: 7
+philosophy_skills:
+  - name: philosophical-foundation
+    role: top_level_philosophical_lens
+    path: skills/philosophical-foundation
+    trigger: consequential_dynamic_system_judgment
 foundation_skills:
   - name: independent-judgment
     role: evidence_discipline
@@ -37,6 +42,8 @@ writing_skills:
     path: upstream/technical-language-skill
     trigger: english_technical_rewrite
 routing:
+  philosophy_only_for_substantive_system_judgments: true
+  philosophy_does_not_override_evidence_or_safety: true
   crux_for_consequential_analysis: true
   interview_only_when_essential: true
   grilling_only_when_requested: true

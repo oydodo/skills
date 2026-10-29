@@ -1,0 +1,4 @@
+interface:
+  display_name: "Philosophical Foundation"
+  short_description: "Systems thinking, feedback, and trade-offs"
+  default_prompt: "用哲学基础框架分析这个复杂决策的主次关系、反作用、变化条件与停止标准。"

@@ -1,6 +1,6 @@
 # oydodo Skills Plugin
 
-**One Plugin, eight distinct Skills.** Individual `skills/<name>/SKILL.md` entrypoints remain intact. This is not a merged umbrella Skill or a mandatory eight-step workflow.
+**One Plugin, nine distinct Skills.** Individual `skills/<name>/SKILL.md` entrypoints remain intact. This is not a merged umbrella Skill or a mandatory nine-step workflow.
 
 This is a **skills-only** Agent Plugin using root `plugin.json` and a backward-compatible `.codex-plugin/plugin.json`. All required Skill contents and references are vendored: Git submodules are NOT required by consumers. The plugin has no connected MCP server, secrets, or automatically registered hooks.
 
@@ -28,7 +28,7 @@ For account-level deployment across ChatGPT surfaces (not just local desktop), a
 1. Open **Admin → Plugins → Add → Import marketplace**.
 2. Set **Source** to `https://github.com/oydodo/skills`; leave **Path** blank because `.agents/plugins/marketplace.json` is at the repository root. Use branch `main` for updates.
 3. Import and review the **single** `oydodo-skills` plugin. Set its **Installation policy** to **Installed** for the intended eligible roles, or let users install this single plugin from the workspace directory.
-4. Open a new ChatGPT conversation and confirm that the eight skills are available. Workspace policy and product eligibility still apply.
+4. Open a new ChatGPT conversation and confirm that the nine Skills are available. Workspace policy and product eligibility still apply.
 
 The plugin bundles no MCP servers, so it does not opt into the MCP-related **Desktop only** restriction. GitHub workspace marketplaces can sync updates automatically (typically daily). The user subsequently confirmed ChatGPT Web import, and a Web conversation demonstrated `grilling` activation. Future sync cadence and iOS support still depend on workspace policy and product availability.
 
@@ -46,7 +46,7 @@ Claude. Claude uses `.claude-plugin/plugin.json` while ChatGPT uses the existing
 
 1. In Claude Web, open **Customize → Plugins → Add → Add marketplace → Add from a repository** (UI labels may differ by rollout).
 2. Enter `oydodo/skills` or `https://github.com/oydodo/skills`; add the marketplace, then add the single `oydodo-skills` plugin.
-3. Open a new Claude chat. Use `/` or the chat `+` menu to inspect the eight skills. Avoid having duplicate old standalone skills enabled.
+3. Open a new Claude chat. Use `/` or the chat `+` menu to inspect the nine Skills. Avoid having duplicate old standalone skills enabled.
 
 The [Claude personal marketplace guide](https://support.claude.com/en/articles/13837440-use-plugins-in-claude) explicitly supports Git repositories on github.com. The repository-backed path simplifies updates, but **the cadence and automatic refresh of personal-marketplace installs have not been verified on this account**. Do not describe every push as an automatic install/update.
 
@@ -83,7 +83,7 @@ Docs: [Use plugins in Claude](https://support.claude.com/en/articles/13837440-us
 **Do not manually edit `plugins/oydodo-skills/skills/` or `licenses/`.**
 The [publishing workflow](../../.github/workflows/publish-plugins.yml)
 regenerates both platform distributions from the curated registry,
-the two self-maintained Skills, and the six pinned upstream Git submodules.
+the three self-maintained Skills, and the six pinned upstream Git submodules.
 
 On a selected source change, the workflow:
 

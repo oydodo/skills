@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "oydodo-skills",
   "version": "0.1.2",
-  "description": "Eight curated skills for evidence-based judgment, decisive analysis, interviewing, stress-testing, coding simplicity, and technical writing.",
+  "description": "Nine curated skills spanning philosophical systems judgment, evidence-based reasoning, interviews, plan critique, coding simplicity, and technical writing.",
   "author": {
     "name": "oydodo",
     "url": "https://github.com/oydodo"
@@ -19,8 +19,8 @@
     "com.openai": {
       "interface": {
         "displayName": "oydodo Skills",
-        "shortDescription": "Eight independent skills for reasoning, coding and writing.",
-        "longDescription": "Independent judgment, crux-first reasoning, requirement interviews, plan stress testing, minimal coding, Chinese technical writing, developer documentation and English technical editing.",
+        "shortDescription": "Reasoning, coding and writing",
+        "longDescription": "Philosophical foundation and systems thinking; independent judgment; decisive reasoning; requirement interviews; plan stress testing; minimal coding; Chinese technical writing; developer documentation; and English technical editing.",
         "developerName": "oydodo",
         "category": "Productivity",
         "defaultPrompt": [

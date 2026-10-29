@@ -1,5 +1,5 @@
 # Selected Skills only; submodules are sources, not automatic installations.
-version: 12
+version: 13
 upstreams:
   addyosmani:
     url: https://github.com/addyosmani/agent-skills
@@ -32,6 +32,11 @@ upstreams:
     module_path: upstream/technical-language-skill
     branch: main
 skills:
+  - name: philosophical-foundation
+    source: maintained
+    category: reasoning
+    skill_path: skills/philosophical-foundation
+    capability_layer: philosophy
   - name: independent-judgment
     source: maintained
     category: reasoning

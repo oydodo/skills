@@ -1,6 +1,6 @@
 # Unified ChatGPT / Claude plugin distribution
 
-`registry/skills.yaml` is the source of truth for the selected Skill set and curated trigger descriptions. The two maintained Skill bodies live in `skills/`; six third-party bodies and their resources come from pinned Git submodules under `upstream/`. Do not edit the generated `plugins/oydodo-skills/skills/` tree.
+`registry/skills.yaml` is the source of truth for the selected Skill set and curated trigger descriptions. The three maintained Skill bodies live in `skills/`; six third-party bodies and their resources come from pinned Git submodules under `upstream/`. Do not edit the generated `plugins/oydodo-skills/skills/` tree.
 
 ## Updating
 

@@ -1,9 +1,11 @@
-# Non-destructive curation: 80 local skills; 6 selected locally, 2 maintained in repository.
-version: 6
+# Non-destructive curation: 80 local skills; 6 selected locally, 3 maintained in repository.
+version: 7
 installed_snapshot: 80
-selected_count: 8
+selected_count: 9
 selected_local_count: 6
 selected:
+  philosophy:
+    - philosophical-foundation
   foundation:
     - independent-judgment
   cognition:
