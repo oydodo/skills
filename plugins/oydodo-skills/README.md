@@ -42,16 +42,15 @@ Claude. Claude uses `.claude-plugin/plugin.json` while ChatGPT uses the existing
 
 ### Claude Web (Pro / Max / Team / Enterprise)
 
-1. Download [`oydodo-skills-claude.zip`](https://github.com/oydodo/skills/releases/latest/download/oydodo-skills-claude.zip) directly from the [latest GitHub Release](https://github.com/oydodo/skills/releases). Alternatively, clone this repository, initialize the selected pinned submodules, install PyYAML and run `python3 scripts/package_claude_plugin.py`.
-2. In claude.ai open **Customize → Plugins → Upload custom plugin**, or the
-   new **Plugins** sidebar experience if it has reached your account.
-3. Upload **one** `oydodo-skills-claude.zip`. Claude registers the eight Skills
-   as a single plugin; you may want to disable old standalone installations
-   with duplicate names. Verify them using `/` or the chat `+` menu.
+**Recommended: import the repository marketplace once, not eight individual Skills or repeated ZIPs.**
 
-**Important:** personal Claude Pro / Max accounts support ZIP upload, but
-installing a ZIP does **not** establish automatic update from public GitHub.
-GitHub Actions automatically builds and publishes a versioned ZIP. Uploading a new version to a personal Claude account is still an explicit action.
+1. In Claude Web, open **Customize → Plugins → Add → Add marketplace → Add from a repository** (UI labels may differ by rollout).
+2. Enter `oydodo/skills` or `https://github.com/oydodo/skills`; add the marketplace, then add the single `oydodo-skills` plugin.
+3. Open a new Claude chat. Use `/` or the chat `+` menu to inspect the eight skills. Avoid having duplicate old standalone skills enabled.
+
+The [Claude personal marketplace guide](https://support.claude.com/en/articles/13837440-use-plugins-in-claude) explicitly supports Git repositories on github.com. The repository-backed path simplifies updates, but **the cadence and automatic refresh of personal-marketplace installs have not been verified on this account**. Do not describe every push as an automatic install/update.
+
+**Fallback:** upload [`oydodo-skills-claude.zip`](https://github.com/oydodo/skills/releases/latest/download/oydodo-skills-claude.zip) from the latest release under Customize → Plugins. A manually uploaded ZIP is not linked to the repository and requires re-uploading for later versions.
 
 ### Claude Code — public GitHub marketplace
 
@@ -60,8 +59,7 @@ claude plugin marketplace add oydodo/skills
 claude plugin install oydodo-skills@oydodo
 ```
 
-This uses `../../.claude-plugin/marketplace.json` and is **not** a way to
-import a GitHub marketplace directly into personal Claude Web.
+Claude Code uses the same root [`.claude-plugin/marketplace.json`](../../.claude-plugin/marketplace.json) as Claude Web's repository marketplace; no second Skill copy is needed.
 
 ### Claude Team / Enterprise workspace automatic updates
 
@@ -95,9 +93,10 @@ On a selected source change, the workflow:
 4. Verifies and publishes directly downloadable Claude and ChatGPT ZIP files.
 
 ChatGPT Web can sync the updated GitHub branch under workspace policy.
-**Claude Web personal ZIP uploads do not auto-update**; each newly published ZIP
-must be uploaded by the user. Claude organization GitHub sync needs a
-private/internal source, not configured in this public repository.
+Claude Web personal users should use the **GitHub repository marketplace** where available;
+personal automatic refresh remains unverified, while a ZIP upload stays manual.
+Claude organization GitHub sync needs a private/internal source, not configured
+in this public repository.
 
 [Release and maintenance guide](../../docs/distribution.md) ·
 [Latest release](https://github.com/oydodo/skills/releases/latest) ·
