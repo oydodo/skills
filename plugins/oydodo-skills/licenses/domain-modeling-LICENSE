@@ -1,17 +1,4 @@
-# Upstream attribution and adaptation notes
-
-This Wayfinder skill is an adapted implementation of the decision-wayfinding method described in Matt Pocock's `wayfinder` Skill:
-
-- Source: https://github.com/mattpocock/skills/blob/main/skills/engineering/wayfinder/SKILL.md
-- Upstream repository: https://github.com/mattpocock/skills
-- Copyright: (c) 2026 Matt Pocock
-- License: MIT
-
-Preserved concepts: destination, canonical decision map (index rather than duplicate store), precise decision tickets, blocker dependencies, frontier of unblocked and unclaimed questions, fog of war, scoped-out work, and incremental resolution.
-
-Adaptations for ChatGPT Web and Claude Web: no mandatory issue-tracker setup, no mandatory local file or subagent access, portable store adapters, explicit cross-session durability caveat, skill-composition optional, and same-session continuation by request. The adaptation is maintained in `oydodo/skills` rather than being a verbatim upstream copy. It must be reviewed manually when upstream behavior changes.
-
-## MIT License
+MIT License
 
 Copyright (c) 2026 Matt Pocock
 
