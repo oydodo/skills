@@ -1,5 +1,4 @@
-# Selected Skills are the only distribution source of truth.
-# Third-party bodies come from pinned upstream gitlinks; descriptions below curate trigger scope.
+# Selected Skills only; submodules are sources, not automatic installations.
 version: 12
 upstreams:
   addyosmani:
@@ -43,6 +42,8 @@ skills:
     category: reasoning
     skill_path: upstream/addyosmani-agent-skills/skills/interview-me
     capability_layer: cognition
+    description_override: >-
+      Clarify the user's actual goal through a focused one-question-at-a-time interview only when a critical requirement is missing or the user explicitly requests an interview. Do not use for generic critique or stress-testing an already-defined plan; use grilling for that.
   - name: crux-first-reasoning
     source: maintained
     category: reasoning
@@ -53,21 +54,29 @@ skills:
     category: reasoning
     skill_path: upstream/mattpocock-skills/skills/productivity/grilling
     capability_layer: cognition
+    description_override: >-
+      Grill the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases.
   - name: ponytail
     source: ponytail
     category: development
     skill_path: upstream/ponytail/skills/ponytail
     capability_layer: coding
+    description_override: >-
+      Apply pragmatic coding simplification when implementing, debugging, refactoring or reviewing code. Make the smallest complete change, include necessary tests and avoid speculative abstractions; adapt to requested scope.
   - name: technical-writing
     source: luoling
     category: writing
     skill_path: upstream/technical-writing
     capability_layer: writing
+    description_override: >-
+      Use when drafting or revising internal technical design docs, review notes, architecture writeups, or sharing posts in Chinese, especially when the tone should stay evidence-backed, calm, and suitable for peers or leaders rather than marketing or literary writing.
   - name: technical-documentation
     source: wondelai
     category: writing
     skill_path: upstream/wondelai-skills/technical-documentation
     capability_layer: writing
+    description_override: >-
+      Create, review and improve developer documentation: README, onboarding guides, tutorials, API reference, release notes and migration docs. Verify facts, help readers complete tasks, preserve rationale and key evidence. Prefer technical-language for English wording-only edits.
   - name: technical-language
     source: jjsnack
     category: writing
