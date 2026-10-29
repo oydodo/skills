@@ -1,0 +1,4 @@
+interface:
+  display_name: "Wayfinder"
+  short_description: "Navigate uncertain long-term goals, one decision at a time"
+  default_prompt: "使用 Wayfinder 给这个跨会话、路径仍不明确的目标创建决策地图，分清已知前沿和迷雾，并指出当前最值得解决的问题。"
