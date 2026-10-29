@@ -1,3 +1,4 @@
 interface:
   display_name: Technical Language
-  short_description: Improve English technical prose without changing code.
+  short_description: Polish or rewrite English technical language only (README wording,
+    PR descriptions, error messages and release

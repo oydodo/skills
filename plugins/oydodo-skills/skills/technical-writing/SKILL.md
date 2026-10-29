@@ -1,6 +1,6 @@
 ---
 name: technical-writing
-description: Use when drafting or revising internal technical design docs, review notes, architecture writeups, or sharing posts in Chinese, especially when the tone should stay evidence-backed, calm, and suitable for peers or leaders rather than marketing or literary writing.
+description: "Use when drafting or revising internal technical design docs, review notes, architecture writeups, or sharing posts in Chinese, especially when the tone should stay evidence-backed, calm, and suitable for peers or leaders rather than marketing or literary writing."
 ---
 
 # Internal Technical Writing
