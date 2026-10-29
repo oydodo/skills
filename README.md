@@ -108,7 +108,7 @@ codex plugin add oydodo-skills@oydodo
 推送到 `main` 后，[发布流水线](.github/workflows/publish-plugins.yml)自动重新生成统一 Skill 树、保存第三方许可证、校验两个 Plugin、递增版本并提交到 GitHub Marketplace 目录，同时发布 [ChatGPT / Claude 双 ZIP](https://github.com/oydodo/skills/releases/latest)。
 
 - **ChatGPT Web**：已导入的 GitHub Marketplace 可同步 `main` 的新版本，受平台同步和审批策略影响。
-- **Claude Web 个人账户**：ZIP 自动生成，但仍需要手动上传新版；上传并未自动化。
+- **Claude Web 个人账户**：优先在 Customize → Plugins → Add → Add marketplace → Add from a repository 中导入 `oydodo/skills`，统一使用 GitHub Marketplace；如入口不可用再上传 Claude ZIP。GitHub 仓库同步受平台策略影响，个人账户是否每次推送后自动刷新尚待实测。
 - **Claude 团队工作区**：若需 GitHub 自动同步，应另配符合要求的私有 Marketplace 镜像；当前未配置。
 
 操作说明见 [分发与发布指南](docs/distribution.md)。
