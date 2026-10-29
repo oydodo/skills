@@ -1,6 +1,6 @@
 {
   "name": "oydodo-skills",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Nine curated skills spanning philosophical systems judgment, evidence-based reasoning, interviews, plan critique, coding simplicity, and technical writing.",
   "skills": "./skills/",
   "interface": {

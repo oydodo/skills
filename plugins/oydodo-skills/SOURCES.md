@@ -4,6 +4,7 @@ DO NOT edit here. Edit registry/skills.yaml, maintained skills, or the pinned su
 
 | Skill | Source | Pinned source | Packaging note |
 | --- | --- | --- | --- |
+| philosophical-foundation | [maintained](https://github.com/oydodo/skills) | maintained in this repository | Body unmodified |
 | independent-judgment | [maintained](https://github.com/oydodo/skills) | maintained in this repository | Body unmodified |
 | interview-me | [addyosmani](https://github.com/addyosmani/agent-skills) | aeac41d4d005999432bb7312f7ff06383a91d59d | Curated trigger description; body unmodified |
 | crux-first-reasoning | [maintained](https://github.com/oydodo/skills) | maintained in this repository | Body unmodified |
