@@ -30,13 +30,13 @@ class CodeGraphSkillContractTest(unittest.TestCase):
     def test_registry_and_catalog_are_consistent(self):
         catalog = yaml.safe_load((ROOT / "registry/skills.yaml").read_text(encoding="utf-8"))
         items = catalog["skills"]
-        self.assertEqual(len(items), 15)
-        self.assertEqual(len({s["name"] for s in items}), 15)
+        self.assertEqual(len(items), 18)
+        self.assertEqual(len({s["name"] for s in items}), 18)
         (entry,) = [s for s in items if s["name"] == "codegraph"]
         self.assertEqual(entry["source"], "maintained")
         self.assertEqual(entry["skill_path"], "skills/codegraph")
         curation = yaml.safe_load((ROOT / "registry/curation.yaml").read_text(encoding="utf-8"))
-        self.assertEqual(curation["selected_count"], 15)
+        self.assertEqual(curation["selected_count"], 18)
         self.assertIn("codegraph", curation["selected"]["coding"])
         self.assertNotIn("codegraph", curation["not_selected"]["codas_excluded"])
         self.assertIn("codas/codegraph", curation["not_selected"]["codas_excluded"])
@@ -66,7 +66,7 @@ class CodeGraphSkillContractTest(unittest.TestCase):
         skill_text = (generated / "SKILL.md").read_text(encoding="utf-8")
         self.assertIn("name: codegraph", skill_text)
         release = json.loads((BUNDLE / "plugin.json").read_text(encoding="utf-8"))
-        self.assertEqual(release["version"], "0.1.11")
+        self.assertEqual(release["version"], "0.1.12")
         notes = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
         self.assertIn("## [0.1.10]", notes)
 
