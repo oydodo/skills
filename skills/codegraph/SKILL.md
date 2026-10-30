@@ -29,3 +29,4 @@ CodeGraph is **not installed by this Skill**. If the user asks to install or con
 - Never invent a graph, project index, tool output or completed installation. If tooling is missing or a client is Web-only, provide a normal code-analysis response with the available tools, or state which local step requires user action.
 - `domain-modeling` concerns conceptual/domain design; this Skill inspects **existing code relationships**. `crux-first-reasoning` handles complex decisions and dominant constraints. `ponytail` handles implementation simplification. Combine only when the actual task requires them; do not make CodeGraph a global prerequisite.
 - Upstream source, pinned CLI version, license and command reference: [references/upstream.md](references/upstream.md).
+- Positive/negative routing checks: [references/evaluation.md](references/evaluation.md).
