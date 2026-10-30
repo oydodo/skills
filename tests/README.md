@@ -1,5 +1,7 @@
 # Evaluation
 
+Formal version history, important design changes and Claude handoff: [CHANGELOG.md](../CHANGELOG.md). This is published with each Plugin ZIP. The build refuses to release changed content without a matching next-version entry.
+
 The Plugin SessionStart Hook has separate [fail-open shell tests](test_core_hook.py): missing/empty/unreadable core content and both Plugin-root environment variable forms must not interrupt startup. In CI, run these tests **after** rebuilding generated Plugin assets. These are command-level checks, not proof of actual Codex/Claude Code hook invocation.
 
 Use [crux-first-reasoning behavioral test cases](../skills/crux-first-reasoning/references/evaluation.md) as a **manual** A/B protocol, not as a performance benchmark.
