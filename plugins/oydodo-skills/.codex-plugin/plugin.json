@@ -1,12 +1,12 @@
 {
   "name": "oydodo-skills",
   "version": "0.1.11",
-  "description": "Fifteen curated skills for philosophical judgment, long-term decision navigation, domain modeling, CodeGraph repository navigation, evidence research, prototyping, lean coding, visual reporting, and technical writing.",
+  "description": "Eighteen curated skills for philosophical judgment, long-term decision navigation, domain modeling, CodeGraph repository navigation, evidence research, prototyping, lean coding, hard-bug diagnosis, agent-instruction quality, manual session retros, visual reporting, and technical writing.",
   "skills": "./skills/",
   "interface": {
     "displayName": "oydodo Skills",
     "shortDescription": "Reasoning, coding and writing",
-    "longDescription": "Philosophical foundation; independent judgment; crux-first reasoning; Wayfinder decision maps; grilling; domain modeling; optional local CodeGraph exploration; evidence research; lightweight prototyping; figure-first visual reports and architecture diagrams; requirements interviews; coding simplicity; and three technical writing skills.",
+    "longDescription": "Philosophical foundation; independent judgment; crux-first reasoning; Wayfinder decision maps; grilling; domain modeling; optional local CodeGraph exploration; evidence research; lightweight prototyping; figure-first visual reports and architecture diagrams; requirements interviews; coding simplicity; hard-bug diagnosis; writing-for-agents; user-invoked retro; and three technical writing skills.",
     "developerName": "oydodo",
     "category": "Productivity",
     "defaultPrompt": [
