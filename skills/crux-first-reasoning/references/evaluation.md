@@ -58,3 +58,35 @@ Expected: Recognize the changed objective and scope, proceed with the requested 
 - Communication: concise but retains decision-relevant facts.
 
 Score 0 = fails, 1 = partial, 2 = solid. Total 0-12. Use the same evaluator and prompts for both configurations. Review case-level failures, not just the total. Do not treat this subjective score as a formal benchmark.
+
+## Additional cases: dominant issue before uncertainty (planned; not executed)
+
+### 12. Source of truth versus runtime reality
+User: "请检查 Skill 是否已经只有一个生效来源。Registry 只有 13 项，Plugin 已安装，但新会话日志仍显示 technical-writing 从旧版 ~/.agents/skills 目录加载。请汇报最关键的问题。"
+Expected: Identify the conflict between *single-source design* and *multiple active runtime sources*; distinguish registry/configuration from what the agent actually loaded. Explain why an installation list cannot prove effective uniqueness, give the relevant observed evidence and the next runtime check. Avoid reciting all thirteen Skills or claiming other clients were checked.
+
+### 13. Known constraint outranks a weaker unknown
+User: "新用户激活率连续四周不变。会话记录显示目标试用用户中有大量用户被强制 SSO 阻断；上线、稳定性和成本都已验证，Logo 还没确定。当前最该解决什么？请解释依据。"
+Expected: Diagnose the observed activation barrier as the priority for the affected users even though it is well evidenced; explain the constraint linking sign-in to activation. Do not elevate the uncertain logo or invent additional hypotheses merely because they are less certain. Keep scope and residual causes explicit.
+
+### 14. Findings versus decision-relevant impact
+User: "权限撤销功能的 10 项检查中 9 项通过，但有一项显示撤销后旧令牌仍可读取受保护文件。请汇报最重要的发现，并解释为何要优先处理它。"
+Expected: Organize around the security-goal-versus-effective-revocation gap, not the pass count. Show the decisive observation, mechanism and consequence, and a justified mitigation/verification direction; avoid declaring an exploit beyond the stated test.
+
+### 15. No evidence for one dominant cause
+User: "销售下降，同时提价、断货、两个渠道流量下降；还没有贡献度数据。请找出唯一主要矛盾。"
+Expected: Reject unsupported singularity without evasiveness; name competing drivers, why the present evidence cannot rank them, and what comparison would change that assessment. Do not use arbitrary scoring to fabricate a winner.
+
+### 16. Negative control: requested inventory only
+User: "只列出精选 Skill 的名称，不需要分析。"
+Expected: Return only the requested names from the available source; no diagnosis, causal story, or unasked-for discussion of main contradictions.
+
+## Supplemental scoring (0 = absent, 1 = partial, 2 = solid)
+
+Keep the original 0–12 rubric unchanged for historical comparability. For cases 12–16, score separately:
+- **Dominant relationship:** Names the governing constraint *relative to the user's goal* or honestly states that dominance cannot yet be established.
+- **Explanatory bridge:** Links relevant observation → relationship/mechanism → practical consequence and distinguishes secondary factors without reciting a fact inventory.
+- **Uncertainty sequencing:** Tests decision-changing unknowns *after* identifying the dominant issue; does not mistake uncertainty itself for importance.
+- **Reader guidance:** Gives enough explicit evidence, comparison, and conditions for a reader to check and restate the judgment without reconstructing the analysis.
+
+Compare original versus revised Skill under the same model, input, source state, and tool permissions. Log the actual loaded SKILL.md path (Plugin versus legacy local installation); a response mentioning a Skill is not proof it loaded. Have a blinded reviewer assess whether the explanation is understandable and transferable. No score or improvement is claimed before execution.
