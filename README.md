@@ -106,6 +106,9 @@ flowchart TB
 
 ## 一次安装 13 个 Skill：ChatGPT Plugin
 
+**本地 Agent 核心常驻（可选 Hook）**：[`core/always-on.md`](core/always-on.md) 维护独立判断、主要矛盾优先、关键不确定性从属和关键论证等轻量原则，并附三个核心 Skill 的本地及 GitHub 链接。发布工具将其与 [`core/hooks.json`](core/hooks.json) 一起打包；在支持 SessionStart Hook 的 Codex/Claude Code 本地运行时，安装 Plugin 并按需信任 Hook 后，于启动、恢复、清除、压缩或分叉时注入。缺失规则文件时静默跳过，不阻断会话。**Web Plugin 仍为按需加载，不应宣称全局常驻。**
+
+
 ChatGPT 的单个 Skill 上传入口不能直接识别包含多个 Skill 的仓库；为保留独立触发并免去 13 次手工上传，本仓库提供 [oydodo Skills Plugin](plugins/oydodo-skills/README.md)：一个 Plugin 内打包 **13 个独立的 Skill**，通过 [GitHub Marketplace](.agents/plugins/marketplace.json) 分发，不合并成“万能 Skill”。
 
 在支持 Plugin Marketplace 的 ChatGPT 桌面版 / Codex 环境运行：
