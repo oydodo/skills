@@ -17,7 +17,12 @@
 | “帮我比较两种跨 Agent 状态管理的架构，给出选择。” | crux-first-reasoning | 三种写作 Skill 同时启用 |
 | “我想做一个系统，但是不知道目标用户，帮我通过访谈定义。” | interview-me | 直接开工编码、grilling |
 | “强力挑战这个计划的漏洞，逐轮问我。” | grilling | interview-me 或直接生成交付 |
-| “修复这个订单接口的幂等 bug，保持改动尽量小。” | ponytail（最小完整实现）；直接诊断，不依赖专用 Skill | 不相关文档 Skill、无必要的新抽象 |
+| “修复这个订单接口的幂等 bug，保持改动尽量小。” | ponytail（最小完整实现）；直接诊断，不依赖专用 Skill | diagnosing-bugs 的重型完整诊断、无必要的新抽象 |
+| “接口出现间歇性 500，无法稳定复现；请完整诊断根因并验证修复。” | diagnosing-bugs：建立针对真实症状的可复现反馈闭环 → 缩小范围 → 证伪假设 → 回归验证 | 没有可用复现信号就先猜原因或声称已经验证 |
+| “请审查我们仓库的 AGENTS.md 与 SKILL.md，删掉无效指令、减少重复上下文。” | writing-for-agents：分析 Context Pointer、完成标准、无效/重复指令 | 自动修改无关代码、调用技术英文润色 Skill |
+| “请写一篇给用户看的技术博客。” | 正常技术写作（若需要选择具体写作 Skill） | writing-for-agents（文章不供 Agent 消费） |
+| “请主动使用 retro，对今天的 Coding Agent 会话做证据驱动的环境复盘。” | retro（用户明确主动调用）：针对日志证据输出可执行改进点，调用 writing-for-agents（如运行环境支持） | 把用户总结当做复盘、更改未经确认的全局策略 |
+| “简单总结一下这次写了哪些代码。” | 直接总结修改内容 | 自动执行 retro 或启动长篇工程复盘 |
 | “把这段中文技术方案改成正式的领导汇报稿。” | technical-writing | 技术英语、开发者文档 |
 | “为这个 API 生成开发者 README。” | technical-documentation | technical-language（除非明确要求英语风格校正） |
 | “把这段英文发布说明改成简明技术英语。” | technical-language | 中文写作 |
@@ -36,6 +41,6 @@
 - **职责边界**：是否过早启动 interview-me/grilling；是否把 write/research/implement 误串成完整“瀑布式流程”。
 - **最简实现**：是否只缩减代码、却漏掉测试或安全处理。
 - **文档质量**：是否只使用一个主导写作 Skill，术语、事实与结构准确。
-- **剪枝回归**：移除十三个精选 Skill 中的任何一个后，其独有任务是否仍可完成。
+- **剪枝回归**：移除十八个精选 Skill 中的任何一个后，其独有任务是否仍可完成。
 
 手动记录每个用例的触发 Skill、结果好坏和反例。未实测前不要宣称本配置优于全量配置。

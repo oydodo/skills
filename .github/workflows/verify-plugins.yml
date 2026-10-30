@@ -42,7 +42,7 @@ jobs:
             git submodule update --init --depth 1 -- "$module"
           done < /tmp/oydodo-modules.txt
       - name: Validate Python syntax
-        run: python3 -m compileall -q scripts/build_plugins.py scripts/package_plugins.py tests/test_core_hook.py tests/test_codegraph_skill.py tests/test_visual_explainer.py
+        run: python3 -m compileall -q scripts tests
       - name: Rebuild local Plugin artifacts
         run: |
           python3 scripts/build_plugins.py --write

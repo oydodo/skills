@@ -1,6 +1,6 @@
 # Unified ChatGPT / Claude plugin distribution
 
-`registry/skills.yaml` is the source of truth for the selected Skill set and curated trigger descriptions. The four maintained Skill bodies (three reasoning cores plus one CodeGraph adapter) live in `skills/`; the canonical advisory always-on text and hook definition live in `core/always-on.md` and `core/hooks.json`; eleven third-party bodies and their resources come from pinned Git submodules under `upstream/`. Do not edit the generated `plugins/oydodo-skills/skills/` tree.
+`registry/skills.yaml` is the source of truth for the selected Skill set and curated trigger descriptions. The four maintained Skill bodies (three reasoning cores plus one CodeGraph adapter) live in `skills/`; the canonical advisory always-on text and hook definition live in `core/always-on.md` and `core/hooks.json`; fourteen third-party bodies and their resources come from pinned Git submodules under `upstream/`. Do not edit the generated `plugins/oydodo-skills/skills/` tree.
 
 ## Updating
 
@@ -21,11 +21,17 @@ python3 -m pip install PyYAML==6.0.2
 git submodule update --init upstream/addyosmani-agent-skills upstream/mattpocock-skills upstream/ponytail upstream/technical-writing upstream/wondelai-skills upstream/technical-language-skill upstream/visual-explainer
 python3 scripts/build_plugins.py --write
 python3 scripts/build_plugins.py --check
-python3 -m unittest discover -s tests -p test_core_hook.py -v
+python3 -m unittest discover -s tests -p 'test_*.py' -v
 python3 scripts/package_plugins.py --platform all
 ```
 
 Artifacts: `dist/oydodo-skills-claude.zip` and `dist/oydodo-skills-chatgpt.zip`.
+
+## Matt quality skills and invocation controls (v0.1.12)
+
+The pinned Matt submodule also supplies `writing-for-agents` (agent-consumed documents), `diagnosing-bugs` (hard failures needing reproducible evidence), and `retro` (an **explicitly user-invoked** coding-agent session retrospective). They are copied without changes to their instruction bodies, along with their supporting references, scripts, and licenses. They do **not** run on SessionStart and do not add global hooks.
+
+For Claude, the build preserves upstream `disable-model-invocation: true` in `SKILL.md` for user-only skills, including existing `wayfinder`. For Codex, it keeps or adds `policy.allow_implicit_invocation: false` in the packaged `agents/openai.yaml`. This is an intentionally narrow portability exception beyond the common `name` and `description` fields; client behavior still requires real-world testing, particularly in Web.
 
 ## CodeGraph adapter (optional local tool)
 

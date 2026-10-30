@@ -1,8 +1,8 @@
-# Non-destructive curation: 80 local skills; 11 selected locally, 4 maintained in repository.
-version: 11
+# Non-destructive curation: historical 80-skill snapshot; 14 selected external, 4 maintained in repository.
+version: 12
 installed_snapshot: 80
-selected_count: 15
-selected_local_count: 11
+selected_count: 18
+selected_local_count: 14
 selected:
   philosophy:
     - philosophical-foundation
@@ -21,6 +21,10 @@ selected:
   coding:
     - ponytail
     - codegraph
+    - diagnosing-bugs
+  agent_quality:
+    - writing-for-agents
+    - retro
   visualization:
     - visual-explainer
   writing:
@@ -29,13 +33,11 @@ selected:
     - technical-language
 not_selected:
   matt:
-    - diagnosing-bugs
     - code-review
     - grill-me
     - grill-with-docs
     - to-questionnaire
     - wait-what
-    - retro
     - to-spec
     - to-tickets
     - triage
@@ -52,7 +54,6 @@ not_selected:
     - handoff
     - setup-matt-pocock-skills
     - wizard
-    - writing-for-agents
     - scaffold-exercises
     - teach
   other:

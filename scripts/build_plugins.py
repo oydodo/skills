@@ -94,12 +94,17 @@ def normalized_skill(original: bytes, name: str, description_override: str | Non
     description = description_override or header.get("description")
     if not isinstance(description, str) or not description.strip():
         raise ValueError(f"Skill {name} has no description")
-    # Keep original body and only the two portable trigger fields.
+    # Keep original body; preserve Claude user-only metadata when supplied.
+    # Codex reads the equivalent invocation policy from agents/openai.yaml.
+    manual = header.get("disable-model-invocation", False)
+    if not isinstance(manual, bool):
+        raise ValueError(f"Skill {name} has invalid disable-model-invocation")
     front = "---\nname: " + name + "\ndescription: " + json.dumps(
-        description, ensure_ascii=False) + "\n---\n"
+        description, ensure_ascii=False) + "\n"
+    if manual:
+        front += "disable-model-invocation: true\n"
+    front += "---\n"
     return (front + value[m.end():]).encode("utf-8")
-
-
 
 def copy_core(stage: Path) -> None:
     """Package one canonical core policy plus its fail-open SessionStart hook."""
@@ -168,6 +173,24 @@ def make_tree(stage: Path) -> list[str]:
             dest.parent.mkdir(parents=True, exist_ok=True)
             dest.write_text(yaml.safe_dump(metadata, allow_unicode=True,
                                            sort_keys=False), encoding="utf-8")
+        # Align Claude explicit-only flag and Codex invocation policy.
+        skill_text = (destination / "SKILL.md").read_text(encoding="utf-8")
+        skill_match = re.match(r"\A---[ \t]*\n([\s\S]*?)\n---[ \t]*\n", skill_text)
+        if not skill_match:
+            raise ValueError(f"Missing generated frontmatter: {name}")
+        skill_header = yaml.safe_load(skill_match.group(1))
+        if skill_header.get("disable-model-invocation", False):
+            meta_path = destination / "agents" / "openai.yaml"
+            meta = yaml.safe_load(meta_path.read_text(encoding="utf-8"))
+            if not isinstance(meta, dict):
+                raise ValueError(f"Invalid OpenAI metadata for {name}")
+            policy = meta.setdefault("policy", {})
+            if not isinstance(policy, dict):
+                raise ValueError(f"Invalid invocation policy for {name}")
+            if policy.get("allow_implicit_invocation") is not False:
+                policy["allow_implicit_invocation"] = False
+                meta_path.write_text(yaml.safe_dump(
+                    meta, allow_unicode=True, sort_keys=False), encoding="utf-8")
         if entry["source"] == "maintained":
             url = "https://github.com/oydodo/skills"
             pin = "maintained in this repository"
