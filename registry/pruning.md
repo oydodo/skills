@@ -1,24 +1,25 @@
 # 精选与剪枝
 
-**精选 13 个 Skill**：L0 `philosophical-foundation` 与两个判断核心保持独立。`wayfinder` 改为 Matt 原版 Submodule 来源；一并引入 `domain-modeling`、`research`、`prototype` 三项协作能力。7 个原有专项能力仍独立保留。所有第三方 Skill 的正文在构建时保持原样，不设适配补丁。
+**当前精选 18 个独立 Skill**：核心判断仍为哲学基础 + 独立判断 + 主要矛盾推理三项；其余能力按实际任务触发。原版第三方 Skill 通过固定 commit 的 Submodule 分发，不直接修改指令正文；已修复用户主动触发标志在构建中丢失的问题。
 
 | 状态 | 数量 | 说明 |
 | --- | ---: | --- |
-| 精选 Skill | 13 | 哲学 1 / 判断 1 / 认知 4 / 决策导航 1 / 调研与原型 2 / 编码 1 / 表达 3；其中 3 项由本仓库维护 |
-| Matt 未选中 | 26 | 已从 Matt 精选 `grilling`、`wayfinder`、`domain-modeling`、`research`、`prototype`；其余保留候选 |
-| DSH 项目专用 | 19 | 不进入通用工作集 |
-| 其他未选中 | 11 | 暂不加入，按真实需求再评估 |
-| 自研暂停 | 2 | `codex-appserver-doctor`、`remote-html-preview` 暂不处理 |
-| Codas 排除 | 12 | 包含 `code-explainer`，暂不处理 |
+| 精选 Skill | 18 | 哲学 1 / 判断 1 / 认知 4 / 长期导航 1 / 调研原型 2 / 编码与故障 3 / Agent 质量 2 / 可视化 1 / 技术表达 3 |
+| 第三方精选 | 14 | 其中 Matt 的 8 项 Skill 来自同一个受控的 Git Submodule |
+| 自维护精选 | 4 | 三个判断核心 + CodeGraph 工具适配 |
+| Matt 未选中 | 23 | 如 code-review、tdd、implement-spec；避免无需求地引入完整工程编排 |
+| DSH 项目专用 | 19 | 不进入通用精选 |
+| 其他未选中 | 10 | 按真实任务与效果再考虑 |
+| 自维护暂停 | 2 | codex-appserver-doctor、remote-html-preview |
+| Codas 排除 | 12 | 不与 Codas 项目内独立工作流混合 |
 
-## 本轮退出精选
+## 本轮选入与保留边界
 
-- `domain-modeling`：本轮重新入选，供 Wayfinder 与独立建模任务按需调用。
-- `diagnosing-bugs`：专用故障诊断流程，基础调试无需依赖它。
-- `code-review`：特定的审查流程，通用代码审查无需额外 Skill。
+- `writing-for-agents`：专供 Agent 可读文档和 Skill 的指令质量治理；避免与普通技术写作重复。
+- `diagnosing-bugs`：复杂、间歇性故障或性能回归的复现—定位—验证闭环；简单 Bug 不强制启动完整流程。
+- `retro`：基于会话证据优化指令、工具和检查。**只由用户主动调用**；上游依赖的 `writing-for-agents` 已一并精选。
+- `code-review`、`tdd`、`codebase-design` 等继续保留为候选；其中的方法论可借鉴，但不因此自动绑定完整 Matt 工程流程。
 
-`diagnosing-bugs` 与 `code-review` 仍在上游和候选清单中，可根据实际效果再评估。
+**停用原则**：先通过正例与负例检验十八个 Skill 的路由和实际行为，再做可逆剪枝。精选与 Plugin 分发并未改变旧版本机 80 项安装快照；不得声称客户端当前仅加载这十八项。
 
-**停用原则**：先验证 13 个精选 Skill 的调用效果，再可逆地缩减本机发现范围。此处仅修改仓库目标配置；本机原有 80 个目录未改变。
-
-[精选清单](skills.yaml) · [80 项分类](curation.yaml) · [路由测试](../tests/core-routing.md)
+[精选清单](skills.yaml) · [历史盘点](curation.yaml) · [路由测试](../tests/core-routing.md) · [统一更新 SOP](../docs/skill-lifecycle.md)
