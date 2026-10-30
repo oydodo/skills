@@ -2,6 +2,8 @@
 
 **One Plugin, thirteen distinct Skills.** Individual `skills/<name>/SKILL.md` entrypoints remain intact. This is not a merged umbrella Skill or a mandatory thirteen-step workflow.
 
+**Formal release history & Claude handoff:** see the bundled [CHANGELOG.md](CHANGELOG.md). It preserves v0.1.6–v0.1.9 reasoning decisions, three-core-Skill boundaries, and actual deployment/test limits. Read it when onboarding or reviewing changes; it is **not** injected on every session.
+
 This is a **skills-only** Agent Plugin using root `plugin.json` and a backward-compatible `.codex-plugin/plugin.json`. All required Skill contents and references are vendored: Git submodules are NOT required by consumers. The plugin has no connected MCP server or secrets. It bundles an optional, fail-open **SessionStart Hook** for supported local runtimes; web-only installs do not deploy executable hooks.
 
 ## Install on ChatGPT desktop (macOS)
@@ -90,7 +92,7 @@ the three self-maintained Skills, and ten third-party Skills sourced from six pi
 
 On a selected source change, the workflow:
 
-1. Rebuilds a single shared Skill tree while retaining supporting resources.
+1. Rebuilds a single shared Skill tree and the versioned Changelog while retaining supporting resources.
 2. Bumps the plugin patch version in all three manifests when contents change.
 3. Commits generated output to `main` for GitHub Marketplace syncing.
 4. Verifies and publishes directly downloadable Claude and ChatGPT ZIP files.

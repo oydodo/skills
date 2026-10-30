@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "registry/skills.yaml"
+      - "CHANGELOG.md"
       - "skills/**"
       - "core/always-on.md"
       - "core/hooks.json"
@@ -71,7 +72,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A -- plugins/oydodo-skills/skills plugins/oydodo-skills/licenses \
             plugins/oydodo-skills/SOURCES.md plugins/oydodo-skills/core \
-            plugins/oydodo-skills/hooks plugins/oydodo-skills/plugin.json \
+            plugins/oydodo-skills/hooks plugins/oydodo-skills/CHANGELOG.md \
+            plugins/oydodo-skills/plugin.json \
             plugins/oydodo-skills/.codex-plugin/plugin.json \
             plugins/oydodo-skills/.claude-plugin/plugin.json
           if git diff --cached --quiet; then
@@ -97,13 +99,16 @@ jobs:
         run: |
           VERSION=$(python3 -c 'import json; print(json.load(open("plugins/oydodo-skills/plugin.json"))["version"])')
           TAG="v$VERSION"
+          python3 scripts/build_plugins.py --release-notes "$VERSION" > /tmp/oydodo-release-notes.md
+          test -s /tmp/oydodo-release-notes.md
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" dist/oydodo-skills-claude.zip \
               dist/oydodo-skills-chatgpt.zip --clobber
+            gh release edit "$TAG" --notes-file /tmp/oydodo-release-notes.md
           else
             gh release create "$TAG" dist/oydodo-skills-claude.zip \
               dist/oydodo-skills-chatgpt.zip \
               --target "$(git rev-parse HEAD)" \
               --title "oydodo Skills $TAG" \
-              --notes "One curated Skill source, two compatible Plugin bundles. For ChatGPT workspace GitHub Marketplace, use main. Claude Web personal accounts upload the Claude ZIP manually."
+              --notes-file /tmp/oydodo-release-notes.md
           fi

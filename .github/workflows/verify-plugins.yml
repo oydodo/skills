@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "core/**"
+      - "CHANGELOG.md"
       - "skills/**"
       - "registry/skills.yaml"
       - "upstream/**"
@@ -43,5 +44,10 @@ jobs:
           python3 scripts/build_plugins.py --check
       - name: Validate fail-open hooks
         run: python3 -m unittest discover -s tests -p test_core_hook.py -v
+      - name: Extract versioned release notes
+        run: |
+          VERSION=$(python3 -c 'import json; print(json.load(open("plugins/oydodo-skills/plugin.json"))["version"])')
+          python3 scripts/build_plugins.py --release-notes "$VERSION" > /tmp/oydodo-release-notes.md
+          test -s /tmp/oydodo-release-notes.md
       - name: Package both plugin distributions
         run: python3 scripts/package_plugins.py --platform all

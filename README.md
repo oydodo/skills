@@ -2,6 +2,8 @@
 
 **目标：用少量、边界明确的 Skill，让 Agent 更可靠地判断问题、选择方法并交付结果。**
 
+**版本变更与 Claude handoff**：阅读 [CHANGELOG.md](CHANGELOG.md)。它记录为何从薄弱假设优先转向主要矛盾优先、三个核心 Skill 的分工、常驻 Hook 的边界及版本验收情况，并随 Plugin 一起分发。
+
 这是一个面向 Codex、Claude Code、Pi 等编码 Agent 的 Skill 精选与管理仓库。我们关心的不是收集了多少技能，而是：当用户的判断或要求可能有误时，Agent 能否指出问题；当任务复杂时，能否抓住关键；当任务明确时，能否直接完成，而不是套用一整套无关流程。
 
 ## 为什么要这样组织
@@ -99,6 +101,7 @@ flowchart TB
 | [`registry/skills.yaml`](registry/skills.yaml) | 当前 13 个精选候选 Skill 及其来源路径 |
 | [`registry/curation.yaml`](registry/curation.yaml) | 全部盘点对象的精选、未选中、项目专用等状态 |
 | [`profiles/core.yaml`](profiles/core.yaml) | 目标角色与触发条件；**不是客户端自动生效的配置** |
+| [`CHANGELOG.md`](CHANGELOG.md) | 版本化设计决策与 Claude handoff；唯一维护源，自动打包进 Plugin |
 | [`registry/pruning.md`](registry/pruning.md) | 取舍依据、未选中项和可逆剪枝原则 |
 | [`tests/`](tests/) | 待执行的行为验收与 A/B 测试案例 |
 

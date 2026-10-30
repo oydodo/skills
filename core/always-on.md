@@ -19,3 +19,7 @@
   https://github.com/oydodo/skills/blob/main/skills/independent-judgment/SKILL.md
 - **Crux-First Reasoning** — `skills/crux-first-reasoning/SKILL.md`  
   https://github.com/oydodo/skills/blob/main/skills/crux-first-reasoning/SKILL.md
+
+## 版本交接（按需查阅）
+
+需要理解设计演进、当前决定与历史版本差异时，读取安装的 Plugin 根目录 `CHANGELOG.md`（仓库来源：https://github.com/oydodo/skills/blob/main/CHANGELOG.md）。不要在每次对话加载整份变更历史。
