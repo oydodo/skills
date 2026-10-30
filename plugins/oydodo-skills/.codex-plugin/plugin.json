@@ -1,6 +1,6 @@
 {
   "name": "oydodo-skills",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Fourteen curated skills for philosophical judgment, long-term decision navigation, domain modeling, CodeGraph repository navigation, evidence research, prototyping, lean coding and technical writing.",
   "skills": "./skills/",
   "interface": {

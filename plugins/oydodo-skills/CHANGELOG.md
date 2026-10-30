@@ -3,8 +3,23 @@
 本文件是 `oydodo/skills` 的**版本化设计交接记录**，供 Claude、Codex、ChatGPT 及后来接手的 Agent 阅读。它说明**改变了什么、为什么改变、哪些边界不能丢**；不是每次会话都必须加载的系统提示词。
 
 - **唯一维护源**：仓库根目录 `CHANGELOG.md`；发布时复制到 Plugin 根目录，供安装后的 Claude Code、Codex 等按需查阅。
-- **版本对应**：以 [GitHub Releases](https://github.com/oydodo/skills/releases) 和已合并 PR 为准；`v0.1.9` 为本轮版本记录分发改进。
+- **版本对应**：以 [GitHub Releases](https://github.com/oydodo/skills/releases) 和已合并 PR 为准；`v0.1.9` 引入版本记录分发；此后每版按本文件记录变更。
 - **不要混淆**：代码合并、CI 通过、ZIP 发布、Marketplace 已同步、Agent 实际触发，是不同的验收层级。
+
+## [0.1.10] - 2026-10-30
+
+### Added — 开源 CodeGraph 作为第 14 个按需 Skill
+
+- 增加 [`codegraph`](skills/codegraph/SKILL.md)：面向跨文件调用链、函数依赖、变更影响范围、受影响测试与代码理解的**可选工具适配 Skill**。它采用独立于三个核心判断 Skill 的触发边界。
+- 技术来源为 MIT 开源的 [colbymchenry/codegraph](https://github.com/colbymchenry/codegraph)，按文档固定上游 **v1.6.2**（commit `6560052a6f856855d3f71eee838fd66ccfa4285d`）；仅维护轻量 Agent 用法指导，不复制整套 CodeGraph 应用，也不自动升级第三方工具。
+- 更新精选注册表、分类、Plugin 元数据、双平台发布范围与校验测试：从 **13 个 Skill 扩展为 14 个**，其中三个仍是核心判断 Skill，第 14 个是工具适配层，不改变全局常驻原则。
+- 原精选记录里排除过的 Codas 项目专用 `codegraph` 与本次新增的通用开源 CodeGraph 并非同一个 Skill；在 `registry/curation.yaml` 中保留历史排除含义并明确区分。
+
+### Boundaries
+
+- **Skill 不是工具本体**：安装 Plugin 不会安装 CodeGraph CLI、配置 MCP 服务器、修改 Agent 全局设置或为任意仓库构建索引；本地使用前需要按授权完成工具部署和 `codegraph init`。
+- 不把 CodeGraph 加进 `core/always-on.md` / SessionStart Hook；需要时再触发，简单任务正常直接执行。CLI、MCP、索引不可用或 Web 环境无法访问本机时，使用普通仓库检索方法继续工作，不因可选工具缺失中止任务。
+- 发布构建和静态检查**不构成**真实 CodeGraph CLI/MCP 使用效果或跨客户端自动触发的证明；需后续以实际仓库任务分别验证。
 
 ## [0.1.9] - 2026-10-30
 
@@ -64,7 +79,7 @@
 
 ### 维护、分发与验收边界
 
-- **维护源**：三个自研 Skill 改 `skills/<name>/`；常驻摘要改 `core/always-on.md`；Hook 改 `core/hooks.json`；精选和触发描述改 `registry/skills.yaml`；**变更原因和版本记录改本文件**。
+- **维护源**：三个核心判断 Skill 和自维护适配 Skill 均改 `skills/<name>/`；常驻摘要改 `core/always-on.md`；Hook 改 `core/hooks.json`；精选和触发描述改 `registry/skills.yaml`；**变更原因和版本记录改本文件**。
 - **生成文件**：`plugins/oydodo-skills/{skills,core,hooks}/` 与 Plugin 内 `CHANGELOG.md` 均由构建生成，**不要手工维护第二份**。
 - **评测**：正例需观察复杂任务是否抓住主要矛盾、展示主次与依据；反例需检查简单任务能否直接完成。不能仅通过 Agent 自述、构建成功或 ZIP 存在宣称行为有效。
 - **Web 同步状态**：GitHub 发布成功不保证 ChatGPT/Claude Web Marketplace 已同步。账户授权、导入器验证与 Hook 的本地行为应分别排查，不能从旧的提醒文本推断同步根因。
