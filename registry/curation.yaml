@@ -1,7 +1,7 @@
-# Non-destructive curation: 80 local skills; 10 selected locally, 3 maintained in repository.
-version: 9
+# Non-destructive curation: 80 local skills; 10 selected locally, 4 maintained in repository.
+version: 10
 installed_snapshot: 80
-selected_count: 13
+selected_count: 14
 selected_local_count: 10
 selected:
   philosophy:
@@ -20,6 +20,7 @@ selected:
     - prototype
   coding:
     - ponytail
+    - codegraph
   writing:
     - technical-writing
     - technical-documentation
@@ -89,7 +90,7 @@ not_selected:
     - remote-html-preview
   codas_excluded:
     - code-explainer
-    - codegraph
+    - codas/codegraph  # historical project-specific skill; not the OSS CodeGraph adapter
     - codas-accept
     - codas-coordinate
     - codas-design
@@ -105,3 +106,4 @@ notes:
   - github_selection_only
   - local_installs_unchanged
   - retained_git_submodules
+  - codegraph_is_a_new_maintained_adapter_for_colbymchenry_codegraph_not_the_excluded_codas_skill
