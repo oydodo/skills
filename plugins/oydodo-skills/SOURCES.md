@@ -18,4 +18,4 @@ DO NOT edit here. Edit registry/skills.yaml, maintained skills, or the pinned su
 | technical-documentation | [wondelai](https://github.com/wondelai/skills) | c172996495bed0fcd26896a9416b2093fd7073f0 | Curated trigger description; body unmodified |
 | technical-language | [jjsnack](https://github.com/jjsnack/technical-language-skill) | cb441ebedbf8d48a7a45cc357e58d5bb7a71dadc | Curated trigger description; body unmodified |
 
-Third-party licenses are included under licenses/. No MCP servers or lifecycle hooks are installed by this bundle.
+Third-party licenses are included under licenses/. No MCP servers are installed. An optional fail-open SessionStart hook loads the core principles on supported local Agent runtimes.
