@@ -1,0 +1,3 @@
+interface:
+  display_name: CodeGraph
+  short_description: Explore local code graphs, call paths and change impact.
