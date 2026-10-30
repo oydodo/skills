@@ -1,5 +1,5 @@
 # Selected Skills only; submodules are sources, not automatic installations.
-version: 17
+version: 18
 upstreams:
   addyosmani:
     url: https://github.com/addyosmani/agent-skills
@@ -85,6 +85,13 @@ skills:
     category: development
     skill_path: upstream/mattpocock-skills/skills/engineering/prototype
     capability_layer: investigation
+  - name: diagnosing-bugs
+    source: mattpocock
+    category: development
+    skill_path: upstream/mattpocock-skills/skills/engineering/diagnosing-bugs
+    capability_layer: coding
+    description_override: >-
+      Diagnose difficult, intermittent or recurring bugs and performance regressions by building a tight reproducible failure signal, narrowing the scenario, testing hypotheses and verifying the fix. Use for hard root-cause debugging, not routine small fixes or generic coding requests; do not claim reproduction when execution access is unavailable.
   - name: ponytail
     source: ponytail
     category: development
@@ -97,6 +104,20 @@ skills:
     category: development
     skill_path: skills/codegraph
     capability_layer: coding
+  - name: writing-for-agents
+    source: mattpocock
+    category: agent-engineering
+    skill_path: upstream/mattpocock-skills/skills/productivity/writing-for-agents
+    capability_layer: agent-quality
+    description_override: >-
+      Design, edit or audit instructions consumed by coding agents: SKILL.md, AGENTS.md, CLAUDE.md and agent-facing references. Improve context pointers, progressive disclosure, completion criteria and removal of duplicate or ineffective directions. Do not invoke for ordinary end-user technical writing, PR descriptions or general prose edits.
+  - name: retro
+    source: mattpocock
+    category: agent-engineering
+    skill_path: upstream/mattpocock-skills/skills/engineering/retro
+    capability_layer: agent-quality
+    description_override: >-
+      Conduct a coding-agent session retrospective ONLY when the user explicitly requests one, using actual session evidence to identify improvements to navigation, tests, agent instructions and tooling. This is a manual user-invoked workflow, not an automatic status summary or generic review.
   - name: visual-explainer
     source: visual-explainer
     category: visualization
