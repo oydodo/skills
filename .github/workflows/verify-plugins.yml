@@ -11,9 +11,9 @@ on:
       - ".gitmodules"
       - "scripts/build_plugins.py"
       - "scripts/package_plugins.py"
-      - "tests/test_core_hook.py"
-      - "tests/test_codegraph_skill.py"
-      - "tests/test_visual_explainer.py"
+      - "tests/test_*.py"
+      - ".github/dependabot.yml"
+      - "docs/skill-lifecycle.md"
       - ".github/workflows/verify-plugins.yml"
 
 permissions:

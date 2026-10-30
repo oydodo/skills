@@ -2,6 +2,8 @@
 
 **目标：用少量、边界明确的 Skill，让 Agent 更可靠地判断问题、选择方法并交付结果。**
 
+**技能新增与升级的统一流程**：阅读 [Skill 生命周期 SOP](docs/skill-lifecycle.md)，第三方来源固定提交并经评审升级；具体版本与变更记录见 [CHANGELOG.md](CHANGELOG.md)。
+
 **版本变更与 Claude handoff**：阅读 [CHANGELOG.md](CHANGELOG.md)。它记录为何从薄弱假设优先转向主要矛盾优先、三个核心 Skill 的分工、常驻 Hook 的边界及版本验收情况，并随 Plugin 一起分发。
 
 这是一个面向 Codex、Claude Code、Pi 等编码 Agent 的 Skill 精选与管理仓库。我们关心的不是收集了多少技能，而是：当用户的判断或要求可能有误时，Agent 能否指出问题；当任务复杂时，能否抓住关键；当任务明确时，能否直接完成，而不是套用一整套无关流程。
