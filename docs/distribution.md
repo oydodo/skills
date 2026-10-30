@@ -1,14 +1,15 @@
 # Unified ChatGPT / Claude plugin distribution
 
-`registry/skills.yaml` is the source of truth for the selected Skill set and curated trigger descriptions. The three maintained Skill bodies live in `skills/`; ten third-party bodies and their resources come from pinned Git submodules under `upstream/`. Do not edit the generated `plugins/oydodo-skills/skills/` tree.
+`registry/skills.yaml` is the source of truth for the selected Skill set and curated trigger descriptions. The three maintained Skill bodies live in `skills/`; the canonical advisory always-on text and hook definition live in `core/always-on.md` and `core/hooks.json`; ten third-party bodies and their resources come from pinned Git submodules under `upstream/`. Do not edit the generated `plugins/oydodo-skills/skills/` tree.
 
 ## Updating
 
 - **Maintained Skill**: edit `skills/<name>/`, commit and push to `main`.
 - **Third-party Skill**: review upstream changes and advance that submodule's *pinned gitlink*, then push. No unattended upstream auto-upgrades.
 - **Selection or trigger**: edit `registry/skills.yaml` and its `description_override` entries, then push.
+- **Always-on core or Hook**: edit `core/always-on.md` or `core/hooks.json`. The build copies them into the generated Plugin `core/` and `hooks/` directories. Do not edit those generated copies.
 
-The [publish workflow](../.github/workflows/publish-plugins.yml) fetches only selected submodules; rebuilds `skills/`, `licenses/` and `SOURCES.md` inside the plugin; increments patch versions of ChatGPT and Claude manifests when generated data changes; commits the result to `main`; creates both ZIPs; and publishes a [GitHub Release](https://github.com/oydodo/skills/releases/latest).
+The [publish workflow](../.github/workflows/publish-plugins.yml) fetches only selected submodules; rebuilds `skills/`, `licenses/`, `core/`, `hooks/` and `SOURCES.md` inside the plugin; increments patch versions of ChatGPT and Claude manifests when generated data changes; commits the result to `main`; creates both ZIPs; and publishes a [GitHub Release](https://github.com/oydodo/skills/releases/latest).
 
 The workflow requires `GITHUB_TOKEN` with repository **contents: write** and a branch policy allowing the Actions bot to push. If either disallows it, the workflow will fail rather than silently distribute stale sources.
 
@@ -19,10 +20,15 @@ python3 -m pip install PyYAML==6.0.2
 git submodule update --init upstream/addyosmani-agent-skills upstream/mattpocock-skills upstream/ponytail upstream/technical-writing upstream/wondelai-skills upstream/technical-language-skill
 python3 scripts/build_plugins.py --write
 python3 scripts/build_plugins.py --check
+python3 -m unittest discover -s tests -p test_core_hook.py -v
 python3 scripts/package_plugins.py --platform all
 ```
 
 Artifacts: `dist/oydodo-skills-claude.zip` and `dist/oydodo-skills-chatgpt.zip`.
+
+## Advisory core Hook (local runtimes only)
+
+The Plugin includes a fail-open `SessionStart` Hook with no external script path: it reads `core/always-on.md` relative to the installed Plugin root, and silently returns success on missing/unreadable/empty text. Supported session sources: startup, resume, clear, compact, fork. On Codex the Hook must first be trusted via `/hooks`; updates to its definition may require renewed trust. This is an advisory prompt, not a safety control. It does not bypass platform restrictions, and cannot guarantee injection in Web-only ChatGPT or Claude chats. The build **fails strictly** when core files or hook configuration are missing; the running Agent **fails open** when the optional text is unavailable.
 
 ## Platform update behavior
 
