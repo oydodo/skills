@@ -29,6 +29,19 @@
 - **移除 Skill**：从 `registry/skills.yaml` 移除精选条目，更新盘点记录、描述、测试与 Changelog。仅当无人使用某个上游仓库时才删除对应 submodule；构建会移除生成包中的该 Skill。
 - **仅改仓库文档**：如果未改变打包内容，可以不创建 Plugin 版本；如修改 `CHANGELOG.md` 或任何被打包来源，构建会将其视为内容变更，要求下一版本记录。
 
+### 每周上游升级检测（已配置）
+
+由 [`.github/dependabot.yml`](../.github/dependabot.yml) 启用 GitHub 原生 **Dependabot / `gitsubmodule`**，每周一 **09:00（Asia/Taipei）** 检查更新；不需要额外定时脚本、第三方 Bot 或长期 Token。仅监控 `registry/skills.yaml` 当前精选的七个上游 submodule；未精选的 `upstream/deepseek-harness` 不自动更新。通过 `tests/test_upstream_monitor.py` 防止两份清单漂移。
+
+- Dependabot 在上游固定 commit 过期时提出**独立 PR**，更新父仓库记录的 gitlink；**不自动合并**，也不直接覆盖 `skills/`。
+- **先审查变更，后合并**：查看从旧 SHA 到新 SHA 的选中 Skill 子目录、许可证与依赖（同一上游仓库可能供应多个 Skill），并核对 `SKILL.md` 的触发语义。需要时可运行 `git -C upstream/<repo> diff <old-sha> <new-sha> -- <selected-skill-path>`。
+- 此更新模式以 `.gitmodules` 的分支为候选来源，**追踪新提交，不等于只追踪稳定 Release tag**。例如 Visual Explainer 原来是 v0.14.0 的固定提交，检测到 main 新提交后仍需人工核对其正式发布版本、许可证和兼容性；不应仅因 SHA 更新就宣称升级到新版本号。
+- 当前发布流程的 **CHANGELOG 是硬门禁**：若新 gitlink 导致 Plugin 生成内容变化，Dependabot 的原始 PR 将因缺少下一版本的 Changelog 条目而无法通过 CI。审查者应补写版本说明、更新旧版本硬编码的测试断言（例如 Visual Explainer 的固定 SHA）并在 PR 中验证通过；这是刻意保留的审查环节，不是自动检测失效。
+- 通过 PR 并合并 `main` 后，现有 `publish-plugins.yml` 才执行生成、版本递增、双 ZIP 和 Release。最后仍需独立确认两个 Web Marketplace 的同步与实际触发。建议在 GitHub Rulesets 中要求 PR 审查和 `Verify Plugin Build` 检查通过，避免跳过 Changelog 门禁。
+- **不监控的来源**：`skills/` 中自维护的三个判断核心及 CodeGraph 工具适配 Skill，由本仓库直接维护；CodeGraph CLI 的新版本属于另一个工具升级决策，不等于 Submodule 更新。
+
+**首次启用**：上述 Dependabot 配置需合并到默认分支 `main` 才会运行；配置生效后由 GitHub 管理定时检查，不依赖已打开的 ChatGPT/Claude 对话。请在仓库 **Insights → Dependency graph → Dependabot** 或 **Settings → Code security and analysis** 核实更新功能与任务日志（界面名称可能调整）。
+
 ## 4. 固定版本、Submodule 与自动更新的精确定义
 
 ```text
