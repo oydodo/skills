@@ -16,9 +16,9 @@ cognition_skills:
     path: upstream/addyosmani-agent-skills/skills/interview-me
     trigger: critical_requirement_missing
   - name: crux-first-reasoning
-    role: judgment
+    role: dominant_tension_reasoning
     path: skills/crux-first-reasoning
-    trigger: consequential_analysis
+    trigger: nontrivial_diagnosis_or_findings_synthesis
   - name: grilling
     role: stress_test
     path: upstream/mattpocock-skills/skills/productivity/grilling
