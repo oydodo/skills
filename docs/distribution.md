@@ -8,10 +8,11 @@
 - **Third-party Skill**: review upstream changes and advance that submodule's *pinned gitlink*, then push. No unattended upstream auto-upgrades.
 - **Selection or trigger**: edit `registry/skills.yaml` and its `description_override` entries, then push.
 - **Always-on core or Hook**: edit `core/always-on.md` or `core/hooks.json`. The build copies them into the generated Plugin `core/` and `hooks/` directories. Do not edit those generated copies.
+- **Formal release history / handoff**: edit root [`CHANGELOG.md`](../CHANGELOG.md) with the **next** patch version heading before publishing any changed Plugin content. The build gates version changes on this entry and copies the canonical file into each Plugin ZIP. Do not edit the generated Plugin copy.
 
-The [publish workflow](../.github/workflows/publish-plugins.yml) fetches only selected submodules; rebuilds `skills/`, `licenses/`, `core/`, `hooks/` and `SOURCES.md` inside the plugin; increments patch versions of ChatGPT and Claude manifests when generated data changes; commits the result to `main`; creates both ZIPs; and publishes a [GitHub Release](https://github.com/oydodo/skills/releases/latest).
+The [publish workflow](../.github/workflows/publish-plugins.yml) fetches only selected submodules; rebuilds `skills/`, `licenses/`, `core/`, `hooks/`, `SOURCES.md` and `CHANGELOG.md` inside the plugin; increments patch versions of ChatGPT and Claude manifests when generated data changes; commits the result to `main`; creates both ZIPs; and publishes a [GitHub Release](https://github.com/oydodo/skills/releases/latest).
 
-The workflow requires `GITHUB_TOKEN` with repository **contents: write** and a branch policy allowing the Actions bot to push. If either disallows it, the workflow will fail rather than silently distribute stale sources.
+The GitHub Release notes are taken from the matching version section of `CHANGELOG.md`, rather than generic boilerplate. The workflow requires `GITHUB_TOKEN` with repository **contents: write** and a branch policy allowing the Actions bot to push. If either disallows it, the workflow will fail rather than silently distribute stale sources.
 
 ## Local reproduction
 
