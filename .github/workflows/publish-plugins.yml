@@ -11,6 +11,7 @@ on:
       - "core/hooks.json"
       - "tests/test_core_hook.py"
       - "tests/test_codegraph_skill.py"
+      - "tests/test_visual_explainer.py"
       - "upstream/**"
       - ".gitmodules"
       - "plugins/oydodo-skills/**"
@@ -40,6 +41,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
       - name: Install build dependency
         run: python3 -m pip install PyYAML==6.0.2
 
@@ -52,7 +56,7 @@ jobs:
           done < /tmp/oydodo-modules.txt
 
       - name: Compile and validate build tools
-        run: python3 -m compileall -q scripts/build_plugins.py scripts/package_plugins.py scripts/package_claude_plugin.py tests/test_core_hook.py tests/test_codegraph_skill.py
+        run: python3 -m compileall -q scripts/build_plugins.py scripts/package_plugins.py scripts/package_claude_plugin.py tests/test_core_hook.py tests/test_codegraph_skill.py tests/test_visual_explainer.py
 
       - name: Build shared Skill tree and update versions
         run: python3 scripts/build_plugins.py --write

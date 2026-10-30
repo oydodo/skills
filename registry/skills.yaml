@@ -1,5 +1,5 @@
 # Selected Skills only; submodules are sources, not automatic installations.
-version: 16
+version: 17
 upstreams:
   addyosmani:
     url: https://github.com/addyosmani/agent-skills
@@ -30,6 +30,10 @@ upstreams:
   jjsnack:
     url: https://github.com/jjsnack/technical-language-skill
     module_path: upstream/technical-language-skill
+    branch: main
+  visual-explainer:
+    url: https://github.com/nicobailon/visual-explainer
+    module_path: upstream/visual-explainer
     branch: main
 skills:
   - name: philosophical-foundation
@@ -93,6 +97,13 @@ skills:
     category: development
     skill_path: skills/codegraph
     capability_layer: coding
+  - name: visual-explainer
+    source: visual-explainer
+    category: visualization
+    skill_path: upstream/visual-explainer/plugins/visual-explainer
+    capability_layer: presentation
+    description_override: >-
+      Create a polished, figure-first visual report or explainer when the user explicitly asks to visualize, diagram, show visually, or present an architecture, project status, research results, plan, review, comparison, data story, or presentation. Prefer a self-contained browser-viewable HTML page when the environment permits file output and viewing. Use only when a visual artifact would materially improve comprehension; do not turn routine Q&A, brief status messages, or ordinary small tables into HTML. In clients without filesystem/browser access, use supported inline diagram or chart formats and state limitations; do not claim files were created.
   - name: technical-writing
     source: luoling
     category: writing

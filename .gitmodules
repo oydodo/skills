@@ -26,3 +26,7 @@
 	path = upstream/deepseek-harness
 	url = https://github.com/deepseek-ai/deepseek-harness.git
 	branch = master
+[submodule "upstream/visual-explainer"]
+	path = upstream/visual-explainer
+	url = https://github.com/nicobailon/visual-explainer.git
+	branch = main

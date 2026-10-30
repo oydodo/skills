@@ -1,5 +1,7 @@
 # Evaluation
 
+[Visual Explainer](test_visual_explainer.py) now has a pinned-submodule and license check, curated-trigger contract, full renderer/resource packaging check and a headless Node.js HTML smoke test. It does not prove browser appearance, Web Plugin execution, or spontaneous routing; test those separately on the actual Agent runtime.
+
 CodeGraph integration has a [packaging/safety contract test](test_codegraph_skill.py) plus [positive/negative routing scenarios](../skills/codegraph/references/evaluation.md). Its CLI/MCP is external, so packaging tests do not establish that an Agent has actually indexed or queried a repository.
 Formal version history, important design changes and Claude handoff: [CHANGELOG.md](../CHANGELOG.md). This is published with each Plugin ZIP. The build refuses to release changed content without a matching next-version entry.
 

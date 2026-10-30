@@ -1,6 +1,6 @@
 # Unified ChatGPT / Claude plugin distribution
 
-`registry/skills.yaml` is the source of truth for the selected Skill set and curated trigger descriptions. The four maintained Skill bodies (three reasoning cores plus one CodeGraph adapter) live in `skills/`; the canonical advisory always-on text and hook definition live in `core/always-on.md` and `core/hooks.json`; ten third-party bodies and their resources come from pinned Git submodules under `upstream/`. Do not edit the generated `plugins/oydodo-skills/skills/` tree.
+`registry/skills.yaml` is the source of truth for the selected Skill set and curated trigger descriptions. The four maintained Skill bodies (three reasoning cores plus one CodeGraph adapter) live in `skills/`; the canonical advisory always-on text and hook definition live in `core/always-on.md` and `core/hooks.json`; eleven third-party bodies and their resources come from pinned Git submodules under `upstream/`. Do not edit the generated `plugins/oydodo-skills/skills/` tree.
 
 ## Updating
 
@@ -18,7 +18,7 @@ The GitHub Release notes are taken from the matching version section of `CHANGEL
 
 ```bash
 python3 -m pip install PyYAML==6.0.2
-git submodule update --init upstream/addyosmani-agent-skills upstream/mattpocock-skills upstream/ponytail upstream/technical-writing upstream/wondelai-skills upstream/technical-language-skill
+git submodule update --init upstream/addyosmani-agent-skills upstream/mattpocock-skills upstream/ponytail upstream/technical-writing upstream/wondelai-skills upstream/technical-language-skill upstream/visual-explainer
 python3 scripts/build_plugins.py --write
 python3 scripts/build_plugins.py --check
 python3 -m unittest discover -s tests -p test_core_hook.py -v
@@ -30,6 +30,10 @@ Artifacts: `dist/oydodo-skills-claude.zip` and `dist/oydodo-skills-chatgpt.zip`.
 ## CodeGraph adapter (optional local tool)
 
 The [`codegraph` Skill](../skills/codegraph/SKILL.md) guides an Agent through the separately installed [colbymchenry/codegraph](https://github.com/colbymchenry/codegraph) CLI/MCP. The Plugin includes neither its executable nor an MCP server. Installing the Plugin alone cannot index a repository or enable CodeGraph in a Web-only chat. No global `codegraph install` or per-project `codegraph init` is executed automatically; follow the version-pinned guide if explicitly requested.
+
+## Visual report skill (optional)
+
+The upstream [visual-explainer](https://github.com/nicobailon/visual-explainer) skill is pinned at v0.14.0 and bundled **with its renderer and reference files** through `upstream/visual-explainer/plugins/visual-explainer`. Use the curated trigger metadata only for genuinely visual explanations, audit/status reports, architecture diagrams, comparisons or slide requests. It is not a global SessionStart rule: a regular chat or short status answer does not require HTML. Rendering uses local files, Node and often a browser; Web-only sessions may not support the same artifact workflow. Use the platform's supported native diagrams/charts where appropriate, and never claim an uncreated local HTML page. The visual-explainer body remains unmodified; the registry overrides **discovery metadata**, not the runtime content.
 
 ## Advisory core Hook (local runtimes only)
 
@@ -51,6 +55,6 @@ Do not equate successful ZIP building with actual auto-invocation accuracy. Main
 
 1. In Claude Web, open **Customize → Plugins → Add → Add marketplace → Add from a repository** (labels can vary by rollout).
 2. Enter `oydodo/skills` or `https://github.com/oydodo/skills`, add the marketplace, then add the **single** `oydodo-skills` plugin.
-3. Start a fresh chat and verify the fourteen independent skills with the `/` menu or chat `+` menu. Avoid keeping duplicate standalone skill names active.
+3. Start a fresh chat and verify the fifteen independent skills with the `/` menu or chat `+` menu. Avoid keeping duplicate standalone skill names active.
 
 Anthropic [documents personal Git marketplace installation](https://support.claude.com/en/articles/13837440-use-plugins-in-claude). This is preferable to repeatedly uploading ZIP files, but **do not claim every push automatically reaches an installed personal plugin** until the sync cadence has been observed on the actual account. If the marketplace UI is unavailable, upload `oydodo-skills-claude.zip` from the [latest release](https://github.com/oydodo/skills/releases/latest) and manually replace it for updates.
