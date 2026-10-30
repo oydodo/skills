@@ -6,6 +6,19 @@
 - **版本对应**：以 [GitHub Releases](https://github.com/oydodo/skills/releases) 和已合并 PR 为准；`v0.1.9` 引入版本记录分发；此后每版按本文件记录变更。
 - **不要混淆**：代码合并、CI 通过、ZIP 发布、Marketplace 已同步、Agent 实际触发，是不同的验收层级。
 
+## [0.1.12] - 2026-10-30
+
+### Added — Matt 的 Agent 质量闭环（15 → 18）
+
+- 从已固定的 [mattpocock/skills](https://github.com/mattpocock/skills) Submodule commit `59db609eb1e18aaf59b63284d0e52255aff0c63c` 精选三个原版 Skill（不升级整个上游，也不复制或改写正文）：`writing-for-agents`（Agent 指令质量）、`diagnosing-bugs`（复杂故障的可复现反馈闭环）、`retro`（基于证据的 Agent 会话复盘）。
+- 精选数量 **15 → 18**；第三方 **11 → 14**、自维护 **4** 项不变。三个新增 Skill 均按需使用，不写入全局常驻 Hook；`retro` 必须用户主动调用，`diagnosing-bugs` 不用于常规小修，`writing-for-agents` 不用于普通文稿。
+- 两类 Agent 指令相关 Skill 可以配合使用：`retro` 原版引用 `writing-for-agents`，全部参考文件、脚本和 MIT License 随 Plugin 打包；新增目录与触发边界的静态测试。
+
+### Fixed — Claude / Codex 的隐式调用语义
+
+- 修复生成器只保留 `name` / `description`，导致上游 `disable-model-invocation: true` 丢失的问题（已选中的 `wayfinder` 也受影响）。今后保留该用户主动调用标志，并确保对应 `agents/openai.yaml` 中 `policy.allow_implicit_invocation: false`；源 Skill 正文保持不变。
+- 该字段的跨客户端支持存在差异：GitHub Actions、压缩包和静态断言验证不等于 ChatGPT Web / Claude Web 或本地真实触发验收。使用前应分别做显式调用与非匹配任务的负例验证。
+
 ## [0.1.11] - 2026-10-30
 
 ### Added — Agent 可视化汇报能力（Visual Explainer）
