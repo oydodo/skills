@@ -41,7 +41,7 @@ class VisualExplainerTest(unittest.TestCase):
             (ROOT / "registry/curation.yaml").read_text(encoding="utf-8")
         )
         entries = catalog["skills"]
-        self.assertEqual(len(entries), 15)
+        self.assertEqual(len(entries), 18)
         (item,) = [e for e in entries if e["name"] == "visual-explainer"]
         self.assertEqual(item["source"], "visual-explainer")
         self.assertEqual(
@@ -51,7 +51,7 @@ class VisualExplainerTest(unittest.TestCase):
         self.assertIn("explicitly asks", desc)
         self.assertIn("Web", desc) if "Web" in desc else self.assertIn("clients", desc)
         self.assertIn("do not turn routine", desc)
-        self.assertEqual(curation["selected_count"], 15)
+        self.assertEqual(curation["selected_count"], 18)
         self.assertIn("visual-explainer", curation["selected"]["visualization"])
         self.assertNotIn("visual-explainer", curation["not_selected"]["other"])
 
@@ -75,7 +75,7 @@ class VisualExplainerTest(unittest.TestCase):
         version = json.loads((BUNDLE / "plugin.json").read_text(encoding="utf-8"))[
             "version"
         ]
-        self.assertEqual(version, "0.1.11")
+        self.assertEqual(version, "0.1.12")
         self.assertIn(
             "## [0.1.11] - 2026-10-30",
             (ROOT / "CHANGELOG.md").read_text(encoding="utf-8"),
