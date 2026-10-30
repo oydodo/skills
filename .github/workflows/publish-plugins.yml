@@ -10,6 +10,7 @@ on:
       - "core/always-on.md"
       - "core/hooks.json"
       - "tests/test_core_hook.py"
+      - "tests/test_codegraph_skill.py"
       - "upstream/**"
       - ".gitmodules"
       - "plugins/oydodo-skills/**"
@@ -51,7 +52,7 @@ jobs:
           done < /tmp/oydodo-modules.txt
 
       - name: Compile and validate build tools
-        run: python3 -m compileall -q scripts/build_plugins.py scripts/package_plugins.py scripts/package_claude_plugin.py tests/test_core_hook.py
+        run: python3 -m compileall -q scripts/build_plugins.py scripts/package_plugins.py scripts/package_claude_plugin.py tests/test_core_hook.py tests/test_codegraph_skill.py
 
       - name: Build shared Skill tree and update versions
         run: python3 scripts/build_plugins.py --write
@@ -60,7 +61,7 @@ jobs:
         run: python3 scripts/build_plugins.py --check
 
       - name: Verify fail-open hook and generated assets
-        run: python3 -m unittest discover -s tests -p test_core_hook.py -v
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
 
       - name: Produce both ChatGPT and Claude ZIPs
         run: python3 scripts/package_plugins.py --platform all

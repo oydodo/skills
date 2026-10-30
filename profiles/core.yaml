@@ -1,5 +1,5 @@
 # Desired workset only, not automatic runtime activation.
-version: 9
+version: 10
 philosophy_skills:
   - name: philosophical-foundation
     role: top_level_philosophical_lens
@@ -42,6 +42,10 @@ investigation_skills:
     path: upstream/mattpocock-skills/skills/engineering/prototype
     trigger: prototype_to_decide
 coding_skills:
+  - name: codegraph
+    role: optional_local_code_graph_navigation
+    path: skills/codegraph
+    trigger: multihop_repository_structure_or_change_impact_with_tool_available
   - name: ponytail
     role: coding_simplicity
     path: upstream/ponytail/skills/ponytail
@@ -70,3 +74,5 @@ routing:
   wayfinder_do_not_claim_persistence_without_storage_receipt: true
   skip_unneeded_layers: true
   project_specific_skills: not_global
+  codegraph_requires_local_cli_or_mcp_and_index: true
+  codegraph_no_automatic_setup: true

@@ -1,5 +1,6 @@
 # Evaluation
 
+CodeGraph integration has a [packaging/safety contract test](test_codegraph_skill.py) plus [positive/negative routing scenarios](../skills/codegraph/references/evaluation.md). Its CLI/MCP is external, so packaging tests do not establish that an Agent has actually indexed or queried a repository.
 Formal version history, important design changes and Claude handoff: [CHANGELOG.md](../CHANGELOG.md). This is published with each Plugin ZIP. The build refuses to release changed content without a matching next-version entry.
 
 The Plugin SessionStart Hook has separate [fail-open shell tests](test_core_hook.py): missing/empty/unreadable core content and both Plugin-root environment variable forms must not interrupt startup. In CI, run these tests **after** rebuilding generated Plugin assets. These are command-level checks, not proof of actual Codex/Claude Code hook invocation.

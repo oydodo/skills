@@ -1,5 +1,5 @@
 # Selected Skills only; submodules are sources, not automatic installations.
-version: 15
+version: 16
 upstreams:
   addyosmani:
     url: https://github.com/addyosmani/agent-skills
@@ -88,6 +88,11 @@ skills:
     capability_layer: coding
     description_override: >-
       Apply pragmatic coding simplification when implementing, debugging, refactoring or reviewing code. Make the smallest complete change, include necessary tests and avoid speculative abstractions; adapt to requested scope.
+  - name: codegraph
+    source: maintained
+    category: development
+    skill_path: skills/codegraph
+    capability_layer: coding
   - name: technical-writing
     source: luoling
     category: writing

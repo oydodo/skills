@@ -1,7 +1,7 @@
 {
   "name": "oydodo-skills",
   "version": "0.1.9",
-  "description": "Thirteen curated, independently triggered skills for sound judgment, reasoning, requirements interviews, plan review, lean coding and technical writing.",
+  "description": "Fourteen curated, independently triggered skills for sound judgment, reasoning, requirements interviews, plan review, optional CodeGraph repository analysis, lean coding and technical writing.",
   "author": {
     "name": "oydodo",
     "url": "https://github.com/oydodo"
