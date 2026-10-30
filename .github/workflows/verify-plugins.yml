@@ -12,6 +12,7 @@ on:
       - "scripts/build_plugins.py"
       - "scripts/package_plugins.py"
       - "tests/test_core_hook.py"
+      - "tests/test_codegraph_skill.py"
       - ".github/workflows/verify-plugins.yml"
 
 permissions:
@@ -37,13 +38,13 @@ jobs:
             git submodule update --init --depth 1 -- "$module"
           done < /tmp/oydodo-modules.txt
       - name: Validate Python syntax
-        run: python3 -m compileall -q scripts/build_plugins.py scripts/package_plugins.py tests/test_core_hook.py
+        run: python3 -m compileall -q scripts/build_plugins.py scripts/package_plugins.py tests/test_core_hook.py tests/test_codegraph_skill.py
       - name: Rebuild local Plugin artifacts
         run: |
           python3 scripts/build_plugins.py --write
           python3 scripts/build_plugins.py --check
       - name: Validate fail-open hooks
-        run: python3 -m unittest discover -s tests -p test_core_hook.py -v
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
       - name: Extract versioned release notes
         run: |
           VERSION=$(python3 -c 'import json; print(json.load(open("plugins/oydodo-skills/plugin.json"))["version"])')
