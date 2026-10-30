@@ -100,7 +100,7 @@ class VisualExplainerTest(unittest.TestCase):
                 '<head><title>项目进度可视化</title>'
                 '<link rel="stylesheet" href="kit.css" data-ve-kit></head>'
                 '<body><main><header><h1>10 of 12 tasks done</h1></header>'
-                '<figure><ve-bars unit="tasks" max="12" '
+                '<figure><ve-bars unit="t" max="12" '
                 'label="10 of 12 tasks completed">'
                 '<ve-bar value="10" hot>done</ve-bar>'
                 '<ve-bar value="2">left</ve-bar></ve-bars>'
