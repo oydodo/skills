@@ -1,0 +1,17 @@
+{
+  "description": "Advisory, fail-open Oydodo core principles for local Agent sessions.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "^(startup|resume|clear|compact|fork)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "root=\"${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:-}}\"; if [ -n \"$root\" ]; then file=\"$root/core/always-on.md\"; if [ -f \"$file\" ] && [ -r \"$file\" ]; then payload=$(cat \"$file\" 2>/dev/null) || payload=; if [ -n \"$payload\" ]; then printf '%s\\n' \"$payload\"; fi; fi; fi; exit 0",
+            "timeout": 3
+          }
+        ]
+      }
+    ]
+  }
+}
