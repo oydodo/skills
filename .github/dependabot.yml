@@ -1,0 +1,22 @@
+# Dependabot is native GitHub dependency monitoring, not an auto-merge bot.
+# Update only curated upstream submodules used by registry/skills.yaml.
+# A PR is only an update *proposal*: review upstream diffs, adapt tests,
+# add the next versioned CHANGELOG.md entry, then merge after CI is green.
+version: 2
+updates:
+  - package-ecosystem: "gitsubmodule"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Taipei"
+    open-pull-requests-limit: 7
+    allow:
+      - dependency-name: "upstream/addyosmani-agent-skills"
+      - dependency-name: "upstream/mattpocock-skills"
+      - dependency-name: "upstream/ponytail"
+      - dependency-name: "upstream/technical-writing"
+      - dependency-name: "upstream/wondelai-skills"
+      - dependency-name: "upstream/technical-language-skill"
+      - dependency-name: "upstream/visual-explainer"
