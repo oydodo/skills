@@ -2,6 +2,7 @@
 
 [Visual Explainer](test_visual_explainer.py) now has a pinned-submodule and license check, curated-trigger contract, full renderer/resource packaging check and a headless Node.js HTML smoke test. It does not prove browser appearance, Web Plugin execution, or spontaneous routing; test those separately on the actual Agent runtime.
 
+Matt's three added quality skills have a [pinned-source/packaging/invocation-policy contract test](test_matt_quality_skills.py): checks 18 curated entries, `writing-for-agents` reference and `diagnosing-bugs` reproduction script, upstream MIT licenses, and `retro` / `wayfinder` explicit-only metadata for Claude and Codex. [Positive and negative routing cases](core-routing.md) remain **manual acceptance checks**; static tests do not prove actual client triggering.
 CodeGraph integration has a [packaging/safety contract test](test_codegraph_skill.py) plus [positive/negative routing scenarios](../skills/codegraph/references/evaluation.md). Its CLI/MCP is external, so packaging tests do not establish that an Agent has actually indexed or queried a repository.
 Formal version history, important design changes and Claude handoff: [CHANGELOG.md](../CHANGELOG.md). This is published with each Plugin ZIP. The build refuses to release changed content without a matching next-version entry.
 
