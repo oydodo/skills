@@ -6,6 +6,9 @@ on:
     paths:
       - "registry/skills.yaml"
       - "skills/**"
+      - "core/always-on.md"
+      - "core/hooks.json"
+      - "tests/test_core_hook.py"
       - "upstream/**"
       - ".gitmodules"
       - "plugins/oydodo-skills/**"
@@ -47,13 +50,16 @@ jobs:
           done < /tmp/oydodo-modules.txt
 
       - name: Compile and validate build tools
-        run: python3 -m compileall -q scripts/build_plugins.py scripts/package_plugins.py scripts/package_claude_plugin.py
+        run: python3 -m compileall -q scripts/build_plugins.py scripts/package_plugins.py scripts/package_claude_plugin.py tests/test_core_hook.py
 
       - name: Build shared Skill tree and update versions
         run: python3 scripts/build_plugins.py --write
 
       - name: Check generated files and version consistency
         run: python3 scripts/build_plugins.py --check
+
+      - name: Verify fail-open hook and generated assets
+        run: python3 -m unittest discover -s tests -p test_core_hook.py -v
 
       - name: Produce both ChatGPT and Claude ZIPs
         run: python3 scripts/package_plugins.py --platform all
@@ -64,7 +70,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A -- plugins/oydodo-skills/skills plugins/oydodo-skills/licenses \
-            plugins/oydodo-skills/SOURCES.md plugins/oydodo-skills/plugin.json \
+            plugins/oydodo-skills/SOURCES.md plugins/oydodo-skills/core \
+            plugins/oydodo-skills/hooks plugins/oydodo-skills/plugin.json \
             plugins/oydodo-skills/.codex-plugin/plugin.json \
             plugins/oydodo-skills/.claude-plugin/plugin.json
           if git diff --cached --quiet; then
