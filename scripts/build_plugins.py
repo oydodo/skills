@@ -230,6 +230,23 @@ def versions() -> tuple[str, list[tuple[Path, dict]]]:
     return version, manifests
 
 
+def release_notes_for(version: str) -> str:
+    """Return the exact versioned notes for GitHub Releases and handoff."""
+    history = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    first = re.search(
+        rf"(?m)^## \[{re.escape(version)}\] - [0-9]{{4}}-[0-9]{{2}}-[0-9]{{2}}\s*$",
+        history,
+    )
+    if first is None:
+        raise ValueError(f"No CHANGELOG.md notes for release v{version}")
+    next_release = re.search(
+        r"(?m)^## \[[0-9]+\.[0-9]+\.[0-9]+\] - ",
+        history[first.end():],
+    )
+    end = first.end() + next_release.start() if next_release else len(history)
+    return history[first.start():end].strip() + "\n"
+
+
 def sync(check: bool) -> None:
     old_version, manifests = versions()
     with tempfile.TemporaryDirectory(prefix="oydodo-build-") as temp:
@@ -281,9 +298,13 @@ def main() -> None:
     group.add_argument("--check", action="store_true", help="Fail on generated drift")
     group.add_argument("--list-submodules", action="store_true",
                        help="Print only selected pinned upstream submodule paths")
+    group.add_argument("--release-notes", metavar="VERSION",
+                       help="Print the matching CHANGELOG.md section for GitHub Releases")
     args = parser.parse_args()
     if args.list_submodules:
         print("\n".join(source_modules()))
+    elif args.release_notes:
+        print(release_notes_for(args.release_notes), end="")
     else:
         sync(check=args.check or not args.write)
 
