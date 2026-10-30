@@ -53,7 +53,7 @@ class CodeGraphSkillContractTest(unittest.TestCase):
         self.assertIn("nonblocking", body)
         self.assertIn("codegraph_explore", body)
         self.assertIn("codegraph status", body)
-        self.assertIn("do **not** bundle", body)
+        self.assertIn("does **not** bundle", body)
         self.assertIn("Do not execute these commands merely because this Skill was loaded", body)
         self.assertIn("Web-only", body)
         self.assertNotIn("curl -fsSL", body)
