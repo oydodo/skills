@@ -1,6 +1,6 @@
 # Unified ChatGPT / Claude plugin distribution
 
-`registry/skills.yaml` is the source of truth for the selected Skill set and curated trigger descriptions. The three maintained Skill bodies live in `skills/`; the canonical advisory always-on text and hook definition live in `core/always-on.md` and `core/hooks.json`; ten third-party bodies and their resources come from pinned Git submodules under `upstream/`. Do not edit the generated `plugins/oydodo-skills/skills/` tree.
+`registry/skills.yaml` is the source of truth for the selected Skill set and curated trigger descriptions. The four maintained Skill bodies (three reasoning cores plus one CodeGraph adapter) live in `skills/`; the canonical advisory always-on text and hook definition live in `core/always-on.md` and `core/hooks.json`; ten third-party bodies and their resources come from pinned Git submodules under `upstream/`. Do not edit the generated `plugins/oydodo-skills/skills/` tree.
 
 ## Updating
 
@@ -27,6 +27,10 @@ python3 scripts/package_plugins.py --platform all
 
 Artifacts: `dist/oydodo-skills-claude.zip` and `dist/oydodo-skills-chatgpt.zip`.
 
+## CodeGraph adapter (optional local tool)
+
+The [`codegraph` Skill](../skills/codegraph/SKILL.md) guides an Agent through the separately installed [colbymchenry/codegraph](https://github.com/colbymchenry/codegraph) CLI/MCP. The Plugin includes neither its executable nor an MCP server. Installing the Plugin alone cannot index a repository or enable CodeGraph in a Web-only chat. No global `codegraph install` or per-project `codegraph init` is executed automatically; follow the version-pinned guide if explicitly requested.
+
 ## Advisory core Hook (local runtimes only)
 
 The Plugin includes a fail-open `SessionStart` Hook with no external script path: it reads `core/always-on.md` relative to the installed Plugin root, and silently returns success on missing/unreadable/empty text. Supported session sources: startup, resume, clear, compact, fork. On Codex the Hook must first be trusted via `/hooks`; updates to its definition may require renewed trust. This is an advisory prompt, not a safety control. It does not bypass platform restrictions, and cannot guarantee injection in Web-only ChatGPT or Claude chats. The build **fails strictly** when core files or hook configuration are missing; the running Agent **fails open** when the optional text is unavailable.
@@ -47,6 +51,6 @@ Do not equate successful ZIP building with actual auto-invocation accuracy. Main
 
 1. In Claude Web, open **Customize → Plugins → Add → Add marketplace → Add from a repository** (labels can vary by rollout).
 2. Enter `oydodo/skills` or `https://github.com/oydodo/skills`, add the marketplace, then add the **single** `oydodo-skills` plugin.
-3. Start a fresh chat and verify the thirteen independent skills with the `/` menu or chat `+` menu. Avoid keeping duplicate standalone skill names active.
+3. Start a fresh chat and verify the fourteen independent skills with the `/` menu or chat `+` menu. Avoid keeping duplicate standalone skill names active.
 
 Anthropic [documents personal Git marketplace installation](https://support.claude.com/en/articles/13837440-use-plugins-in-claude). This is preferable to repeatedly uploading ZIP files, but **do not claim every push automatically reaches an installed personal plugin** until the sync cadence has been observed on the actual account. If the marketplace UI is unavailable, upload `oydodo-skills-claude.zip` from the [latest release](https://github.com/oydodo/skills/releases/latest) and manually replace it for updates.
