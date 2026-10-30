@@ -1,8 +1,8 @@
-# Non-destructive curation: 80 local skills; 10 selected locally, 4 maintained in repository.
-version: 10
+# Non-destructive curation: 80 local skills; 11 selected locally, 4 maintained in repository.
+version: 11
 installed_snapshot: 80
-selected_count: 14
-selected_local_count: 10
+selected_count: 15
+selected_local_count: 11
 selected:
   philosophy:
     - philosophical-foundation
@@ -21,6 +21,8 @@ selected:
   coding:
     - ponytail
     - codegraph
+  visualization:
+    - visual-explainer
   writing:
     - technical-writing
     - technical-documentation
@@ -60,7 +62,6 @@ not_selected:
     - archify
     - design-taste-frontend
     - explore-recipes
-    - visual-explainer
     - find-skills
     - nopua
     - write-a-skill
@@ -107,3 +108,4 @@ notes:
   - local_installs_unchanged
   - retained_git_submodules
   - codegraph_is_a_new_maintained_adapter_for_colbymchenry_codegraph_not_the_excluded_codas_skill
+  - visual_explainer_selected_from_prior_local_snapshot_as_pinned_nicobailon_upstream
