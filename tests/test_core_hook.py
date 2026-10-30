@@ -102,5 +102,18 @@ class CoreHookTest(unittest.TestCase):
                          (ROOT / "CHANGELOG.md").read_bytes())
 
 
+    def test_versioned_changelog_is_ready_for_claude_handoff(self):
+        notes = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+        bundle = ROOT / "plugins" / "oydodo-skills"
+        current = json.loads((bundle / "plugin.json").read_text(encoding="utf-8"))["version"]
+        versions = [line for line in notes.splitlines() if line.startswith("## [")]
+        self.assertTrue(versions and versions[0].startswith(f"## [{current}] - "))
+        for version in ("0.1.6", "0.1.7", "0.1.8"):
+            self.assertIn(f"## [{version}]", notes)
+        self.assertIn("Design contract", notes)
+        self.assertIn("主要矛盾", notes)
+        self.assertIn("CHANGELOG.md", CORE.read_text(encoding="utf-8"))
+
+
 if __name__ == "__main__":
     unittest.main()
