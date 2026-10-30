@@ -1,10 +1,12 @@
 # oydodo Skills Plugin
 
-**One Plugin, fifteen distinct Skills.** Individual `skills/<name>/SKILL.md` entrypoints remain intact. This is not a merged umbrella Skill or a mandatory fifteen-step workflow.
+**One Plugin, eighteen distinct Skills.** Individual `skills/<name>/SKILL.md` entrypoints remain intact. This is not a merged umbrella Skill or a mandatory eighteen-step workflow.
 
 **Formal release history & Claude handoff:** see the bundled [CHANGELOG.md](CHANGELOG.md). It preserves v0.1.6–v0.1.9 reasoning decisions, three-core-Skill boundaries, and actual deployment/test limits. Read it when onboarding or reviewing changes; it is **not** injected on every session.
 
 This is a **skills-only** Agent Plugin using root `plugin.json` and a backward-compatible `.codex-plugin/plugin.json`. All required Skill contents and references are vendored: Git submodules are NOT required by consumers. The plugin has no connected MCP server or secrets. The bundled [CodeGraph Skill](skills/codegraph/SKILL.md) is guidance for a separate, MIT-licensed CLI/MCP project; it never auto-installs that executable or creates an index. The [visual-explainer Skill](skills/visual-explainer/SKILL.md) includes its version-pinned HTML renderer and reference assets (MIT), but is not an automatically running server or global hook. Use it for explicitly visual results; browser viewing and node-based rendering require suitable host capabilities. It bundles an optional, fail-open **SessionStart Hook** for supported local runtimes; web-only installs do not deploy executable hooks.
+
+**Matt quality skills (v0.1.12):** `writing-for-agents` improves instructions that agents consume; `diagnosing-bugs` is reserved for difficult, reproducible diagnostic work; `retro` is an explicitly user-invoked session review. Claude's `disable-model-invocation: true` is retained for `retro` and `wayfinder`, and Codex receives `policy.allow_implicit_invocation: false` in their `agents/openai.yaml`. Packaging checks are not proof of Web runtime routing.
 
 ## Install on ChatGPT desktop (macOS)
 
