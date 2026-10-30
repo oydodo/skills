@@ -11,7 +11,7 @@ import zipfile
 from build_plugins import ROOT, BUNDLE, catalog, versions
 
 FILE_PARTS = ("skills", "licenses", "core", "hooks")
-COMMON_FILES = ("README.md", "SOURCES.md")
+COMMON_FILES = ("README.md", "SOURCES.md", "CHANGELOG.md")
 PLATFORM_FILES = {
     "claude": (".claude-plugin",),
     "chatgpt": (".codex-plugin", "plugin.json"),
@@ -59,6 +59,12 @@ def package(platform: str, output: Path) -> None:
                        if re.fullmatch(r"skills/[^/]+/SKILL.md", x)}
         if entrypoints != expected or verify.testzip() is not None:
             raise ValueError("ZIP payload verification failed")
+        if "CHANGELOG.md" not in inside:
+            raise ValueError("Versioned Changelog is missing from the Plugin ZIP")
+        notes = verify.read("CHANGELOG.md").decode("utf-8")
+        released = re.search(r"(?m)^## \[([0-9]+\.[0-9]+\.[0-9]+)\] - [0-9]{4}-[0-9]{2}-[0-9]{2}\s*$", notes)
+        if released is None or released.group(1) != version:
+            raise ValueError(f"Changelog version does not match packaged v{version}")
         if not {"core/always-on.md", "hooks/hooks.json"}.issubset(inside):
             raise ValueError("Required always-on policy or SessionStart Hook missing from ZIP")
         hooks = json.loads(verify.read("hooks/hooks.json").decode("utf-8"))
