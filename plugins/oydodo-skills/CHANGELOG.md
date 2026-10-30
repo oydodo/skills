@@ -6,6 +6,20 @@
 - **版本对应**：以 [GitHub Releases](https://github.com/oydodo/skills/releases) 和已合并 PR 为准；`v0.1.9` 引入版本记录分发；此后每版按本文件记录变更。
 - **不要混淆**：代码合并、CI 通过、ZIP 发布、Marketplace 已同步、Agent 实际触发，是不同的验收层级。
 
+## [0.1.11] - 2026-10-30
+
+### Added — Agent 可视化汇报能力（Visual Explainer）
+
+- 从 MIT 开源的 [nicobailon/visual-explainer](https://github.com/nicobailon/visual-explainer) 引入 **v0.14.0**，固定 Git commit `5f378868e0ea745a6284b51e710c390f0c76f72c`，作为第 **15 个独立 Skill**。通过 Git submodule 管理版本，保持 upstream `SKILL.md`、HTML 渲染 kit、模板与参考文件原样；构建时复制至 ChatGPT/Codex 和 Claude 两套 Plugin 包，保存 MIT 和随附第三方许可证。
+- 适用于可视化解释、架构/流程、方案比较、审查结果、研究与项目进展回顾、数据图表及演示页面。首屏优先呈现关键结论及图示，让读者理解事实、关系、变化与下一步，而非堆砌装饰性图形。
+- 在 `registry/skills.yaml` 使用受控的 **description_override**：仅在用户明确要求可视化，或任务与交付场景确实需要视觉表达时触发；避免普通答复、简短进展、简单表格无端变成 HTML。提供选择与降级说明，不修改上游 Skill 正文。
+- 从精选清单的 `not_selected.other` 移出此前盘点过的 `visual-explainer`；精选数 **14 → 15**，固定版本第三方 **10 → 11**，自维护 Skill 仍为 **4**；三个核心判断 Skill 的职责和常驻 Hook 均不变。
+
+### Compatibility and verification
+
+- 本地 Node + 文件系统允许使用内置 `kit/render.mjs` 输出自包含 HTML；浏览器可用时进行视觉检查。**Web Plugin 的 Skill 安装不代表浏览器/Node/本地文件执行权限自动开放**；缺少产物能力时选用客户端原生图表/流程图等安全降级，不虚构 HTML 文件或已打开的浏览器。
+- 发布后需分别验证真实 Agent 的触发、HTML 输出和可读性。GitHub 构建、文件存在和静态/无浏览器渲染测试仅证明分发/基本渲染，不证明所有客户端的自动触发、文件打开和渲染质量。
+
 ## [0.1.10] - 2026-10-30
 
 ### Added — 开源 CodeGraph 作为第 14 个按需 Skill
