@@ -10,7 +10,7 @@ import zipfile
 
 from build_plugins import ROOT, BUNDLE, catalog, versions
 
-FILE_PARTS = ("skills", "licenses")
+FILE_PARTS = ("skills", "licenses", "core", "hooks")
 COMMON_FILES = ("README.md", "SOURCES.md")
 PLATFORM_FILES = {
     "claude": (".claude-plugin",),
@@ -59,6 +59,11 @@ def package(platform: str, output: Path) -> None:
                        if re.fullmatch(r"skills/[^/]+/SKILL.md", x)}
         if entrypoints != expected or verify.testzip() is not None:
             raise ValueError("ZIP payload verification failed")
+        if not {"core/always-on.md", "hooks/hooks.json"}.issubset(inside):
+            raise ValueError("Required always-on policy or SessionStart Hook missing from ZIP")
+        hooks = json.loads(verify.read("hooks/hooks.json").decode("utf-8"))
+        if not hooks.get("hooks", {}).get("SessionStart"):
+            raise ValueError("SessionStart Hook missing from packaged configuration")
         if any(x not in inside for x in
                (".claude-plugin/plugin.json",) if platform == "claude"):
             raise ValueError("Claude manifest missing from ZIP")

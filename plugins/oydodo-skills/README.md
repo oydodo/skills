@@ -2,7 +2,7 @@
 
 **One Plugin, thirteen distinct Skills.** Individual `skills/<name>/SKILL.md` entrypoints remain intact. This is not a merged umbrella Skill or a mandatory thirteen-step workflow.
 
-This is a **skills-only** Agent Plugin using root `plugin.json` and a backward-compatible `.codex-plugin/plugin.json`. All required Skill contents and references are vendored: Git submodules are NOT required by consumers. The plugin has no connected MCP server, secrets, or automatically registered hooks.
+This is a **skills-only** Agent Plugin using root `plugin.json` and a backward-compatible `.codex-plugin/plugin.json`. All required Skill contents and references are vendored: Git submodules are NOT required by consumers. The plugin has no connected MCP server or secrets. It bundles an optional, fail-open **SessionStart Hook** for supported local runtimes; web-only installs do not deploy executable hooks.
 
 ## Install on ChatGPT desktop (macOS)
 
@@ -13,7 +13,7 @@ codex plugin add oydodo-skills@oydodo
 
 If `codex` is absent from PATH, the ChatGPT desktop app may supply `/Applications/ChatGPT.app/Contents/Resources/codex-cli/bin/codex`.
 
-Restart ChatGPT desktop and test the installed plugin in a **new conversation**. This repo marketplace is a local installation mechanism; it does **not** by itself publish or sync the plugin to ChatGPT web/iOS. Availability depends on desktop version and workspace settings.
+Restart ChatGPT desktop and test the installed plugin in a **new conversation**. The bundled Hook is non-managed: open `/hooks` in Codex and review/trust it before expecting injection. It loads [core principles](core/always-on.md) on `startup|resume|clear|compact|fork`, and returns success without output when the file is missing, empty, or unreadable. It does not run extra setup scripts or block agent startup. This repo marketplace is a local installation mechanism; it does **not** by itself publish or sync the plugin to ChatGPT web/iOS. Availability depends on desktop version and workspace settings.
 
 For updates, use `codex plugin marketplace upgrade oydodo` and the plugin management workflow. If a standalone older `crux-first-reasoning` already exists, check duplicate Skill names and disable or replace the old version to prevent ambiguous routing.
 
@@ -53,6 +53,9 @@ The [Claude personal marketplace guide](https://support.claude.com/en/articles/1
 **Fallback:** upload [`oydodo-skills-claude.zip`](https://github.com/oydodo/skills/releases/latest/download/oydodo-skills-claude.zip) from the latest release under Customize → Plugins. A manually uploaded ZIP is not linked to the repository and requires re-uploading for later versions.
 
 ### Claude Code — public GitHub marketplace
+
+This Plugin also ships `hooks/hooks.json`, automatically discovered by Claude Code. The self-contained Hook uses `CLAUDE_PLUGIN_ROOT` to find the packaged [core principles](core/always-on.md). Check its startup, resume and post-compaction behavior in the target client; this has not been validated by a real Claude Code session yet. Missing or unreadable policy text is intentionally skipped (fail-open).
+
 
 ```bash
 claude plugin marketplace add oydodo/skills

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Build both platform plugins from the single curated Skill registry.
 
-Source of truth: registry/skills.yaml + skills/ + pinned upstream submodules.
-Generated outputs: plugins/oydodo-skills/{skills,licenses,SOURCES.md}.
+Source of truth: registry/skills.yaml + skills/ + core/{always-on.md,hooks.json} + pinned upstream submodules.
+Generated outputs: plugins/oydodo-skills/{skills,licenses,core,hooks,SOURCES.md}.
 Only generated contents change; platform-specific manifests keep their identities.
 """
 from __future__ import annotations
@@ -21,7 +21,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 BUNDLE = ROOT / "plugins" / "oydodo-skills"
 MANIFESTS = ("plugin.json", ".codex-plugin/plugin.json", ".claude-plugin/plugin.json")
-GENERATED_DIRS = ("skills", "licenses")
+GENERATED_DIRS = ("skills", "licenses", "core", "hooks")
 MAX_SIZE = 25 * 1024 * 1024
 
 
@@ -99,9 +99,36 @@ def normalized_skill(original: bytes, name: str, description_override: str | Non
     return (front + value[m.end():]).encode("utf-8")
 
 
+
+def copy_core(stage: Path) -> None:
+    """Package one canonical core policy plus its fail-open SessionStart hook."""
+    rules = ROOT / "core" / "always-on.md"
+    hooks = ROOT / "core" / "hooks.json"
+    if any(not p.is_file() or p.is_symlink() for p in (rules, hooks)):
+        raise ValueError("Missing or unsafe core/always-on.md or core/hooks.json")
+    content = rules.read_text(encoding="utf-8")
+    for name in ("philosophical-foundation", "independent-judgment", "crux-first-reasoning"):
+        if f"skills/{name}/SKILL.md" not in content:
+            raise ValueError(f"Always-on core is missing reference: {name}")
+    payload = json.loads(hooks.read_text(encoding="utf-8"))
+    groups = payload.get("hooks", {}).get("SessionStart", [])
+    if len(groups) != 1 or len(groups[0].get("hooks", [])) != 1:
+        raise ValueError("Expected one fail-open SessionStart command hook")
+    handler = groups[0]["hooks"][0]
+    command = handler.get("command")
+    if (handler.get("type") != "command" or not isinstance(command, str)
+            or "core/always-on.md" not in command or "exit 0" not in command):
+        raise ValueError("Core Hook must read the packaged rules and fail open")
+    for source, relative in ((rules, "core/always-on.md"), (hooks, "hooks/hooks.json")):
+        dest = stage / relative
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, dest)
+
+
 def make_tree(stage: Path) -> list[str]:
     data, entries = catalog()
     pins = {module: pinned_commit(module) for module in source_modules()}
+    copy_core(stage)
     origin = []
     for entry in entries:
         name = entry["name"]
@@ -160,7 +187,8 @@ def make_tree(stage: Path) -> list[str]:
         "| --- | --- | --- | --- |\n"
         + "\n".join(origin)
         + "\n\nThird-party licenses are included under licenses/. "
-        "No MCP servers or lifecycle hooks are installed by this bundle.\n"
+        "No MCP servers are installed. An optional fail-open SessionStart hook "
+        "loads the core principles on supported local Agent runtimes.\n"
     )
     (stage / "SOURCES.md").write_text(provenance, encoding="utf-8")
     return [e["name"] for e in entries]

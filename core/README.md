@@ -7,6 +7,6 @@
 
 **场景工具**：`interview-me`（关键需求确实缺失）、`grilling`（明确要求挑战）、`ponytail`（编码简化）、`technical-writing` / `technical-documentation` / `technical-language`（选与交付物匹配的一项）。
 
-所有能力均以 Skill 管理。**Skill 会被发现和按需加载，不能仅凭其存在就保证 Always-on**；不另外维护一份全局规则正文。
+**本地常驻核心**：[`always-on.md`](always-on.md) 是唯一的简短核心原则正文（包含三个核心 Skill 的本地入口及 GitHub 链接）；[`hooks.json`](hooks.json) 定义可选、失败放行的 SessionStart 注入。发布流程自动将两者打包进 Plugin，无须单独维护本机 AGENTS/CLAUDE 文件。完整 Skill 仍按需加载。Web Plugin 不保证运行这些本地 Hook。
 
 [选用配置](../profiles/core.yaml) · [Skill 索引](../registry/skills.yaml) · [剪枝状态](../registry/curation.yaml)
