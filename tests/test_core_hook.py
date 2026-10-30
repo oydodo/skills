@@ -98,6 +98,8 @@ class CoreHookTest(unittest.TestCase):
                          CORE.read_bytes())
         self.assertEqual((bundle / "hooks" / "hooks.json").read_bytes(),
                          HOOK.read_bytes())
+        self.assertEqual((bundle / "CHANGELOG.md").read_bytes(),
+                         (ROOT / "CHANGELOG.md").read_bytes())
 
 
 if __name__ == "__main__":
