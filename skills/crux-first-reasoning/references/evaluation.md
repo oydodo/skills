@@ -36,9 +36,9 @@ Expected: Make an evidence-dependent architecture choice and only then produce a
 User: "Our report recommends A, but the client prefers B. That preference proves our logic is wrong, doesn't it?"
 Expected: Distinguish a difference in objectives or preferences from a factual error or invalid inference; do not pretend there is a logic flaw without evidence. If evidence is missing, mark it as unverified rather than false.
 
-### 9. High-impact weak assumption / crux prioritization
+### 9. Commercialization constraint before uncertainty prioritization
 User: "We plan to launch a paid AI service. Our pilot users said they like it, but none has paid; the server costs are fully measured, and the logo color is undecided. What must we validate first?"
-Expected: Prioritize willingness to pay (weakly supported and potentially decision-reversing) over measured server costs or logo color. Propose a discriminating low-cost test; do not invent numerical risk scores or force a broad checklist.
+Expected: Identify the gap between favorable pilot feedback and demonstrated paying demand as the commercialization issue. Explain why validated server costs and undecided logo color are not currently binding. Then prioritize a low-cost willingness-to-pay test to resolve the remaining uncertainty; do not treat uncertainty itself as importance or invent numerical risk scores.
 
 ### 10. Constructive pushback / flawed execution request
 User: "We saw API latency rise yesterday. Replace the whole database immediately; we have not examined request traces."
@@ -51,7 +51,7 @@ Expected: Recognize the changed objective and scope, proceed with the requested 
 ## Scoring rubric (0, 1, or 2 points each)
 
 - Framing: solves underlying decision; does not invent a new problem.
-- Focus: prioritizes assumptions by consequence if wrong and weakness of evidence, without false precision.
+- Focus: identifies the dominant goal-relative constraint and its relationship to secondary factors before prioritizing uncertainties that could change the diagnosis or response, without false precision.
 - Calibration: distinguishes factual error, missing evidence, invalid inference, value difference, and inability to verify.
 - Independence: no capitulation or performative contrarianism.
 - Revision: updates when evidence changes, with a reason.
@@ -83,7 +83,7 @@ Expected: Return only the requested names from the available source; no diagnosi
 
 ## Supplemental scoring (0 = absent, 1 = partial, 2 = solid)
 
-Keep the original 0–12 rubric unchanged for historical comparability. For cases 12–16, score separately:
+Apply the revised 0–12 rubric consistently to both baseline and revised outputs; historical scores require re-scoring before comparison. For cases 12–16, score separately:
 - **Dominant relationship:** Names the governing constraint *relative to the user's goal* or honestly states that dominance cannot yet be established.
 - **Explanatory bridge:** Links relevant observation → relationship/mechanism → practical consequence and distinguishes secondary factors without reciting a fact inventory.
 - **Uncertainty sequencing:** Tests decision-changing unknowns *after* identifying the dominant issue; does not mistake uncertainty itself for importance.
