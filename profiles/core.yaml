@@ -1,5 +1,5 @@
 # Desired workset only, not automatic runtime activation.
-version: 10
+version: 11
 philosophy_skills:
   - name: philosophical-foundation
     role: top_level_philosophical_lens
@@ -50,6 +50,11 @@ coding_skills:
     role: coding_simplicity
     path: upstream/ponytail/skills/ponytail
     trigger: coding_task
+visualization_skills:
+  - name: visual-explainer
+    role: visual_reporting_and_explanation
+    path: upstream/visual-explainer/plugins/visual-explainer
+    trigger: explicit_visual_report_or_diagram_with_suitable_output_capabilities
 writing_skills:
   - name: technical-writing
     role: chinese_technical_prose
@@ -76,3 +81,6 @@ routing:
   project_specific_skills: not_global
   codegraph_requires_local_cli_or_mcp_and_index: true
   codegraph_no_automatic_setup: true
+  visual_explainer_only_on_explicit_visual_or_material_value: true
+  visual_explainer_requires_real_output_capability: true
+  visual_explainer_not_global_hook: true
