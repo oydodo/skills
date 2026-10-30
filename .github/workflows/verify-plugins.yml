@@ -1,0 +1,47 @@
+name: Verify Plugin Build
+
+on:
+  pull_request:
+    paths:
+      - "core/**"
+      - "skills/**"
+      - "registry/skills.yaml"
+      - "upstream/**"
+      - ".gitmodules"
+      - "scripts/build_plugins.py"
+      - "scripts/package_plugins.py"
+      - "tests/test_core_hook.py"
+      - ".github/workflows/verify-plugins.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install build dependency
+        run: python3 -m pip install PyYAML==6.0.2
+      - name: Fetch pinned submodules for selected Skills
+        shell: bash
+        run: |
+          python3 scripts/build_plugins.py --list-submodules > /tmp/oydodo-modules.txt
+          while IFS= read -r module; do
+            git submodule update --init --depth 1 -- "$module"
+          done < /tmp/oydodo-modules.txt
+      - name: Validate Python syntax
+        run: python3 -m compileall -q scripts/build_plugins.py scripts/package_plugins.py tests/test_core_hook.py
+      - name: Rebuild local Plugin artifacts
+        run: |
+          python3 scripts/build_plugins.py --write
+          python3 scripts/build_plugins.py --check
+      - name: Validate fail-open hooks
+        run: python3 -m unittest discover -s tests -p test_core_hook.py -v
+      - name: Package both plugin distributions
+        run: python3 scripts/package_plugins.py --platform all
