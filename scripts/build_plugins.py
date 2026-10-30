@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Build both platform plugins from the single curated Skill registry.
 
-Source of truth: registry/skills.yaml + skills/ + core/{always-on.md,hooks.json} + pinned upstream submodules.
-Generated outputs: plugins/oydodo-skills/{skills,licenses,core,hooks,SOURCES.md}.
+Source of truth: registry/skills.yaml + skills/ + core/{always-on.md,hooks.json} + CHANGELOG.md + pinned upstream submodules.
+Generated outputs: plugins/oydodo-skills/{skills,licenses,core,hooks,SOURCES.md,CHANGELOG.md}.
 Only generated contents change; platform-specific manifests keep their identities.
 """
 from __future__ import annotations
@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BUNDLE = ROOT / "plugins" / "oydodo-skills"
 MANIFESTS = ("plugin.json", ".codex-plugin/plugin.json", ".claude-plugin/plugin.json")
 GENERATED_DIRS = ("skills", "licenses", "core", "hooks")
+GENERATED_FILES = ("SOURCES.md", "CHANGELOG.md")
 MAX_SIZE = 25 * 1024 * 1024
 
 
@@ -129,6 +130,10 @@ def make_tree(stage: Path) -> list[str]:
     data, entries = catalog()
     pins = {module: pinned_commit(module) for module in source_modules()}
     copy_core(stage)
+    history = ROOT / "CHANGELOG.md"
+    if not history.is_file() or history.is_symlink():
+        raise ValueError("Missing or unsafe canonical CHANGELOG.md")
+    shutil.copy2(history, stage / "CHANGELOG.md")
     origin = []
     for entry in entries:
         name = entry["name"]
@@ -196,7 +201,7 @@ def make_tree(stage: Path) -> list[str]:
 
 def signature(folder: Path) -> dict[str, str]:
     result = {}
-    for part in (*GENERATED_DIRS, "SOURCES.md"):
+    for part in (*GENERATED_DIRS, *GENERATED_FILES):
         path = folder / part
         if path.is_file():
             result[part] = hashlib.sha256(path.read_bytes()).hexdigest()
@@ -246,12 +251,20 @@ def sync(check: bool) -> None:
             print(f"OK: generated files match source; {len(names)} skills; v{old_version}")
             return
         if changed:
+            major, minor, patch = map(int, old_version.split("."))
+            next_version = f"{major}.{minor}.{patch + 1}"
+            history = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+            latest = re.search(r"(?m)^## \[([0-9]+\.[0-9]+\.[0-9]+)\] - [0-9]{4}-[0-9]{2}-[0-9]{2}\s*$", history)
+            if latest is None or latest.group(1) != next_version:
+                raise ValueError(
+                    f"CHANGELOG.md must start its release history with [{next_version}] "
+                    "before publishing a changed Plugin"
+                )
             for name in GENERATED_DIRS:
                 shutil.rmtree(BUNDLE / name, ignore_errors=True)
                 shutil.copytree(staging / name, BUNDLE / name)
-            shutil.copy2(staging / "SOURCES.md", BUNDLE / "SOURCES.md")
-            major, minor, patch = map(int, old_version.split("."))
-            next_version = f"{major}.{minor}.{patch + 1}"
+            for name in GENERATED_FILES:
+                shutil.copy2(staging / name, BUNDLE / name)
             for path, info in manifests:
                 info["version"] = next_version
                 path.write_text(json.dumps(info, indent=2, ensure_ascii=False) + "\n",
