@@ -13,6 +13,7 @@ on:
       - "scripts/package_plugins.py"
       - "tests/test_core_hook.py"
       - "tests/test_codegraph_skill.py"
+      - "tests/test_visual_explainer.py"
       - ".github/workflows/verify-plugins.yml"
 
 permissions:
@@ -28,6 +29,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
       - name: Install build dependency
         run: python3 -m pip install PyYAML==6.0.2
       - name: Fetch pinned submodules for selected Skills
@@ -38,7 +42,7 @@ jobs:
             git submodule update --init --depth 1 -- "$module"
           done < /tmp/oydodo-modules.txt
       - name: Validate Python syntax
-        run: python3 -m compileall -q scripts/build_plugins.py scripts/package_plugins.py tests/test_core_hook.py tests/test_codegraph_skill.py
+        run: python3 -m compileall -q scripts/build_plugins.py scripts/package_plugins.py tests/test_core_hook.py tests/test_codegraph_skill.py tests/test_visual_explainer.py
       - name: Rebuild local Plugin artifacts
         run: |
           python3 scripts/build_plugins.py --write
