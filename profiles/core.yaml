@@ -1,5 +1,5 @@
 # Desired workset only, not automatic runtime activation.
-version: 11
+version: 12
 philosophy_skills:
   - name: philosophical-foundation
     role: top_level_philosophical_lens
@@ -42,6 +42,10 @@ investigation_skills:
     path: upstream/mattpocock-skills/skills/engineering/prototype
     trigger: prototype_to_decide
 coding_skills:
+  - name: diagnosing-bugs
+    role: evidence_driven_debugging
+    path: upstream/mattpocock-skills/skills/engineering/diagnosing-bugs
+    trigger: difficult_regression_or_unreproduced_complex_bug
   - name: codegraph
     role: optional_local_code_graph_navigation
     path: skills/codegraph
@@ -50,6 +54,15 @@ coding_skills:
     role: coding_simplicity
     path: upstream/ponytail/skills/ponytail
     trigger: coding_task
+quality_skills:
+  - name: writing-for-agents
+    role: agent_instructions_review
+    path: upstream/mattpocock-skills/skills/productivity/writing-for-agents
+    trigger: create_or_refine_agent_facing_instructions
+  - name: retro
+    role: manual_session_retro
+    path: upstream/mattpocock-skills/skills/engineering/retro
+    trigger: explicit_agent_session_retrospective_only
 visualization_skills:
   - name: visual-explainer
     role: visual_reporting_and_explanation
@@ -84,3 +97,6 @@ routing:
   visual_explainer_only_on_explicit_visual_or_material_value: true
   visual_explainer_requires_real_output_capability: true
   visual_explainer_not_global_hook: true
+  diagnosing_bugs_only_for_hard_failures: true
+  writing_for_agents_only_for_agent_consumed_docs: true
+  retro_user_invoked_only: true
