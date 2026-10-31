@@ -1,0 +1,4 @@
+interface:
+  display_name: Interview Me
+  short_description: Clarify the user's actual goal through a focused one-question-at-a-time
+    interview only when a critical require
