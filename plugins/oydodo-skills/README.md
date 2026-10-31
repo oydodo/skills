@@ -8,7 +8,11 @@ This is a **skills-only** Agent Plugin using root `plugin.json` and a backward-c
 
 **Matt quality skills (v0.1.12):** `writing-for-agents` improves instructions that agents consume; `diagnosing-bugs` is reserved for difficult, reproducible diagnostic work; `retro` is an explicitly user-invoked session review. Claude's `disable-model-invocation: true` is retained for `retro` and `wayfinder`, and Codex receives `policy.allow_implicit_invocation: false` in their `agents/openai.yaml`. Packaging checks are not proof of Web runtime routing.
 
-## Install on ChatGPT desktop (macOS)
+## Preferred local Codex / Pi / DSH use: native `.agents`
+
+For **local Codex**, Pi, and DeepSeek Harness, prefer the root [`.agents/skills/`](../../.agents/skills/) generated from the same curated registry. The [portable Agents ZIP](https://github.com/oydodo/skills/releases/latest) can be extracted into a target project or home directory; submodule initialization is not required by consumers. The Plugin remains necessary or useful for ChatGPT Web / Claude Plugin installation and optional Plugin hooks. **Do not install the same 18 Skill names as both native `.agents` and Plugin Skills in one local scope.** DSH may shadow an `.agents` entry with its project `.dsh/skills` copy.
+
+## Alternative Plugin installation on ChatGPT desktop (macOS)
 
 ```bash
 codex plugin marketplace add oydodo/skills
