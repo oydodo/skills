@@ -66,7 +66,7 @@ class CodeGraphSkillContractTest(unittest.TestCase):
         skill_text = (generated / "SKILL.md").read_text(encoding="utf-8")
         self.assertIn("name: codegraph", skill_text)
         release = json.loads((BUNDLE / "plugin.json").read_text(encoding="utf-8"))
-        self.assertEqual(release["version"], "0.1.13")
+        self.assertEqual(release["version"], "0.1.14")
         notes = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
         self.assertIn("## [0.1.10]", notes)
 

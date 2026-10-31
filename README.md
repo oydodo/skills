@@ -128,7 +128,8 @@ flowchart TB
 
 - **使用本仓库作为工作目录**：Codex、Pi、DSH 可直接发现根目录 `.agents/skills/`；Pi 需要项目已信任，DSH 如存在同名 `.dsh/skills/`，其优先级更高。
 - **让其他仓库使用**：从 [最新 Release](https://github.com/oydodo/skills/releases/latest) 下载 `oydodo-skills-agents.zip`，解压到目标项目根目录，得到 `.agents/skills/`（连同第三方许可和版本记录）。需要全局通用时解压到用户 Home，生成 `~/.agents/skills/`。覆盖已有同名 Skill 前应备份并检查冲突。
-- **Codex 优先原生入口**，仅在 ChatGPT Web / Claude 或必须使用 Plugin 功能时选择现有插件分发。**同一环境不要同时加载原生 Skill 与 Plugin 中的同名 Skill**，避免重复路由。
+- **Pi 支持 Package 批量更新**：本仓库根目录 `package.json` 指向同一套 `.agents/skills`，执行 `pi install git:github.com/oydodo/skills` 安装整个精选集，再用 `pi update --extensions` 批量升级。纯 `pi update` 只更新 Pi 本体，不更新 Packages。为跟随 main，不要在安装地址附加固定 tag/commit。
+- **Codex 原生与 Plugin 各有侧重**：项目内原生发现优先用 `.agents`；跨项目统一安装/更新、按需启用可信 Hook 时，Codex Plugin 管理更方便。**同一环境不要同时加载原生 Skill 与 Plugin 中的同名 Skill**，避免重复路由。
 - **升级**：上游由 Dependabot 检测并提交 PR，合并后 GitHub 同时发布三份 ZIP；本机原生 Skill 不会因发布而自动更新，需要重新拉取或部署。网页 Marketplace 同步另行验收。
 
 完整操作及三端差异见 [分发指南](docs/distribution.md)。

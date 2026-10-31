@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "registry/skills.yaml"
+      - "package.json"
       - "CHANGELOG.md"
       - "skills/**"
       - "core/always-on.md"
