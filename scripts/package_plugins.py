@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create deterministic Claude and ChatGPT Plugin ZIP files from one Skill tree."""
+"""Create deterministic portable .agents, Claude, and ChatGPT archives."""
 from __future__ import annotations
 
 import argparse
@@ -8,7 +8,8 @@ from pathlib import Path
 import re
 import zipfile
 
-from build_plugins import ROOT, BUNDLE, catalog, versions
+from build_plugins import (ROOT, BUNDLE, PORTABLE, PORTABLE_DIRS,
+                           PORTABLE_FILES, catalog, signature, versions)
 
 FILE_PARTS = ("skills", "licenses", "core", "hooks")
 COMMON_FILES = ("README.md", "SOURCES.md", "CHANGELOG.md")
@@ -80,21 +81,79 @@ def package(platform: str, output: Path) -> None:
     print(f"OK: {platform} {output} ({len(expected)} skills, v{version})")
 
 
+def package_agents(output: Path) -> None:
+    """Portable project-root archive for native Codex, Pi, and DSH discovery.
+
+    Extract at the repository root; deliberately do not package marketplace
+    metadata or optional plugin lifecycle hooks as portable skill assets.
+    """
+    expected = {entry["name"] for entry in catalog()[1]}
+    version, _ = versions()
+    if signature(PORTABLE, PORTABLE_DIRS, PORTABLE_FILES) != signature(
+            BUNDLE, PORTABLE_DIRS, PORTABLE_FILES):
+        raise ValueError("Portable .agents skills differ from the plugin source")
+    names = {p.parent.name for p in (PORTABLE / "skills").glob("*/SKILL.md")}
+    if names != expected:
+        raise ValueError(f"Expected portable {sorted(expected)}, got {sorted(names)}")
+
+    contents = []
+    for name in PORTABLE_DIRS:
+        folder = PORTABLE / name
+        if not folder.is_dir() or folder.is_symlink():
+            raise ValueError(f"Missing or unsafe portable directory: {folder}")
+        contents.extend(p for p in folder.rglob("*") if p.is_file() or p.is_symlink())
+    contents.extend(PORTABLE / name for name in PORTABLE_FILES)
+    if any(not p.is_file() or p.is_symlink()
+           or any(parent.is_symlink() for parent in p.parents if parent != ROOT)
+           for p in contents):
+        raise ValueError("Portable archive has a missing or symlinked file")
+    output = output.resolve()
+    if PORTABLE in output.parents or BUNDLE in output.parents:
+        raise ValueError("ZIP must be outside generated source directories")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for path in sorted(contents, key=lambda p: p.relative_to(ROOT).as_posix()):
+            info = zipfile.ZipInfo(path.relative_to(ROOT).as_posix(),
+                                   date_time=(2026, 1, 1, 0, 0, 0))
+            info.compress_type = zipfile.ZIP_DEFLATED
+            info.external_attr = (0o100644 << 16)
+            archive.writestr(info, path.read_bytes(), compress_type=zipfile.ZIP_DEFLATED)
+    with zipfile.ZipFile(output) as verify:
+        inside = set(verify.namelist())
+        names = {item.split("/")[2] for item in inside
+                 if re.fullmatch(r"\.agents/skills/[^/]+/SKILL\.md", item)}
+        if names != expected or verify.testzip() is not None:
+            raise ValueError("Portable ZIP payload verification failed")
+        if not {".agents/SOURCES.md", ".agents/CHANGELOG.md"}.issubset(inside):
+            raise ValueError("Portable provenance or release notes missing")
+        notes = verify.read(".agents/CHANGELOG.md").decode("utf-8")
+        latest = re.search(r"(?m)^## \[([0-9]+\.[0-9]+\.[0-9]+)\] - ", notes)
+        if latest is None or latest.group(1) != version:
+            raise ValueError("Portable archive version disagrees with plugin release")
+        if any(item.startswith(".agents/plugins/") or "hooks/hooks.json" in item
+               for item in inside):
+            raise ValueError("Portable archive must not install plugin hooks")
+    print(f"OK: agents {output} ({len(expected)} skills, v{version})")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--platform", choices=("all", "claude", "chatgpt"),
+    parser.add_argument("--platform", choices=("all", "agents", "claude", "chatgpt"),
                         default="all")
     parser.add_argument("--output", type=Path,
                         help="ZIP path for one platform; directory when --platform=all")
     args = parser.parse_args()
-    platforms = ("claude", "chatgpt") if args.platform == "all" else (args.platform,)
+    platforms = ("agents", "claude", "chatgpt") if args.platform == "all" else (args.platform,)
     if args.platform == "all" and args.output is not None and args.output.suffix == ".zip":
         parser.error("--platform all requires an output directory, not a ZIP path")
     for platform in platforms:
         path = args.output if len(platforms) == 1 and args.output is not None else (
             (args.output or ROOT / "dist") / f"oydodo-skills-{platform}.zip"
         )
-        package(platform, path)
+        if platform == "agents":
+            package_agents(path)
+        else:
+            package(platform, path)
 
 
 if __name__ == "__main__":
