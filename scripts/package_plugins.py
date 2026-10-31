@@ -8,8 +8,12 @@ from pathlib import Path
 import re
 import zipfile
 
-from build_plugins import (ROOT, BUNDLE, PORTABLE, PORTABLE_DIRS,
-                           PORTABLE_FILES, catalog, signature, versions)
+if __package__:
+    from .build_plugins import (ROOT, BUNDLE, PORTABLE, PORTABLE_DIRS,
+                                PORTABLE_FILES, catalog, signature, versions)
+else:
+    from build_plugins import (ROOT, BUNDLE, PORTABLE, PORTABLE_DIRS,
+                               PORTABLE_FILES, catalog, signature, versions)
 
 FILE_PARTS = ("skills", "licenses", "core", "hooks")
 COMMON_FILES = ("README.md", "SOURCES.md", "CHANGELOG.md")
