@@ -6,6 +6,21 @@
 - **版本对应**：以 [GitHub Releases](https://github.com/oydodo/skills/releases) 和已合并 PR 为准；`v0.1.9` 引入版本记录分发；此后每版按本文件记录变更。
 - **不要混淆**：代码合并、CI 通过、ZIP 发布、Marketplace 已同步、Agent 实际触发，是不同的验收层级。
 
+## [0.1.13] - 2026-10-31
+
+### Added — 通用 Agent Skills 分发（Codex / Pi / DSH）
+
+- 将 `.agents/skills/<name>/SKILL.md` 及其脚本、参考文件、`agents/openai.yaml` 设为 **Codex、Pi 和 DeepSeek Harness 的优先本地发现入口**；按标准目录命名，兼容这三个 Agent 的原生项目级 Skill 扫描，不创建重复的 `.pi/skills`、`.dsh/skills` 或 `.codex/skills`。
+- `scripts/build_plugins.py` 从唯一的 `registry/skills.yaml`、自维护 `skills/` 和固定的 `upstream/` 提交构建同一棵 Skill 树，同时生成根目录 `.agents/{skills,licenses,SOURCES.md,CHANGELOG.md}` 和原有 `plugins/oydodo-skills/`。两份是**生成的分发产物**，而不是两套可人工编辑的源代码；构建检查可检测两者不一致。
+- 新增 `oydodo-skills-agents.zip`，可直接解压到任意项目根目录（或用户 Home）供 Codex、Pi、DSH 识别，并保留单独的第三方许可、来源和版本变更记录。与 ChatGPT / Claude 两份 Plugin ZIP 共用一次生成、同版本测试和 GitHub Release。
+- 保留 `.agents/plugins/marketplace.json` 供 ChatGPT Marketplace 使用；**通用 ZIP 不包含 Marketplace 配置、Plugin Hooks 或自动执行脚本**。现有 Plugin 安装/分发路径仍兼容，不要求网页端理解原生本地文件系统。
+
+### 兼容与验收边界
+
+- 推荐 Codex **优先使用 `.agents/skills`** 的原生发现；在同一个作用域内避免同时启用同名 Plugin Skill 和原生 Skill，防止重复出现。Pi 需要项目已信任，DSH 的 `.dsh/skills` 优先级高于 `.agents/skills`，如果本机已有同名 Skill 应先处理覆盖关系。
+- 保留 `retro`、`wayfinder` 的 `disable-model-invocation: true` 和 Codex `allow_implicit_invocation: false`；不增加新的常驻 Hook。某些平台/版本可能不支持全部扩展字段，需单独验证实际触发和插件生命周期。
+- CI 可验证目录、资源、许可、ZIP 格式与内容一致，但 **Codex/Pi/DSH 的真实运行时发现，以及 GitHub Release 至本机的更新同步，仍须在实际客户端独立验收**。本轮仅建立发行能力，不自动覆盖用户电脑上的旧 Skill。
+
 ## [0.1.12] - 2026-10-30
 
 ### Added — Matt 的 Agent 质量闭环（15 → 18）
