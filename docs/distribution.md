@@ -40,6 +40,29 @@ Artifacts: `dist/oydodo-skills-agents.zip`, `dist/oydodo-skills-claude.zip`, and
 
 The native release intentionally **omits** Plugin Hooks and `.agents/plugins/marketplace.json`; it does **not** remove those files from this repository. All Skills remain self-contained with their required resources; CodeGraph CLI / renderer dependencies still require suitable host tools.
 
+## Pi Package — one Git install and batch update
+
+Pi supports packages containing only Skills. This repository now declares a root `package.json` with `pi.skills: ["./.agents/skills"]`, so Pi can consume all 18 Skills from the **same generated native tree**. No Pi-specific Skill fork or executable extension is included. The Pi package does not run custom scripts or install CodeGraph/MCP services.
+
+Install one Git package globally:
+
+```bash
+pi install git:github.com/oydodo/skills
+pi list
+```
+
+To install for one trusted project instead, use `pi install --local git:github.com/oydodo/skills` in the target repo (Pi writes `.pi/settings.json`; project approval is required).
+
+Batch update installed Git/npm Pi packages:
+
+```bash
+pi update --extensions
+```
+
+`pi update --all` updates Pi itself **and** packages. Bare `pi update` updates the Pi CLI, not the packages. To follow released commits on `main`, install without an `@tag` or `@commit` suffix; a pinned Git ref does not move automatically. Git package updates remain an **explicit local command**, not a background push or auto-sync.
+
+**Avoid duplicate discovery:** If you are running Pi *inside* a project already containing the same `.agents/skills/`, do not also install the Git package in that scope without checking name-collision diagnostics. Pi warns when more than one Skill declares the same name. The package is intentionally Skills-only, so Pi's extension-update changelog popover is not shown; the authoritative release notes remain in [CHANGELOG.md](../CHANGELOG.md).
+
 ## Matt quality skills and invocation controls (v0.1.12)
 
 The pinned Matt submodule also supplies `writing-for-agents` (agent-consumed documents), `diagnosing-bugs` (hard failures needing reproducible evidence), and `retro` (an **explicitly user-invoked** coding-agent session retrospective). They are copied without changes to their instruction bodies, along with their supporting references, scripts, and licenses. They do **not** run on SessionStart and do not add global hooks.
