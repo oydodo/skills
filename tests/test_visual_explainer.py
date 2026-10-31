@@ -75,7 +75,7 @@ class VisualExplainerTest(unittest.TestCase):
         version = json.loads((BUNDLE / "plugin.json").read_text(encoding="utf-8"))[
             "version"
         ]
-        self.assertEqual(version, "0.1.13")
+        self.assertEqual(version, "0.1.14")
         self.assertIn(
             "## [0.1.11] - 2026-10-30",
             (ROOT / "CHANGELOG.md").read_text(encoding="utf-8"),
