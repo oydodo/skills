@@ -65,8 +65,11 @@ class PortableAgentsTest(unittest.TestCase):
                 self.assertTrue({".agents/SOURCES.md", ".agents/CHANGELOG.md"}
                                 .issubset(files))
                 self.assertIn(f"## [{version}]", z.read(".agents/CHANGELOG.md").decode())
-                for name in expected:
+                external = {entry["name"] for entry in catalog()[1]
+                            if entry["source"] != "maintained"}
+                for name in external:
                     self.assertIn(f".agents/licenses/{name}-LICENSE", files)
+                self.assertEqual(len(external), 14)
 
 
 if __name__ == "__main__":
