@@ -1,5 +1,7 @@
 # Evaluation
 
+Portable [`.agents` distribution tests](test_portable_agents.py) verify the exact 18 one-level Skill entrypoints in the native Codex/Pi/DSH directory, hash parity with the Plugin output (including licenses and reference assets), preservation of `.agents/plugins/marketplace.json`, explicit-only metadata, and the deterministic third ZIP's install layout. These are **filesystem and packaging checks**; actual native discovery/triggering in Codex, Pi and DSH still requires manual runtime testing. Avoid activating the same Skill through both the native directory and a plugin in the same scope.
+
 [Visual Explainer](test_visual_explainer.py) now has a pinned-submodule and license check, curated-trigger contract, full renderer/resource packaging check and a headless Node.js HTML smoke test. It does not prove browser appearance, Web Plugin execution, or spontaneous routing; test those separately on the actual Agent runtime.
 
 Matt's three added quality skills have a [pinned-source/packaging/invocation-policy contract test](test_matt_quality_skills.py): checks 18 curated entries, `writing-for-agents` reference and `diagnosing-bugs` reproduction script, upstream MIT licenses, and `retro` / `wayfinder` explicit-only metadata for Claude and Codex. [Positive and negative routing cases](core-routing.md) remain **manual acceptance checks**; static tests do not prove actual client triggering.

@@ -112,16 +112,28 @@ flowchart TB
 | --- | --- |
 | [`skills/`](skills/) | 维护三个自研判断 Skill 和一个 CodeGraph 工具适配 Skill 的正文、参考资料与测试 |
 | [`upstream/`](upstream/) | 通过 Git submodule 固定第三方来源；**来源库不等于全量启用** |
-| [`registry/skills.yaml`](registry/skills.yaml) | 当前 18 个精选候选 Skill 及其来源路径 |
+| [`registry/skills.yaml`](registry/skills.yaml) | 当前 18 个精选 Skill 的唯一注册表及来源路径 |
+| [`.agents/skills/`](.agents/skills/) | **Codex / Pi / DSH 原生扫描的优先入口**；构建生成，禁止单独修改 |
 | [`registry/curation.yaml`](registry/curation.yaml) | 全部盘点对象的精选、未选中、项目专用等状态 |
 | [`profiles/core.yaml`](profiles/core.yaml) | 目标角色与触发条件；**不是客户端自动生效的配置** |
 | [`CHANGELOG.md`](CHANGELOG.md) | 版本化设计决策与 Claude handoff；唯一维护源，自动打包进 Plugin |
 | [`registry/pruning.md`](registry/pruning.md) | 取舍依据、未选中项和可逆剪枝原则 |
 | [`tests/`](tests/) | 待执行的行为验收与 A/B 测试案例 |
 
-本仓库先回答 **“为什么选择这些 Skill，以及它们应该在什么任务上发挥作用”**。实际安装、启用与本机剪枝是下一步独立的工作，不应与精选结论混为一谈。
+本仓库回答 **“为什么选择这些 Skill，以及它们应该在什么任务上发挥作用”**，并提供生成的原生 `.agents` 与 Plugin 安装包。代码仓库、安装到本机和运行时实际触发仍是不同的验收层级。
 
-## 一次安装 18 个 Skill：ChatGPT Plugin
+## Codex / Pi / DSH：优先使用通用 `.agents/skills/`
+
+`registry/skills.yaml` 是唯一精选注册表；构建会将 **18 项 Skill、关联参考资料和脚本**同时生成到根目录 `.agents/skills/<name>/SKILL.md` 和 ChatGPT/Claude Plugin。不要在两个位置各自改正文，也不要另建 `.codex/skills`、`.pi/skills`、`.dsh/skills` 的同名副本。
+
+- **使用本仓库作为工作目录**：Codex、Pi、DSH 可直接发现根目录 `.agents/skills/`；Pi 需要项目已信任，DSH 如存在同名 `.dsh/skills/`，其优先级更高。
+- **让其他仓库使用**：从 [最新 Release](https://github.com/oydodo/skills/releases/latest) 下载 `oydodo-skills-agents.zip`，解压到目标项目根目录，得到 `.agents/skills/`（连同第三方许可和版本记录）。需要全局通用时解压到用户 Home，生成 `~/.agents/skills/`。覆盖已有同名 Skill 前应备份并检查冲突。
+- **Codex 优先原生入口**，仅在 ChatGPT Web / Claude 或必须使用 Plugin 功能时选择现有插件分发。**同一环境不要同时加载原生 Skill 与 Plugin 中的同名 Skill**，避免重复路由。
+- **升级**：上游由 Dependabot 检测并提交 PR，合并后 GitHub 同时发布三份 ZIP；本机原生 Skill 不会因发布而自动更新，需要重新拉取或部署。网页 Marketplace 同步另行验收。
+
+完整操作及三端差异见 [分发指南](docs/distribution.md)。
+
+## 一次安装 18 个 Skill：ChatGPT / Claude Plugin
 
 **本地 Agent 核心常驻（可选 Hook）**：[`core/always-on.md`](core/always-on.md) 维护独立判断、主要矛盾优先、关键不确定性从属和关键论证等轻量原则，并附三个核心 Skill 的本地及 GitHub 链接。发布工具将其与 [`core/hooks.json`](core/hooks.json) 一起打包；在支持 SessionStart Hook 的 Codex/Claude Code 本地运行时，安装 Plugin 并按需信任 Hook 后，于启动、恢复、清除、压缩或分叉时注入。缺失规则文件时静默跳过，不阻断会话。**Web Plugin 仍为按需加载，不应宣称全局常驻。**
 
@@ -147,7 +159,7 @@ codex plugin add oydodo-skills@oydodo
 
 **唯一维护入口**：自研 Skill 修改 `skills/`；第三方升级调整 `upstream/` 的 Git submodule 固定提交；精选清单与触发描述修改 `registry/skills.yaml`。**不要直接编辑生成目录** `plugins/oydodo-skills/skills/`。
 
-推送到 `main` 后，[发布流水线](.github/workflows/publish-plugins.yml)自动重新生成统一 Skill 树、保存第三方许可证、校验两个 Plugin、递增版本并提交到 GitHub Marketplace 目录，同时发布 [ChatGPT / Claude 双 ZIP](https://github.com/oydodo/skills/releases/latest)。
+推送到 `main` 后，[发布流水线](.github/workflows/publish-plugins.yml)自动生成统一 Skill 树，更新 `.agents/skills/` 与两个 Plugin、保存第三方许可证、校验版本并发布 [通用 Agents / ChatGPT / Claude 三份 ZIP](https://github.com/oydodo/skills/releases/latest)。
 
 - **ChatGPT Web**：已导入的 GitHub Marketplace 可同步 `main` 的新版本，受平台同步和审批策略影响。
 - **Claude Web 个人账户**：优先在 Customize → Plugins → Add → Add marketplace → Add from a repository 中导入 `oydodo/skills`，统一使用 GitHub Marketplace；如入口不可用再上传 Claude ZIP。GitHub 仓库同步受平台策略影响，个人账户是否每次推送后自动刷新尚待实测。

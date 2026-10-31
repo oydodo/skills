@@ -98,7 +98,7 @@ class MattQualitySkillsTest(unittest.TestCase):
         manifests = ["plugin.json", ".codex-plugin/plugin.json", ".claude-plugin/plugin.json"]
         for manifest in manifests:
             meta = json.loads((BUNDLE / manifest).read_text(encoding="utf-8"))
-            self.assertEqual(meta["version"], "0.1.12")
+            self.assertEqual(meta["version"], "0.1.13")
         changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
         self.assertIn("## [0.1.12] - 2026-10-30", changelog)
         core = (ROOT / "core/always-on.md").read_text(encoding="utf-8")
