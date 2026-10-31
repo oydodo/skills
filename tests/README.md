@@ -1,5 +1,7 @@
 # Evaluation
 
+[Pi Package contract](test_pi_package.py) verifies that the repo-root `package.json` exposes the 18 generated `.agents/skills` through Pi's `pi.skills` field, without defining executable extensions or install scripts. `pi install git:github.com/oydodo/skills` and `pi update --extensions` are documented, but must still be tested in a live Pi client.
+
 Portable [`.agents` distribution tests](test_portable_agents.py) verify the exact 18 one-level Skill entrypoints in the native Codex/Pi/DSH directory, hash parity with the Plugin output (including licenses and reference assets), preservation of `.agents/plugins/marketplace.json`, explicit-only metadata, and the deterministic third ZIP's install layout. These are **filesystem and packaging checks**; actual native discovery/triggering in Codex, Pi and DSH still requires manual runtime testing. Avoid activating the same Skill through both the native directory and a plugin in the same scope.
 
 [Visual Explainer](test_visual_explainer.py) now has a pinned-submodule and license check, curated-trigger contract, full renderer/resource packaging check and a headless Node.js HTML smoke test. It does not prove browser appearance, Web Plugin execution, or spontaneous routing; test those separately on the actual Agent runtime.
