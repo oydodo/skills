@@ -1,0 +1,8 @@
+{
+  "name": "oydodo-skills",
+  "private": true,
+  "description": "Curated portable Agent Skills; Pi loads the generated .agents/skills tree.",
+  "pi": {
+    "skills": ["./.agents/skills"]
+  }
+}
