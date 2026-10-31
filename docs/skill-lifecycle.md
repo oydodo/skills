@@ -18,9 +18,9 @@
 2. **确定唯一来源**：自研/工具适配编辑 `skills/<name>/`；上游 Skill 使用 `git submodule add -b <branch> <url> upstream/<repo>`，选定并**固定具体提交**。仅通过 `.gitmodules` 声明分支不代表持续跟踪。
 3. **登记**：在 `registry/skills.yaml` 添加一个精选条目（名称、来源、路径、分类、能力层）；必要时设置 `description_override`。更新 `registry/curation.yaml` 和 `profiles/core.yaml` 的相关条目，避免触发范围冲突。
 4. **说明与许可**：更新 README、分发文档及受影响的 Plugin/Marketplace 描述和数量；上游 Skill 保留许可证、版本与 pinned commit；外部工具适配说明它**不会**自动安装二进制、MCP 服务或索引。
-5. **测试**：至少验证 `SKILL.md`、元数据、资源、许可、正负触发用例和双端打包。需要 Node、浏览器、CLI 或 MCP 的能力，应另外记录真实运行验收，不能用构建成功代替。
+5. **测试**：至少验证 `SKILL.md`、元数据、资源、许可、正负触发用例与三端打包（原生 `.agents`、ChatGPT、Claude）。需要 Node、浏览器、CLI 或 MCP 的能力，应另外记录真实运行验收，不能用构建成功代替。
 6. **版本记录**：先在根目录 `CHANGELOG.md` 创建**下一补丁版本**的说明（为什么引入、来源和固定版本、能力边界、未验证内容）。**不要手动修改 Plugin 版本或生成目录**。
-7. **发布**：提交 PR → 通过 `Verify Plugin Build` → 合并 `main` → `Build and Publish Skill Plugins` 自动重建、递增版本、提交生成文件、发布两份 ZIP 和 Release。再分别验证 ChatGPT / Claude 的 Marketplace 同步及实际触发。
+7. **发布**：提交 PR → 通过 `Verify Plugin Build` → 合并 `main` → `Build and Publish Skill Plugins` 自动重建、递增版本、提交生成文件、发布三份 ZIP（包括通用 `.agents`）和 Release。再分别验证 ChatGPT / Claude 的 Marketplace 同步及实际触发。
 
 ## 3. 升级与移除：仍走同一条发布链
 
@@ -48,15 +48,15 @@
 upstream repository (可随时发布新提交)
     -> upstream/<repo> (Git submodule，父仓库固定 gitlink commit)
     -> registry/skills.yaml (决定精选哪个 Skill，并覆盖触发元数据)
-    -> scripts/build_plugins.py (生成 plugins/oydodo-skills/skills/)
-    -> GitHub Actions / Release (生成 Claude 与 ChatGPT ZIP)
+    -> scripts/build_plugins.py (同时生成 .agents/skills/ 与 plugins/oydodo-skills/skills/)
+    -> GitHub Actions / Release (生成原生 Agents、Claude 与 ChatGPT ZIP)
     -> 各客户端 Marketplace 同步 / 用户安装 / 真实触发（独立验收）
 ```
 
 - `git submodule update --init` **只检出父仓库固定的 commit**，不会自动升级到上游最新版。
 - 上游更新 **不会**自行变成 `skills/` 或 Plugin 的内容；本仓库目前**未配置自动升级上游 gitlink 的机器人**。今后如要自动跟踪，优先采用“定期发现 → 提交 PR → CI → 审查合并”，而非无审查直推。
 - `main` 中精选来源变化后，GitHub Actions **自动构建与发布**；构建机器人不能替代 Marketplace 同步或客户端触发验收。
-- 只有 `skills/` 的自维护内容随本仓库编辑而变化；第三方正文位于 `upstream/` 并通过编译复制进生成包。
+- 只有 `skills/` 的自维护内容随本仓库编辑而变化；第三方正文位于 `upstream/` 并通过编译复制进生成包。**Codex/Pi/DSH 使用仓库 `.agents/skills` 原生目录优先**，不要与同名 Plugin Skill 同时启用。
 
 ## 5. 最小本地复现
 
@@ -78,8 +78,8 @@ python3 scripts/package_plugins.py --platform all
 | 层级 | 完成标准 |
 | --- | --- |
 | 来源 | 选定 Skill、许可证和 gitlink / 自研正文已提交 |
-| 构建 | PR 校验、双端 ZIP 内容与版本一致 |
-| 发布 | GitHub Release/tag 和两份 ZIP 已存在 |
+| 构建 | PR 校验、通用 `.agents` 与双 Plugin ZIP 内容及版本一致 |
+| 发布 | GitHub Release/tag 和三份 ZIP 已存在 |
 | 同步 | 目标 ChatGPT / Claude 账户确实显示新版本 |
 | 行为 | 实际任务的正例触发、负例不误触发、文件/工具能力可用 |
 
