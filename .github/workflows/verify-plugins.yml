@@ -11,6 +11,10 @@ on:
       - ".gitmodules"
       - "scripts/build_plugins.py"
       - "scripts/package_plugins.py"
+      - ".agents/skills/**"
+      - ".agents/licenses/**"
+      - ".agents/SOURCES.md"
+      - ".agents/CHANGELOG.md"
       - "tests/test_*.py"
       - ".github/dependabot.yml"
       - "docs/skill-lifecycle.md"
@@ -43,7 +47,7 @@ jobs:
           done < /tmp/oydodo-modules.txt
       - name: Validate Python syntax
         run: python3 -m compileall -q scripts tests
-      - name: Rebuild local Plugin artifacts
+      - name: Rebuild local Plugin and portable .agents artifacts
         run: |
           python3 scripts/build_plugins.py --write
           python3 scripts/build_plugins.py --check
@@ -54,5 +58,5 @@ jobs:
           VERSION=$(python3 -c 'import json; print(json.load(open("plugins/oydodo-skills/plugin.json"))["version"])')
           python3 scripts/build_plugins.py --release-notes "$VERSION" > /tmp/oydodo-release-notes.md
           test -s /tmp/oydodo-release-notes.md
-      - name: Package both plugin distributions
+      - name: Package portable Agents and both plugin distributions
         run: python3 scripts/package_plugins.py --platform all
