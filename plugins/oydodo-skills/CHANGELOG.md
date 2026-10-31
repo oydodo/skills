@@ -6,6 +6,15 @@
 - **版本对应**：以 [GitHub Releases](https://github.com/oydodo/skills/releases) 和已合并 PR 为准；`v0.1.9` 引入版本记录分发；此后每版按本文件记录变更。
 - **不要混淆**：代码合并、CI 通过、ZIP 发布、Marketplace 已同步、Agent 实际触发，是不同的验收层级。
 
+## [0.1.14] - 2026-10-31
+
+### Added — Pi Git Package 批量安装与更新
+
+- 新增仓库根目录 `package.json`，在 `pi.skills` 声明 `./.agents/skills`：Pi 现在可以通过 `pi install git:github.com/oydodo/skills` 将当前 18 项精选 Skill 作为**一个 Git Package** 安装，使用 `pi update --extensions` 批量更新安装的 Package。
+- Pi Package 仅声明已有的生成目录，无专属 Skill 复制、Extension、`npm scripts` 或额外服务；一套 `registry/skills.yaml` 继续生成原生 `.agents` 和 ChatGPT / Claude Plugins。
+- 保留 `.agents/skills` 作为 Codex / Pi / DSH 跨项目原生兼容入口；Codex Plugin 依然作为安装、统一更新及可选可信 Hook 的管理层。两者加载相同 Skill 正文，不应声称 Plugin 自动提高推理质量。
+- 新增配置契约测试和 Pi 更新文档。Git 安装不附 `@tag` / `@commit` 才能跟踪主分支；`pi update` 只更新 Pi CLI，Package 统一更新使用 `pi update --extensions`。本机安装、实际路由及重复 Skill 冲突仍需在 Pi 客户端验收。
+
 ## [0.1.13] - 2026-10-31
 
 ### Added — 通用 Agent Skills 分发（Codex / Pi / DSH）

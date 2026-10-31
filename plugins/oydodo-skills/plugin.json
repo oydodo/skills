@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "oydodo-skills",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Eighteen curated skills for philosophical judgment, long-term decision navigation, domain modeling, CodeGraph repository navigation, evidence research, prototyping, lean coding, hard-bug diagnosis, agent-instruction quality, manual session retros, visual reporting, and technical writing.",
   "author": {
     "name": "oydodo",
