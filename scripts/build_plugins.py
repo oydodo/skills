@@ -2,7 +2,8 @@
 """Build both platform plugins from the single curated Skill registry.
 
 Source of truth: registry/skills.yaml + skills/ + core/{always-on.md,hooks.json} + CHANGELOG.md + pinned upstream submodules.
-Generated outputs: plugins/oydodo-skills/{skills,licenses,core,hooks,SOURCES.md,CHANGELOG.md}.
+Generated outputs: plugins/oydodo-skills/{skills,licenses,core,hooks,SOURCES.md,CHANGELOG.md}
+                   and .agents/{skills,licenses,SOURCES.md,CHANGELOG.md}.
 Only generated contents change; platform-specific manifests keep their identities.
 """
 from __future__ import annotations
@@ -20,9 +21,12 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 BUNDLE = ROOT / "plugins" / "oydodo-skills"
+PORTABLE = ROOT / ".agents"
 MANIFESTS = ("plugin.json", ".codex-plugin/plugin.json", ".claude-plugin/plugin.json")
 GENERATED_DIRS = ("skills", "licenses", "core", "hooks")
 GENERATED_FILES = ("SOURCES.md", "CHANGELOG.md")
+PORTABLE_DIRS = ("skills", "licenses")
+PORTABLE_FILES = ("SOURCES.md", "CHANGELOG.md")
 MAX_SIZE = 25 * 1024 * 1024
 
 
@@ -222,9 +226,9 @@ def make_tree(stage: Path) -> list[str]:
     return [e["name"] for e in entries]
 
 
-def signature(folder: Path) -> dict[str, str]:
+def signature(folder: Path, dirs=GENERATED_DIRS, files=GENERATED_FILES) -> dict[str, str]:
     result = {}
-    for part in (*GENERATED_DIRS, *GENERATED_FILES):
+    for part in (*dirs, *files):
         path = folder / part
         if path.is_file():
             result[part] = hashlib.sha256(path.read_bytes()).hexdigest()
@@ -279,16 +283,21 @@ def sync(check: bool) -> None:
         if size > MAX_SIZE:
             raise ValueError(f"Skill content exceeds 25MB: {size}")
         before, after = signature(BUNDLE), signature(staging)
+        portable_before = signature(PORTABLE, PORTABLE_DIRS, PORTABLE_FILES)
+        portable_after = signature(staging, PORTABLE_DIRS, PORTABLE_FILES)
         changed = before != after
+        portable_changed = portable_before != portable_after
         if check:
-            if changed:
-                missing = sorted(set(after) - set(before))
-                removed = sorted(set(before) - set(after))
-                modified = sorted(k for k in before.keys() & after.keys()
-                                  if before[k] != after[k])
-                raise SystemExit(f"OUT OF SYNC: missing={missing}, "
+            if changed or portable_changed:
+                label = "PLUGIN" if changed else "PORTABLE .agents"
+                left, right = (before, after) if changed else (portable_before, portable_after)
+                missing = sorted(set(right) - set(left))
+                removed = sorted(set(left) - set(right))
+                modified = sorted(k for k in left.keys() & right.keys()
+                                  if left[k] != right[k])
+                raise SystemExit(f"{label} OUT OF SYNC: missing={missing}, "
                                  f"removed={removed}, changed={modified}")
-            print(f"OK: generated files match source; {len(names)} skills; v{old_version}")
+            print(f"OK: plugin and .agents mirror match; {len(names)} skills; v{old_version}")
             return
         if changed:
             major, minor, patch = map(int, old_version.split("."))
@@ -312,6 +321,16 @@ def sync(check: bool) -> None:
             print(f"UPDATED: {len(names)} skills; v{old_version} -> v{next_version}")
         else:
             print(f"UNCHANGED: {len(names)} skills; v{old_version}")
+        # .agents/skills is the native discovery path for Codex, Pi, and DSH.
+        # Do not touch .agents/plugins/marketplace.json (not generated).
+        if portable_changed:
+            PORTABLE.mkdir(parents=True, exist_ok=True)
+            for name in PORTABLE_DIRS:
+                shutil.rmtree(PORTABLE / name, ignore_errors=True)
+                shutil.copytree(staging / name, PORTABLE / name)
+            for name in PORTABLE_FILES:
+                shutil.copy2(staging / name, PORTABLE / name)
+            print(f"SYNCED: portable .agents distribution; {len(names)} skills")
 
 
 def main() -> None:
