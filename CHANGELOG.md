@@ -1,10 +1,22 @@
 # Changelog
 
-本文件是 `oydodo/skills` 的**版本化设计交接记录**，供 Claude、Codex、ChatGPT 及后来接手的 Agent 阅读。它说明**改变了什么、为什么改变、哪些边界不能丢**；不是每次会话都必须加载的系统提示词。
+本文件是 `oydodo/skills` 的**版本记录**，供 Claude、Codex、ChatGPT 及后来接手的 Agent 阅读。它说明每一版**改变了什么、为什么改变**；现行的规矩见根目录 [AGENTS.md](AGENTS.md) 和各目录的 README。它不是每次会话都必须加载的系统提示词。
 
 - **唯一维护源**：仓库根目录 `CHANGELOG.md`；发布时复制到 Plugin 根目录，供安装后的 Claude Code、Codex 等按需查阅。
 - **版本对应**：以 [GitHub Releases](https://github.com/oydodo/skills/releases) 和已合并 PR 为准；`v0.1.9` 引入版本记录分发；此后每版按本文件记录变更。
 - **不要混淆**：代码合并、CI 通过、ZIP 发布、Marketplace 已同步、Agent 实际触发，是不同的验收层级。
+
+## [0.1.15] - 2026-11-09
+
+### Changed — 现行规矩回到仓库各处，CHANGELOG 只记版本
+
+- 删除原来文末的 “Design contract” 一节。它写的是一直有效的规矩，放在版本记录里，Agent 要从历史条目中翻找；规矩一改，又会和旧版本的说法对不上。内容搬到：根目录 `AGENTS.md`（只改源头、“做好了”分层、新旧规矩冲突先比情景），`skills/README.md`（三个核心各自独立、怎样算改好了），`core/README.md`（常驻提醒的边界）。“想问题的顺序”本来就写在 `crux-first-reasoning` 正文里。
+- 新增 `PRODUCT.md`（方向、取舍、不做什么、成功标准），`AGENTS.md` 与只引用它的 `CLAUDE.md`（新会话的 Agent 进门先读），`skills/README.md`、`scripts/README.md`（说明这两个目录是什么）。
+- 情景：在本仓库试用 Codas。仓库已经写有目标、决定和流程，但新开会话的 Agent 没有一个会主动去读的入口。
+
+### Compatibility
+
+- 没有修改任何 Skill 正文。随插件分发的 `CHANGELOG.md` 不再包含设计契约；契约本来是写给维护本仓库的 Agent，这些规矩现在在仓库的 `AGENTS.md` 和各 README 里。
 
 ## [0.1.14] - 2026-10-31
 
@@ -115,24 +127,3 @@
 - **新路径（现行）**：明确用户目标与现实差距 → 识别当前主导矛盾 / 关键制约及主次结构 → 评估能改变判断的关键未知 → 用证据与关系解释结论及可执行含义。
 - 主要矛盾是相对于**目标、阶段和证据**的主导制约，不等于最不确定的假设、最显眼的症状，也不必是唯一的根因。
 - 对报告、审计、调研及复杂取舍，**解释“为什么它重要、为什么其他因素暂居次要”与结论同样重要**。简单任务不强制复杂分析。
-
-## Design contract — 给 Claude 等后续 Agent 的交接
-
-**一条核心链路**：`目标与差距 → 主要矛盾及主次关系 → 关键不确定性与验证 → 证据链、行动和条件变化`。
-
-### 三个自研核心，各司其职
-
-1. [Philosophical Foundation](skills/philosophical-foundation/SKILL.md)：系统、联系、矛盾、变化、二阶效应、可逆性、反馈、简化与知止。属于项目的 **L0 方法论**，不是平台 system-role 权限。
-2. [Independent Judgment](skills/independent-judgment/SKILL.md)：证据纪律、建设性质疑、诚实区分事实与未知；**不为反对而反对**，尊重用户知情后的合理选择。
-3. [Crux-First Reasoning](skills/crux-first-reasoning/SKILL.md)：面对复杂诊断、审计、调研或决策，识别主导制约，解释主次与决定性证据，再决定验证什么；让用户**理解判断**，而非只收到答案。
-
-这些是**独立 Skill**，不是一个强制的三段式执行工作流。其它精选 Skill（如 `interview-me`、`grilling`、`wayfinder`、`ponytail`）仍按真实任务触发；不要因为“核心”就让简单查询也走完整流程。
-
-### 维护、分发与验收边界
-
-- **维护源**：三个核心判断 Skill 和自维护适配 Skill 均改 `skills/<name>/`；常驻摘要改 `core/always-on.md`；Hook 改 `core/hooks.json`；精选和触发描述改 `registry/skills.yaml`；**变更原因和版本记录改本文件**。
-- **生成文件**：`plugins/oydodo-skills/{skills,core,hooks}/` 与 Plugin 内 `CHANGELOG.md` 均由构建生成，**不要手工维护第二份**。
-- **评测**：正例需观察复杂任务是否抓住主要矛盾、展示主次与依据；反例需检查简单任务能否直接完成。不能仅通过 Agent 自述、构建成功或 ZIP 存在宣称行为有效。
-- **Web 同步状态**：GitHub 发布成功不保证 ChatGPT/Claude Web Marketplace 已同步。账户授权、导入器验证与 Hook 的本地行为应分别排查，不能从旧的提醒文本推断同步根因。
-
-后续如果需要改变以上设计契约，请**先说明要推翻的决策、支持证据和影响范围**，再更新相关 Skill、评测与本 Changelog；避免在一处悄悄改回旧方法。
