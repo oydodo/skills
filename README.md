@@ -4,7 +4,7 @@
 
 **技能新增与升级的统一流程**：阅读 [Skill 生命周期 SOP](docs/skill-lifecycle.md)，第三方来源固定提交并经评审升级；具体版本与变更记录见 [CHANGELOG.md](CHANGELOG.md)。
 
-**版本变更与 Claude handoff**：阅读 [CHANGELOG.md](CHANGELOG.md)。它记录为何从薄弱假设优先转向主要矛盾优先、三个核心 Skill 的分工、常驻 Hook 的边界及版本验收情况，并随 Plugin 一起分发。
+**在本仓库干活**：先读 [AGENTS.md](AGENTS.md)，方向见 [PRODUCT.md](PRODUCT.md)。**版本变更**：见 [CHANGELOG.md](CHANGELOG.md)，它记录每一版改了什么、为什么改，并随 Plugin 一起分发。
 
 这是一个面向 Codex、Claude Code、Pi 等编码 Agent 的 Skill 精选与管理仓库。我们关心的不是收集了多少技能，而是：当用户的判断或要求可能有误时，Agent 能否指出问题；当任务复杂时，能否抓住关键；当任务明确时，能否直接完成，而不是套用一整套无关流程。
 
@@ -116,7 +116,9 @@ flowchart TB
 | [`.agents/skills/`](.agents/skills/) | **Codex / Pi / DSH 原生扫描的优先入口**；构建生成，禁止单独修改 |
 | [`registry/curation.yaml`](registry/curation.yaml) | 全部盘点对象的精选、未选中、项目专用等状态 |
 | [`profiles/core.yaml`](profiles/core.yaml) | 目标角色与触发条件；**不是客户端自动生效的配置** |
-| [`CHANGELOG.md`](CHANGELOG.md) | 版本化设计决策与 Claude handoff；唯一维护源，自动打包进 Plugin |
+| [`CHANGELOG.md`](CHANGELOG.md) | 每一版改了什么、为什么改；自动打包进 Plugin |
+| [`AGENTS.md`](AGENTS.md) | 在本仓库干活的现行规矩，新会话的 Agent 先读 |
+| [`PRODUCT.md`](PRODUCT.md) | 方向、取舍、不做什么和成功标准 |
 | [`registry/pruning.md`](registry/pruning.md) | 取舍依据、未选中项和可逆剪枝原则 |
 | [`tests/`](tests/) | 待执行的行为验收与 A/B 测试案例 |
 
