@@ -110,7 +110,7 @@ class CoreHookTest(unittest.TestCase):
         self.assertTrue(versions and versions[0].startswith(f"## [{current}] - "))
         for version in ("0.1.6", "0.1.7", "0.1.8"):
             self.assertIn(f"## [{version}]", notes)
-        self.assertIn("Design contract", notes)
+        self.assertTrue((ROOT / "AGENTS.md").is_file())
         self.assertIn("主要矛盾", notes)
         self.assertIn("CHANGELOG.md", CORE.read_text(encoding="utf-8"))
 
