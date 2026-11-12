@@ -4,7 +4,7 @@
 
 **技能新增与升级的统一流程**：阅读 [Skill 生命周期 SOP](docs/skill-lifecycle.md)，第三方来源固定提交并经评审升级；具体版本与变更记录见 [CHANGELOG.md](CHANGELOG.md)。
 
-**在本仓库干活**：先读 [AGENTS.md](AGENTS.md)，方向见 [PRODUCT.md](PRODUCT.md)。**版本变更**：见 [CHANGELOG.md](CHANGELOG.md)，它记录每一版改了什么、为什么改，并随 Plugin 一起分发。
+**在本仓库干活**：先读 [AGENTS.md](AGENTS.md)；方向见本文的“预期获得什么”和“不做什么”。**版本变更**：见 [CHANGELOG.md](CHANGELOG.md)，它记录每一版改了什么、为什么改，并随 Plugin 一起分发。
 
 这是一个面向 Codex、Claude Code、Pi 等编码 Agent 的 Skill 精选与管理仓库。我们关心的不是收集了多少技能，而是：当用户的判断或要求可能有误时，Agent 能否指出问题；当任务复杂时，能否抓住关键；当任务明确时，能否直接完成，而不是套用一整套无关流程。
 
@@ -106,6 +106,17 @@ flowchart TB
 
 **这些是设计目标，不是已经验证的性能结论。** 目前精选 **18 个候选 Skill**：其中 14 个选自原有本机 80 项（通过固定版本上游来源管理），另有 3 个自研判断核心和 1 个维护中的开源工具适配 Skill（CodeGraph）。原有 **80 个本机目录尚未停用或删除**；Skill 的版本管理也不意味着它已在各客户端自动安装或每次被调用。后续应通过同任务的 A/B 行为测试，检验触发准确性、结果质量及额外开销。
 
+**成功标准**：同一个任务做有、无对比时，该触发的 Skill 触发得准，结果比不用更好，多花的成本可以接受。目前还没有做过这种对比。
+
+**现在的阶段**：精选清单已定，还没有行为对比数据；下一步是做出第一次对比，而不是继续加 Skill。
+
+## 不做什么
+
+- 不追求 Skill 数量。
+- 不做跨平台的 Hook 抽象或适配层（见 [HANDOFF](HANDOFF.md) 第 1 节的纠偏）。
+- 不宣称没有实测过的效果：构建成功、打包成功都不等于 Agent 会用。
+- 不把 Skill 串成固定流程，也不合成“万能 Skill”。
+
 ## 仓库中的文件分别做什么
 
 | 位置 | 作用 |
@@ -113,12 +124,14 @@ flowchart TB
 | [`skills/`](skills/) | 维护三个自研判断 Skill 和一个 CodeGraph 工具适配 Skill 的正文、参考资料与测试 |
 | [`upstream/`](upstream/) | 通过 Git submodule 固定第三方来源；**来源库不等于全量启用** |
 | [`registry/skills.yaml`](registry/skills.yaml) | 当前 18 个精选 Skill 的唯一注册表及来源路径 |
-| [`.agents/skills/`](.agents/skills/) | **Codex / Pi / DSH 原生扫描的优先入口**；构建生成，禁止单独修改 |
+| [`.agents/skills/`](.agents/skills/) | **Codex / Pi / DSH 原生扫描的优先入口**；其中 18 个精选 Skill 由构建生成，禁止单独修改；`codas-*` 由 Codas 安装，构建不碰 |
 | [`registry/curation.yaml`](registry/curation.yaml) | 全部盘点对象的精选、未选中、项目专用等状态 |
 | [`profiles/core.yaml`](profiles/core.yaml) | 目标角色与触发条件；**不是客户端自动生效的配置** |
 | [`CHANGELOG.md`](CHANGELOG.md) | 每一版改了什么、为什么改；自动打包进 Plugin |
 | [`AGENTS.md`](AGENTS.md) | 在本仓库干活的现行规矩，新会话的 Agent 先读 |
-| [`PRODUCT.md`](PRODUCT.md) | 方向、取舍、不做什么和成功标准 |
+| [`docs/AGENTS.md`](docs/AGENTS.md) | 各类知识放在哪里的对照（Codas） |
+| [`docs/notes/`](docs/notes/) | 决策记录（Note）；版本历史仍在 CHANGELOG |
+| [`codas.yml`](codas.yml) | Codas 版本来源与不读取的目录 |
 | [`registry/pruning.md`](registry/pruning.md) | 取舍依据、未选中项和可逆剪枝原则 |
 | [`tests/`](tests/) | 待执行的行为验收与 A/B 测试案例 |
 

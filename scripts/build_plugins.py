@@ -226,17 +226,41 @@ def make_tree(stage: Path) -> list[str]:
     return [e["name"] for e in entries]
 
 
-def signature(folder: Path, dirs=GENERATED_DIRS, files=GENERATED_FILES) -> dict[str, str]:
+def signature(folder: Path, dirs=GENERATED_DIRS, files=GENERATED_FILES,
+              owned: set[str] | None = None) -> dict[str, str]:
+    """Hash generated content. With `owned`, look only inside those child entries
+    of each dir, so extra entries other tools place there are not our business."""
     result = {}
     for part in (*dirs, *files):
         path = folder / part
         if path.is_file():
             result[part] = hashlib.sha256(path.read_bytes()).hexdigest()
         elif path.is_dir():
-            for child in path.rglob("*"):
+            roots = path.rglob("*") if owned is None else (
+                f for child in sorted(owned) if (path / child).exists()
+                for f in [path / child, *(path / child).rglob("*")])
+            for child in roots:
                 if child.is_file():
                     key = child.relative_to(folder).as_posix()
                     result[key] = hashlib.sha256(child.read_bytes()).hexdigest()
+    return result
+
+
+def owned_entries(*roots: Path) -> dict[str, set[str]]:
+    """Entries of each portable dir that the build generates, read from the given
+    generated trees."""
+    return {
+        name: {c.name for root in roots if (root / name).is_dir()
+               for c in (root / name).iterdir()}
+        for name in PORTABLE_DIRS
+    }
+
+
+def portable_sig(folder: Path, owned: dict[str, set[str]]) -> dict[str, str]:
+    result = {}
+    for name in PORTABLE_DIRS:
+        result.update(signature(folder, (name,), (), owned[name]))
+    result.update(signature(folder, (), PORTABLE_FILES))
     return result
 
 
@@ -279,12 +303,16 @@ def sync(check: bool) -> None:
     with tempfile.TemporaryDirectory(prefix="oydodo-build-") as temp:
         staging = Path(temp)
         names = make_tree(staging)
+        # The build owns only the entries it generates (this run's, plus the previous
+        # run's so a removed Skill is cleaned up); anything else under .agents/skills
+        # or .agents/licenses is left alone.
+        owned = owned_entries(staging, BUNDLE)
         size = sum(p.stat().st_size for p in staging.rglob("*") if p.is_file())
         if size > MAX_SIZE:
             raise ValueError(f"Skill content exceeds 25MB: {size}")
         before, after = signature(BUNDLE), signature(staging)
-        portable_before = signature(PORTABLE, PORTABLE_DIRS, PORTABLE_FILES)
-        portable_after = signature(staging, PORTABLE_DIRS, PORTABLE_FILES)
+        portable_before = portable_sig(PORTABLE, owned)
+        portable_after = portable_sig(staging, owned)
         changed = before != after
         portable_changed = portable_before != portable_after
         if check:
@@ -326,8 +354,18 @@ def sync(check: bool) -> None:
         if portable_changed:
             PORTABLE.mkdir(parents=True, exist_ok=True)
             for name in PORTABLE_DIRS:
-                shutil.rmtree(PORTABLE / name, ignore_errors=True)
-                shutil.copytree(staging / name, PORTABLE / name)
+                (PORTABLE / name).mkdir(exist_ok=True)
+                for entry in owned[name]:
+                    target = PORTABLE / name / entry
+                    if target.is_dir():
+                        shutil.rmtree(target)
+                    elif target.exists():
+                        target.unlink()
+                    source = staging / name / entry
+                    if source.is_dir():
+                        shutil.copytree(source, target)
+                    elif source.exists():
+                        shutil.copy2(source, target)
             for name in PORTABLE_FILES:
                 shutil.copy2(staging / name, PORTABLE / name)
             print(f"SYNCED: portable .agents distribution; {len(names)} skills")

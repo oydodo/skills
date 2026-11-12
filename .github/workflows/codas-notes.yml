@@ -1,0 +1,21 @@
+name: Codas Note checks
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+permissions:
+  contents: read
+jobs:
+  notes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: npx --yes tsx@4.21.0 .agents/codas/hooks/verify-agent-note-format.ts
+      - run: npx --yes tsx@4.21.0 .agents/codas/hooks/verify-agent-note-classification.ts
+      - run: npx --yes tsx@4.21.0 .agents/codas/hooks/verify-archived-agent-notes.ts
+        env:
+          DSH_ARCHIVE_BASE_REF: ${{ github.event.pull_request.base.sha }}

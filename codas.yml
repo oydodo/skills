@@ -1,0 +1,7 @@
+source:
+  repository: https://github.com/oydodo/codas
+  commit: d03df30caefead0ec3361ab5ac7b20fff9b35b34
+exclude:
+  - ".agents/**"
+  - "plugins/**"
+  - "upstream/**"

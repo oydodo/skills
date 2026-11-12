@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+
+hook_dir=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd)
+cd "$(git rev-parse --show-toplevel)"
+if git diff --cached --quiet -- docs/notes/; then
+    exit 0
+fi
+
+npx --yes tsx@4.21.0 "$hook_dir/verify-agent-note-format.ts"
+npx --yes tsx@4.21.0 "$hook_dir/verify-agent-note-classification.ts"
+npx --yes tsx@4.21.0 "$hook_dir/verify-archived-agent-notes.ts"

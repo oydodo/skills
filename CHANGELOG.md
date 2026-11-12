@@ -6,6 +6,15 @@
 - **版本对应**：以 [GitHub Releases](https://github.com/oydodo/skills/releases) 和已合并 PR 为准；`v0.1.9` 引入版本记录分发；此后每版按本文件记录变更。
 - **不要混淆**：代码合并、CI 通过、ZIP 发布、Marketplace 已同步、Agent 实际触发，是不同的验收层级。
 
+## [0.1.16] - 2026-11-12
+
+### Changed — 构建只管自己生成的条目；整体重装 Codas 最新版
+
+- `scripts/build_plugins.py` 和 `scripts/package_plugins.py` 现在只检查、覆盖、打包 `.agents/skills` 与 `.agents/licenses` 里由注册表生成的条目（按本次生成和上一次生成的名单），不再把整个目录当作自己的。别的工具放进这些目录的东西，构建不报“不一致”，也不会删除，发布的 ZIP 也不含它们。
+- 情景：把 Codas 的 Skill（`codas-*`）装进本仓库，安装规定放在 `.agents/skills/`。旧构建会把它们当作多余内容报错，`--write` 还会删掉。维护者的判断：构建本来就不该碰自己范围之外的东西，所以改构建，而不是给 `codas-*` 开例外。
+- 影响：`package.json` 里 Pi 的 skills 路径指向整个 `.agents/skills`，所以用 Git 包安装本仓库的 Pi 用户，也会同时拿到 `codas-*`。这是已知代价，未做处理。
+- 重装 Codas（`d03df30`）：删除 `PRODUCT.md` 和只引用 `AGENTS.md` 的 `CLAUDE.md`（Claude Code 不需要它也会读 `AGENTS.md`），方向、成功标准、不做什么并入 README；新增 `docs/AGENTS.md`（各类知识放哪里）、`docs/ontology/`、`docs/templates/`、`docs/notes/`、`codas.yml`、`.agents/codas/hooks/`、Note 检查的 CI 工作流和 `.claude/skills` 链接。
+
 ## [0.1.15] - 2026-11-09
 
 ### Changed — 现行规矩回到仓库各处，CHANGELOG 只记版本
