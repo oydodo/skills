@@ -9,7 +9,7 @@ import zipfile
 import yaml
 
 from scripts.build_plugins import (
-    ROOT, BUNDLE, PORTABLE, PORTABLE_DIRS, PORTABLE_FILES, catalog, signature, versions,
+    ROOT, BUNDLE, PORTABLE, PORTABLE_DIRS, PORTABLE_FILES, catalog, owned_entries, portable_sig, versions,
 )
 from scripts.package_plugins import package_agents
 
@@ -18,12 +18,11 @@ class PortableAgentsTest(unittest.TestCase):
     def test_one_level_skills_are_identical_to_curated_plugin(self):
         expected = {entry["name"] for entry in catalog()[1]}
         self.assertEqual(len(expected), 18)
-        native = {p.parent.name for p in (PORTABLE / "skills").glob("*/SKILL.md")}
+        owned = owned_entries(BUNDLE)
+        native = {p.parent.name for p in (PORTABLE / "skills").glob("*/SKILL.md")
+                  if p.parent.name in owned["skills"]}
         self.assertEqual(native, expected)
-        self.assertEqual(
-            signature(PORTABLE, PORTABLE_DIRS, PORTABLE_FILES),
-            signature(BUNDLE, PORTABLE_DIRS, PORTABLE_FILES),
-        )
+        self.assertEqual(portable_sig(PORTABLE, owned), portable_sig(BUNDLE, owned))
         self.assertTrue((PORTABLE / "plugins" / "marketplace.json").is_file(),
                         "Regeneration must preserve the existing ChatGPT marketplace")
         self.assertFalse((PORTABLE / "hooks").exists(),

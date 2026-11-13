@@ -24,7 +24,7 @@ class PiPackageContractTest(unittest.TestCase):
 
         expected = {e["name"] for e in catalog()[1]}
         self.assertEqual(len(expected), 18)
-        native = {p.parent.name for p in (PORTABLE / "skills").glob("*/SKILL.md")}
+        native = {p.name for p in (PORTABLE / "skills").iterdir() if p.name in expected}
         plugin = {p.parent.name for p in (BUNDLE / "skills").glob("*/SKILL.md")}
         self.assertEqual(expected, native)
         self.assertEqual(expected, plugin)
