@@ -11,7 +11,7 @@
 
 ## 只改源头
 
-- 源头是 `skills/`、`registry/skills.yaml`、`core/always-on.md`、`core/hooks.json`、`upstream/` 的固定提交和 `CHANGELOG.md`。`plugins/oydodo-skills/` 和 `.agents/` 下的 `skills`、`licenses`、`SOURCES.md`、`CHANGELOG.md` 都由 [构建脚本](scripts/README.md) 生成。情景：构建会整个覆盖这些目录，手改会丢失，`--check` 也会报不一致（CHANGELOG 0.1.13）。
+- 源头是 `skills/`、`registry/skills.yaml`、`core/always-on.md`、`core/hooks.json`、`upstream/` 的固定提交和 `CHANGELOG.md`。`plugins/oydodo-skills/` 和 `.agents/` 下的 `skills`、`licenses`、`SOURCES.md`、`CHANGELOG.md` 里由注册表生成的条目都由 [构建脚本](scripts/README.md) 生成，别的条目（如 Codas 安装的 `.agents/skills/codas-*`）构建不碰。情景：构建会覆盖它生成的条目，手改会丢失，`--check` 也会报不一致（CHANGELOG 0.1.13、0.1.16）。
 - `upstream/` 是第三方仓库的固定版本，不在这里改它们的正文；要调整触发描述用 `registry/skills.yaml` 的 `description_override`。
 - 新增、升级、移除 Skill 按 [Skill 生命周期](docs/skill-lifecycle.md) 走。
 
