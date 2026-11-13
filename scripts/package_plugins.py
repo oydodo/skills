@@ -10,10 +10,12 @@ import zipfile
 
 if __package__:
     from .build_plugins import (ROOT, BUNDLE, PORTABLE, PORTABLE_DIRS,
-                                PORTABLE_FILES, catalog, signature, versions)
+                                PORTABLE_FILES, catalog, owned_entries, portable_sig,
+                                signature, versions)
 else:
     from build_plugins import (ROOT, BUNDLE, PORTABLE, PORTABLE_DIRS,
-                               PORTABLE_FILES, catalog, signature, versions)
+                               PORTABLE_FILES, catalog, owned_entries, portable_sig,
+                               signature, versions)
 
 FILE_PARTS = ("skills", "licenses", "core", "hooks")
 COMMON_FILES = ("README.md", "SOURCES.md", "CHANGELOG.md")
@@ -93,10 +95,11 @@ def package_agents(output: Path) -> None:
     """
     expected = {entry["name"] for entry in catalog()[1]}
     version, _ = versions()
-    if signature(PORTABLE, PORTABLE_DIRS, PORTABLE_FILES) != signature(
-            BUNDLE, PORTABLE_DIRS, PORTABLE_FILES):
+    owned = owned_entries(BUNDLE)
+    if portable_sig(PORTABLE, owned) != portable_sig(BUNDLE, owned):
         raise ValueError("Portable .agents skills differ from the plugin source")
-    names = {p.parent.name for p in (PORTABLE / "skills").glob("*/SKILL.md")}
+    names = {p.parent.name for p in (PORTABLE / "skills").glob("*/SKILL.md")
+             if p.parent.name in owned["skills"]}
     if names != expected:
         raise ValueError(f"Expected portable {sorted(expected)}, got {sorted(names)}")
 
@@ -105,7 +108,10 @@ def package_agents(output: Path) -> None:
         folder = PORTABLE / name
         if not folder.is_dir() or folder.is_symlink():
             raise ValueError(f"Missing or unsafe portable directory: {folder}")
-        contents.extend(p for p in folder.rglob("*") if p.is_file() or p.is_symlink())
+        contents.extend(p for entry in sorted(owned[name]) for p in (folder / entry).rglob("*")
+                        if p.is_file() or p.is_symlink())
+        contents.extend(folder / entry for entry in sorted(owned[name])
+                        if (folder / entry).is_file() or (folder / entry).is_symlink())
     contents.extend(PORTABLE / name for name in PORTABLE_FILES)
     if any(not p.is_file() or p.is_symlink()
            or any(parent.is_symlink() for parent in p.parents if parent != ROOT)
