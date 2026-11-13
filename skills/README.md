@@ -2,7 +2,7 @@
 
 本目录是本仓库自己维护的 4 个 Skill 的源码：三个判断核心 `philosophical-foundation`、`independent-judgment`、`crux-first-reasoning`，以及 CodeGraph 工具适配 `codegraph`。
 
-不在这里的：第三方 Skill 在 `upstream/` 以固定提交引入；`.agents/skills/` 和 `plugins/oydodo-skills/skills/` 里是构建生成的副本，不在那里改。
+不在这里的：第三方 Skill 在 `upstream/` 以固定提交引入；`.agents/skills/` 里注册表对应的条目和 `plugins/oydodo-skills/skills/` 里是构建生成的副本，不在那里改。
 
 ## 三个核心各管各的
 

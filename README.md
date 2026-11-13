@@ -113,7 +113,7 @@ flowchart TB
 | [`skills/`](skills/) | 维护三个自研判断 Skill 和一个 CodeGraph 工具适配 Skill 的正文、参考资料与测试 |
 | [`upstream/`](upstream/) | 通过 Git submodule 固定第三方来源；**来源库不等于全量启用** |
 | [`registry/skills.yaml`](registry/skills.yaml) | 当前 18 个精选 Skill 的唯一注册表及来源路径 |
-| [`.agents/skills/`](.agents/skills/) | **Codex / Pi / DSH 原生扫描的优先入口**；构建生成，禁止单独修改 |
+| [`.agents/skills/`](.agents/skills/) | **Codex / Pi / DSH 原生扫描的优先入口**；其中注册表里的 18 个 Skill 由构建生成，禁止单独修改；构建只管这些条目，别的工具（如 Codas 的 `codas-*`）放进来的不动 |
 | [`registry/curation.yaml`](registry/curation.yaml) | 全部盘点对象的精选、未选中、项目专用等状态 |
 | [`profiles/core.yaml`](profiles/core.yaml) | 目标角色与触发条件；**不是客户端自动生效的配置** |
 | [`CHANGELOG.md`](CHANGELOG.md) | 每一版改了什么、为什么改；自动打包进 Plugin |

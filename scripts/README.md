@@ -4,6 +4,7 @@
 
 - `build_plugins.py`：`--write` 生成产物，`--check` 核对产物和源头是否一致，`--list-submodules` 列出要初始化的上游，`--release-notes` 取出某一版的 CHANGELOG 说明。
 - `package_plugins.py`：打包通用 `.agents`、ChatGPT、Claude 三份 ZIP。`package_claude_plugin.py` 是只打 Claude 包的旧入口。
+- 构建只检查、覆盖、打包 `.agents/skills`、`.agents/licenses` 里由注册表生成的条目；别的工具放进这两个目录的东西不动（CHANGELOG 0.1.16）。
 - `checkout-dsh-skills.sh`：只检出 DSH 上游里的 `.agents/skills`。
 
 ## 版本门禁
