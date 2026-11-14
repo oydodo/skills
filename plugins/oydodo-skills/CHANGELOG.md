@@ -6,6 +6,15 @@
 - **版本对应**：以 [GitHub Releases](https://github.com/oydodo/skills/releases) 和已合并 PR 为准；`v0.1.9` 引入版本记录分发；此后每版按本文件记录变更。
 - **不要混淆**：代码合并、CI 通过、ZIP 发布、Marketplace 已同步、Agent 实际触发，是不同的验收层级。
 
+## [0.1.17] - 2026-11-14
+
+### Added — 自维护写作 Skill `crux-first-writing`（18 → 19）
+
+- 新增 `skills/crux-first-writing/`：写或改“讲某样东西是什么”的文字时，先从它在整体里的位置找出本质，用一句正面的话说出，再从本质展开全文；逐句检验“这句是否在说对象现在的性质”，说被否决做法或旧版本的句子移到决策记录或 CHANGELOG；每次修改都从本质重写受影响的整段。附 `references/evaluation.md`。
+- 情景：Codas 本体里 link 的定义四句话全在讲它不是什么、不做什么，没有说出本质。查下来，文档在逐条反馈中被逐句修补，每做一次减法就留下一句告别句，写成了旧版的差分。`crux-first-reasoning` 管判断，触发条件是决策和诊断，且跳过文字修改，写定义时不会加载；现有写作 Skill 只零散地管“不是X而是Y”这类句式。
+- 配合顺序：`crux-first-reasoning`、`independent-judgment` 先定什么是真的、什么是主要的；本 Skill 定本质和组织；`technical-documentation`、`technical-writing`、`technical-language`、`writing-for-agents` 再管文体和措辞。
+- 未验证：Agent 是否在写定义、改文档时实际触发本 Skill，以及有无对比的效果。
+
 ## [0.1.16] - 2026-11-13
 
 ### Changed — 构建只管自己生成的条目
