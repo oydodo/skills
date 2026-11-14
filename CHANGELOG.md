@@ -6,6 +6,14 @@
 - **版本对应**：以 [GitHub Releases](https://github.com/oydodo/skills/releases) 和已合并 PR 为准；`v0.1.9` 引入版本记录分发；此后每版按本文件记录变更。
 - **不要混淆**：代码合并、CI 通过、ZIP 发布、Marketplace 已同步、Agent 实际触发，是不同的验收层级。
 
+## [0.1.18] - 2026-11-14
+
+### Fixed — 插件里只留一份插件清单
+
+- 构建复制 Skill 时不再带上上游自己的 `.claude-plugin/` 和 `.codex-plugin/`。`visual-explainer` 的源路径是上游的整个插件目录，它的 `.claude-plugin/plugin.json` 一直跟着进了 `plugins/oydodo-skills/skills/visual-explainer/`，于是插件里套着另一个插件的清单。
+- 情景：claude.ai 添加 `oydodo/skills` 为 Marketplace 时报 “Marketplace sync failed”，删掉旧来源重加仍失败。账号里最后同步成功的是 0.1.10；0.1.11 正是首次加入 `visual-explainer` 的一版，此后再没同步上。本地 `claude plugin validate` 对 Marketplace 和插件都通过，所以只能从同步前后的差别找原因；嵌套的插件清单是这一版新出现、又最像会让同步方认错插件的东西。
+- 未验证：这是按时间对应推出的原因，修好后要在 claude.ai 重新同步一次才能确认。若仍失败，下一个怀疑对象是同一 Skill 带进来的 `commands/`、`mcp/server.mjs` 和 `extension.ts`。
+
 ## [0.1.17] - 2026-11-14
 
 ### Added — 自维护写作 Skill `crux-first-writing`（18 → 19）
