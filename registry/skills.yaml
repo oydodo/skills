@@ -1,5 +1,5 @@
 # Selected Skills only; submodules are sources, not automatic installations.
-version: 18
+version: 19
 upstreams:
   addyosmani:
     url: https://github.com/addyosmani/agent-skills
@@ -58,6 +58,11 @@ skills:
     category: reasoning
     skill_path: skills/crux-first-reasoning
     capability_layer: cognition
+  - name: crux-first-writing
+    source: maintained
+    category: writing
+    skill_path: skills/crux-first-writing
+    capability_layer: writing
   - name: grilling
     source: mattpocock
     category: reasoning

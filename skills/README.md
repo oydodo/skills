@@ -1,6 +1,8 @@
 # 自维护 Skill
 
-本目录是本仓库自己维护的 4 个 Skill 的源码：三个判断核心 `philosophical-foundation`、`independent-judgment`、`crux-first-reasoning`，以及 CodeGraph 工具适配 `codegraph`。
+本目录是本仓库自己维护的 5 个 Skill 的源码：三个判断核心 `philosophical-foundation`、`independent-judgment`、`crux-first-reasoning`，写作 Skill `crux-first-writing`，以及 CodeGraph 工具适配 `codegraph`。
+
+`crux-first-writing` 是 `crux-first-reasoning` 在写作上的对应：后者围绕主要矛盾组织判断，前者围绕对象的本质组织讲“它是什么”的文字，每次修改都从本质重写受影响的整段。它先于其他写作 Skill，那些 Skill 管文体和措辞。
 
 不在这里的：第三方 Skill 在 `upstream/` 以固定提交引入；`.agents/skills/` 和 `plugins/oydodo-skills/skills/` 里是构建生成的副本，不在那里改。
 

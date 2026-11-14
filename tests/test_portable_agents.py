@@ -17,7 +17,7 @@ from scripts.package_plugins import package_agents
 class PortableAgentsTest(unittest.TestCase):
     def test_one_level_skills_are_identical_to_curated_plugin(self):
         expected = {entry["name"] for entry in catalog()[1]}
-        self.assertEqual(len(expected), 18)
+        self.assertEqual(len(expected), 19)
         owned = owned_entries(BUNDLE)
         native = {p.parent.name for p in (PORTABLE / "skills").glob("*/SKILL.md")
                   if p.parent.name in owned["skills"]}

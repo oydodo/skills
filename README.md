@@ -25,7 +25,7 @@
 
 ```mermaid
 flowchart TB
-    ROOT["精选工作集 · 18 个 Skill"]
+    ROOT["精选工作集 · 19 个 Skill"]
 
     ROOT --> L0["L0 · 哲学基础"]
     ROOT --> L0J["L1 · 判断准则"]
@@ -51,6 +51,7 @@ flowchart TB
     L2C --> DB["diagnosing-bugs"]
     L2Q --> WFA["writing-for-agents"]
     L2Q --> RT["retro"]
+    L2W --> CW["crux-first-writing"]
     L2W --> TW["technical-writing"]
     L2W --> TD["technical-documentation"]
     L2W --> TL["technical-language"]
@@ -72,7 +73,7 @@ flowchart TB
 
 例如，用户说“接口变慢了，把数据库全部换掉”。前者提醒 Agent：**用户提出的解决办法尚未被证实**；后者围绕性能目标与当前调用链表现的差距，判断真正制约响应速度的环节。如果证据不足，再选择能区分数据库、业务服务等解释的检查，并说明为什么它最有判断价值。两者可配合，也可以独立使用。
 
-### 十五个专项 Skill 为什么保留
+### 十六个专项 Skill 为什么保留
 
 | Skill | 解决的问题 | 何时调用 |
 | --- | --- | --- |
@@ -88,11 +89,12 @@ flowchart TB
 | [`visual-explainer`](https://github.com/nicobailon/visual-explainer) | 将分析、架构、进展、审查结论变成直观的图示和 HTML 页面 | 明确要求视觉化或视觉形式有显著价值，并具备合适的输出能力时 |
 | [`writing-for-agents`](https://github.com/mattpocock/skills/blob/main/skills/productivity/writing-for-agents/SKILL.md) | 优化 Agent 指令的按需加载、完成标准与无效规则 | 编写或审查 SKILL.md、AGENTS.md、CLAUDE.md 等 Agent 可读文件 |
 | [`retro`](https://github.com/mattpocock/skills/blob/main/skills/engineering/retro/SKILL.md) | 从真实开发会话中改进导航、自动检查和 Agent 工作环境 | **用户显式提出会话复盘**时使用；不自动运行 |
+| [`crux-first-writing`](skills/crux-first-writing/SKILL.md) | 讲“某样东西是什么”的文字只列它不是什么、或被逐句修成旧版的差分 | 写或改定义、README 首页、文档小节、决策记录正文、代码注释时；先于其他写作 Skill |
 | `technical-writing` | 中文技术文稿有结论却缺少背景、证据和设计依据 | 写技术方案、架构说明、评审材料时 |
 | `technical-documentation` | 开发文档难以帮助读者理解或完成任务 | README、API 文档、教程等开发者文档 |
 | `technical-language` | 英文技术表达不准确、不自然或不一致 | 技术英语编辑与改写时 |
 
-这十五项提供专项方法，不改变通用判断准则。例如写一篇已有明确事实依据的 README，可以直接使用文档写作能力，不必先启动访谈或复杂推理。
+这十六项提供专项方法，不改变通用判断准则。例如写一篇已有明确事实依据的 README，可以直接使用文档写作能力，不必先启动访谈或复杂推理。
 
 ## 怎么筛选，而不是继续堆积
 
@@ -104,7 +106,7 @@ flowchart TB
 
 这套组织方式希望产生三个效果：减少不必要的 Skill 触发和流程负担；让用户提出错误前提时，Agent 能保持独立判断；让复杂分析优先关注真正影响选择的因素，同时保持交付物对读者友好。
 
-**这些是设计目标，不是已经验证的性能结论。** 目前精选 **18 个候选 Skill**：其中 14 个选自原有本机 80 项（通过固定版本上游来源管理），另有 3 个自研判断核心和 1 个维护中的开源工具适配 Skill（CodeGraph）。原有 **80 个本机目录尚未停用或删除**；Skill 的版本管理也不意味着它已在各客户端自动安装或每次被调用。后续应通过同任务的 A/B 行为测试，检验触发准确性、结果质量及额外开销。
+**这些是设计目标，不是已经验证的性能结论。** 目前精选 **19 个候选 Skill**：其中 14 个选自原有本机 80 项（通过固定版本上游来源管理），另有 3 个自研判断核心、1 个自研写作 Skill（crux-first-writing）和 1 个维护中的开源工具适配 Skill（CodeGraph）。原有 **80 个本机目录尚未停用或删除**；Skill 的版本管理也不意味着它已在各客户端自动安装或每次被调用。后续应通过同任务的 A/B 行为测试，检验触发准确性、结果质量及额外开销。
 
 ## 仓库中的文件分别做什么
 
@@ -112,7 +114,7 @@ flowchart TB
 | --- | --- |
 | [`skills/`](skills/) | 维护三个自研判断 Skill 和一个 CodeGraph 工具适配 Skill 的正文、参考资料与测试 |
 | [`upstream/`](upstream/) | 通过 Git submodule 固定第三方来源；**来源库不等于全量启用** |
-| [`registry/skills.yaml`](registry/skills.yaml) | 当前 18 个精选 Skill 的唯一注册表及来源路径 |
+| [`registry/skills.yaml`](registry/skills.yaml) | 当前 19 个精选 Skill 的唯一注册表及来源路径 |
 | [`.agents/skills/`](.agents/skills/) | **Codex / Pi / DSH 原生扫描的优先入口**；构建生成，禁止单独修改 |
 | [`registry/curation.yaml`](registry/curation.yaml) | 全部盘点对象的精选、未选中、项目专用等状态 |
 | [`profiles/core.yaml`](profiles/core.yaml) | 目标角色与触发条件；**不是客户端自动生效的配置** |
@@ -126,7 +128,7 @@ flowchart TB
 
 ## Codex / Pi / DSH：优先使用通用 `.agents/skills/`
 
-`registry/skills.yaml` 是唯一精选注册表；构建会将 **18 项 Skill、关联参考资料和脚本**同时生成到根目录 `.agents/skills/<name>/SKILL.md` 和 ChatGPT/Claude Plugin。不要在两个位置各自改正文，也不要另建 `.codex/skills`、`.pi/skills`、`.dsh/skills` 的同名副本。
+`registry/skills.yaml` 是唯一精选注册表；构建会将 **19 项 Skill、关联参考资料和脚本**同时生成到根目录 `.agents/skills/<name>/SKILL.md` 和 ChatGPT/Claude Plugin。不要在两个位置各自改正文，也不要另建 `.codex/skills`、`.pi/skills`、`.dsh/skills` 的同名副本。
 
 - **使用本仓库作为工作目录**：Codex、Pi、DSH 可直接发现根目录 `.agents/skills/`；Pi 需要项目已信任，DSH 如存在同名 `.dsh/skills/`，其优先级更高。
 - **让其他仓库使用**：从 [最新 Release](https://github.com/oydodo/skills/releases/latest) 下载 `oydodo-skills-agents.zip`，解压到目标项目根目录，得到 `.agents/skills/`（连同第三方许可和版本记录）。需要全局通用时解压到用户 Home，生成 `~/.agents/skills/`。覆盖已有同名 Skill 前应备份并检查冲突。
@@ -136,12 +138,12 @@ flowchart TB
 
 完整操作及三端差异见 [分发指南](docs/distribution.md)。
 
-## 一次安装 18 个 Skill：ChatGPT / Claude Plugin
+## 一次安装 19 个 Skill：ChatGPT / Claude Plugin
 
 **本地 Agent 核心常驻（可选 Hook）**：[`core/always-on.md`](core/always-on.md) 维护独立判断、主要矛盾优先、关键不确定性从属和关键论证等轻量原则，并附三个核心 Skill 的本地及 GitHub 链接。发布工具将其与 [`core/hooks.json`](core/hooks.json) 一起打包；在支持 SessionStart Hook 的 Codex/Claude Code 本地运行时，安装 Plugin 并按需信任 Hook 后，于启动、恢复、清除、压缩或分叉时注入。缺失规则文件时静默跳过，不阻断会话。**Web Plugin 仍为按需加载，不应宣称全局常驻。**
 
 
-ChatGPT 的单个 Skill 上传入口不能直接识别包含多个 Skill 的仓库；为保留独立触发并免去 18 次手工上传，本仓库提供 [oydodo Skills Plugin](plugins/oydodo-skills/README.md)：一个 Plugin 内打包 **18 个独立的 Skill**，通过 [GitHub Marketplace](.agents/plugins/marketplace.json) 分发，不合并成“万能 Skill”。
+ChatGPT 的单个 Skill 上传入口不能直接识别包含多个 Skill 的仓库；为保留独立触发并免去 19 次手工上传，本仓库提供 [oydodo Skills Plugin](plugins/oydodo-skills/README.md)：一个 Plugin 内打包 **19 个独立的 Skill**，通过 [GitHub Marketplace](.agents/plugins/marketplace.json) 分发，不合并成“万能 Skill”。
 
 **可视化汇报**：`visual-explainer` 复用 MIT 开源的成熟 HTML 图示与报表能力，支持技术架构、流程、方案对比、项目回顾与数据说明；不作为全局 Hook，也不把每条普通答复转换成图。浏览器/文件能力不可用时应使用当前平台支持的图表或文字说明，不能声称生成了本地 HTML。
 
