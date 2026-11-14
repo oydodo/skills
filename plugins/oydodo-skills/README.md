@@ -10,7 +10,7 @@ This is a **skills-only** Agent Plugin using root `plugin.json` and a backward-c
 
 ## Preferred local Codex / Pi / DSH use: native `.agents`
 
-For **local Codex**, Pi, and DeepSeek Harness, prefer the root [`.agents/skills/`](../../.agents/skills/) generated from the same curated registry. The [portable Agents ZIP](https://github.com/oydodo/skills/releases/latest) can be extracted into a target project or home directory; submodule initialization is not required by consumers. The Plugin remains necessary or useful for ChatGPT Web / Claude Plugin installation and optional Plugin hooks. **Do not install the same 18 Skill names as both native `.agents` and Plugin Skills in one local scope.** DSH may shadow an `.agents` entry with its project `.dsh/skills` copy.
+For **local Codex**, Pi, and DeepSeek Harness, prefer the root [`.agents/skills/`](../../.agents/skills/) generated from the same curated registry. The [portable Agents ZIP](https://github.com/oydodo/skills/releases/latest) can be extracted into a target project or home directory; submodule initialization is not required by consumers. The Plugin remains necessary or useful for ChatGPT Web / Claude Plugin installation and optional Plugin hooks. **Do not install the same 19 Skill names as both native `.agents` and Plugin Skills in one local scope.** DSH may shadow an `.agents` entry with its project `.dsh/skills` copy.
 
 ## Alternative Plugin installation on ChatGPT desktop (macOS)
 

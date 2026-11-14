@@ -69,6 +69,10 @@ visualization_skills:
     path: upstream/visual-explainer/plugins/visual-explainer
     trigger: explicit_visual_report_or_diagram_with_suitable_output_capabilities
 writing_skills:
+  - name: crux-first-writing
+    role: essence_first_definition_and_revision
+    path: skills/crux-first-writing
+    trigger: prose_that_says_what_something_is
   - name: technical-writing
     role: chinese_technical_prose
     path: upstream/technical-writing

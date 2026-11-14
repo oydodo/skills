@@ -31,8 +31,8 @@ class MattQualitySkillsTest(unittest.TestCase):
         self.assertIn(PIN, pinned)
         registry = yaml.safe_load((ROOT / "registry/skills.yaml").read_text(encoding="utf-8"))
         entries = registry["skills"]
-        self.assertEqual(len(entries), 18)
-        self.assertEqual(len({e["name"] for e in entries}), 18)
+        self.assertEqual(len(entries), 19)
+        self.assertEqual(len({e["name"] for e in entries}), 19)
         by_name = {e["name"]: e for e in entries}
         for name, source_path in NEW_SKILLS.items():
             with self.subTest(name=name):
@@ -44,9 +44,9 @@ class MattQualitySkillsTest(unittest.TestCase):
         self.assertIn("not an automatic status summary", by_name["retro"]["description_override"])
         self.assertIn("not invoke for ordinary", by_name["writing-for-agents"]["description_override"])
         curation = yaml.safe_load((ROOT / "registry/curation.yaml").read_text(encoding="utf-8"))
-        self.assertEqual(curation["selected_count"], 18)
+        self.assertEqual(curation["selected_count"], 19)
         selected = {n for group in curation["selected"].values() for n in group}
-        self.assertEqual(len(selected), 18)
+        self.assertEqual(len(selected), 19)
         self.assertTrue(set(NEW_SKILLS) <= selected)
         self.assertTrue(set(NEW_SKILLS).isdisjoint(set(curation["not_selected"]["matt"])))
 
@@ -98,7 +98,7 @@ class MattQualitySkillsTest(unittest.TestCase):
         manifests = ["plugin.json", ".codex-plugin/plugin.json", ".claude-plugin/plugin.json"]
         for manifest in manifests:
             meta = json.loads((BUNDLE / manifest).read_text(encoding="utf-8"))
-            self.assertEqual(meta["version"], "0.1.16")
+            self.assertEqual(meta["version"], "0.1.17")
         changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
         self.assertIn("## [0.1.12] - 2026-10-30", changelog)
         core = (ROOT / "core/always-on.md").read_text(encoding="utf-8")

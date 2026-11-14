@@ -23,7 +23,7 @@ class PiPackageContractTest(unittest.TestCase):
         self.assertNotIn("version", package, "Git package version is tracked by the release/Changelog, not a second manual version")
 
         expected = {e["name"] for e in catalog()[1]}
-        self.assertEqual(len(expected), 18)
+        self.assertEqual(len(expected), 19)
         native = {p.name for p in (PORTABLE / "skills").iterdir() if p.name in expected}
         plugin = {p.parent.name for p in (BUNDLE / "skills").glob("*/SKILL.md")}
         self.assertEqual(expected, native)
