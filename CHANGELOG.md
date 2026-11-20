@@ -8,13 +8,14 @@
 
 ## [0.1.19] - 2026-11-20
 
-### Changed — CodeGraph 缺失索引自动初始化、过期索引按需刷新
+### Changed — CodeGraph 缺图自动初始化、版本化过期检测与按需重建
 
-- 更新自维护 `codegraph` Skill：在复杂跨文件分析任务中，如果本地 CLI 已安装且目标 worktree 可写，`codegraph status` 明确确认无索引时，自动执行一次 `codegraph init <repo-root> --yes` 并核验；CLI 查询前每项任务最多执行一次 `codegraph sync`，代替旧版直接降级的行为。
-- 复用 CodeGraph v1.6.2 MCP 内置文件监听、连接时差异补齐和过期文件提示。MCP 正常工作时不额外执行 sync；仅在结果与源码持续矛盾时同步并重试一次。强制重建仅用于增量修复后仍损坏且无写入冲突的场景。
-- 不自动安装 CLI/MCP、不修改全局配置、不引入 Hook/服务/缓存监控、不碰其他仓库或只读目录；同步失败时仍降级源代码检索。扩充正负例验收说明与合同测试。
-- 情景：原 Skill 把缺失本地索引视作无法使用图的终点，导致已装 CodeGraph 的跨文件任务仍反复使用普通搜索；而本地初始化是作用域明确的低成本自恢复。避免另建复杂“过期监测”机制，因为上游已提供增量同步。
-- 尚未验证：真实 Codex/Claude/Pi 运行时自动执行、CodeGraph CLI 的现场表现以及 Web Plugin 侧加载；静态断言和构建不能代表行为验收。
+- 自维护的 `codegraph` Skill 针对真正需要跨文件图分析的任务：在本地 CLI 已安装、目标 worktree 可写且 `status` 明确报未初始化时，按安装版本自动运行一次 `init` 并核验。CodeGraph v1.6.3+ 使用 `codegraph init <repo-root> --yes --local-only` 避免把生成索引纳入 Git；v1.6.2 降级为 `init --yes`。
+- CLI 模式针对已有且同引擎构建的索引，每项任务增量 `sync` 一次。MCP 模式优先使用上游文件 watcher、连接时补同步和 stale-file 提示，避免重复维护。
+- 已根据 2026-11-17 发布的上游 v1.6.3 调整关键逻辑：`status --strict` 可辅助判断缺图、不完整或过期，但非零返回码并不等于损坏；上游引擎升级、框架/配置变化并明确提示需要重建时执行一次 `codegraph index <repo-root>`，而不是只做 `sync`。`index` 本身就完整重建，`--force` 只是绕过根目录安全保护，不能用作常规恢复。
+- 保留权限与边界：不自动安装/升级 CodeGraph、修改 MCP/Agent 全局配置、删索引、创建自制 watcher/Hook/锁；只作用于当前任务仓库，遇到只读、异常、竞争写入时降级代码检索。
+- 情景：旧 Skill 因缺索引直接退回普通搜索；新增自恢复时又需兼容上游版本变化，避免新旧索引混用或误用强制选项。
+- 验收层级：本机 v1.6.2 临时 Git 仓库上的 `status → init → sync → index` 命令实测通过；v1.6.3 语义基于上游 release/docs，真实 CLI 和 Codex/Claude/Pi 行为仍待另验。
 
 ## [0.1.18] - 2026-11-14
 
