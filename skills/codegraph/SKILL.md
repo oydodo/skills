@@ -1,32 +1,31 @@
 ---
 name: codegraph
-description: "Use the open-source colbymchenry/CodeGraph CLI or MCP to investigate an accessible local repository's structural code graph: cross-file calls, implementation paths, callers/callees, dependency and refactor impact, and affected tests. Apply for nontrivial codebase navigation, bug localization or change-risk analysis when a CodeGraph index/tool is available, or when the user explicitly wants to set up CodeGraph. Do not force graph queries for small edits; if the binary, MCP tool, or local index is unavailable, fall back to ordinary repository inspection without blocking."
+description: "Use the open-source colbymchenry/CodeGraph CLI or MCP to investigate accessible local repositories: cross-file calls, implementation paths, callers/callees, dependency and refactor impact, and affected tests. For graph-worthy tasks, automatically initialize a missing local index or refresh a stale one when the CLI and repository writes are available. Do not force CodeGraph on small edits or install tooling without approval; fall back to ordinary repository inspection when graph access is unavailable."
 ---
 
 # CodeGraph — Repository graph navigation
 
-**Purpose:** Find the smallest code context that explains a cross-file behavior or change impact. This is a **maintained Skill adapter** for the MIT-licensed external project [colbymchenry/codegraph](https://github.com/colbymchenry/codegraph); it does **not** bundle the CodeGraph executable, install MCP servers, or assume Web sessions can access local files.
+**Purpose:** Find the smallest code context that explains cross-file behavior or change impact. This is a maintained Skill adapter for the MIT-licensed [colbymchenry/CodeGraph](https://github.com/colbymchenry/codegraph). It does **not** bundle the executable, install MCP servers, or grant access to a user's machine.
 
 ## Workflow
 
-1. **Establish scope.** Identify the actual repository/worktree and the question to answer. Use graph analysis for cross-file symbol relationships, call chains, route-to-handler paths, blast radius, test selection, and refactor/bug investigations. Simple edits, known-file reads, or straightforward grep do not need CodeGraph.
-2. **Check availability without modifying the environment.** If an installed `codegraph_explore` MCP tool is exposed, use it. Otherwise check whether `codegraph` CLI is accessible (`command -v codegraph` in a POSIX shell, or the platform's equivalent); run `codegraph status .` in the target repository before querying. Respect configured alternate index directories. A missing CLI, unusable tool, absent index, or failing command is **nonblocking**: continue with built-in repository search and label the missing coverage.
-3. **Retrieve focused graph evidence.** Prefer one `codegraph_explore` request (or `codegraph explore "<question>"`) asking specifically for the relevant call path, symbol or flow. Include `projectPath` when using MCP across repositories and the tool accepts it. For targeted follow-up use the CLI, if installed:
-   - `codegraph callers <symbol>` / `codegraph callees <symbol>` — callers and callees.
-   - `codegraph impact <symbol>` — potential change radius.
-   - `codegraph query "<symbol-or-query>"` — symbol discovery.
-   - `git diff --name-only | codegraph affected --stdin` — candidate affected tests (only when meaningful for the diff).
-4. **Verify, don't reify the index.** Confirm decisive file paths, line ranges, contracts, dynamic behavior and test coverage in real source and/or executable checks. A static graph can miss runtime dispatch, generated code or unsupported files, and an index can be stale; report such limits. Avoid treating graph edges as authoritative architecture or a proven root cause.
-5. **Deliver actionable context.** Explain the observed route/call chain, the likely binding point or impact surface, supporting source locations, what is still uncertain, and the smallest sensible verification. Prefer concise evidence over a full repository dump.
+1. **Scope the task.** Identify the exact local repository/worktree and the question. Use CodeGraph for cross-file paths, symbol relationships, blast radius, affected tests, and nontrivial debugging/refactoring. Skip it for a tiny edit, a known-file read, or straightforward grep. Do not index repositories outside the task.
+2. **Check access.** Prefer an available `codegraph_explore` MCP tool for graph queries. If the local shell can access the same repository, check for the `codegraph` CLI (`command -v codegraph` on POSIX) and inspect `codegraph status <repo-root>`. Respect `CODEGRAPH_DIR` and platform-specific index locations; the existence of `.codegraph/` alone is not a reliable readiness test. An unavailable CLI/tool or inaccessible repository is **nonblocking**.
+3. **Ensure a usable graph, only when the task needs one.**
+   - **Missing index:** If `status` clearly reports an uninitialized repository and the CLI can write to the selected worktree, run `codegraph init <repo-root> --yes` once, then confirm with `codegraph status <repo-root>`. This is automatic per-project indexing, **not** automatic CLI/MCP installation. If status fails for an unknown reason, do not mistake it for a missing index.
+   - **Existing index, MCP:** Query through `codegraph_explore` without an extra pre-query sync. The pinned CodeGraph MCP server already watches edits and reconciles changes on connection.
+   - **Existing index, CLI only:** Run `codegraph sync <repo-root>` once before the first graph query for this task, not before every symbol lookup. `status` reports statistics, not a definitive source-freshness check; incremental sync is the freshness check.
+   - **Stale result:** If MCP reports a pending/stale file, inspect that file directly for current content. When the result remains inconsistent with accessible source, use one `codegraph sync <repo-root>` if the CLI is available, then retry the graph query once. If the index is demonstrably corrupt or still unusable after sync, `codegraph index <repo-root> --force` is a last-resort, **one-time** local rebuild, only with write permission and no competing writer. Do not force-rebuild merely because time passed, a commit changed, or a symbol was not found.
+   - **Failure:** If initialization, sync, or rebuild fails, do not loop, delete `.codegraph/`, run `uninit`, or alter global settings. Fall back to source search and report the missing graph coverage.
+4. **Retrieve focused evidence.** Prefer one `codegraph_explore` request (or `codegraph explore "<question>"`) about the relevant path or symbol. Supply the exact `projectPath` for MCP across repositories where supported. Use `codegraph callers <symbol>`, `callees`, `impact`, `query`, and `git diff --name-only | codegraph affected --stdin` only for focused follow-ups.
+5. **Verify consequential claims.** Check decisive source contracts and tests when needed. A graph can omit dynamic behavior, generated code, or unsupported files; no result is not proof of no dependency. Explain the observed path, impact, source locations, uncertainty, and smallest useful verification. Mention auto-initialization/sync only if it actually succeeded.
 
-## Setup is a separate, consented operation
+## Boundaries
 
-CodeGraph is **not installed by this Skill**. If the user asks to install or configure it, first check their environment and refer to [the version-pinned upstream guide](references/upstream.md). `codegraph install` modifies agent MCP/instruction settings; `codegraph init` writes a local project index; `codegraph sync` changes that index. Do not execute these commands merely because this Skill was loaded. Respect the user's requested scope and permissions.
+- **No implicit environment setup:** Do not execute `codegraph install`, download binaries, change MCP configuration, or upgrade the CLI as a side effect of graph navigation. Installation/configuration remains a separate, consented operation; see [references/upstream.md](references/upstream.md).
+- **No index writes just from activation:** Do not execute `init`, `sync`, or `index --force` merely because this Skill was loaded. Automatic per-repository index maintenance begins only for a graph-worthy task, in a writable and accessible checkout. Respect explicit read-only instructions and existing project permissions.
+- **No extra infrastructure:** Do not add background daemons, hooks, timestamps, lock managers, or custom staleness databases; use upstream's own index, watcher, and incremental sync. Avoid concurrent rebuilds of the same worktree.
+- **No invented access:** If only an MCP tool is accessible and it reports no index, but no CLI can reach that repository, use ordinary inspection instead of claiming to have initialized it. For Web-only sessions, explain the access boundary.
+- `domain-modeling` covers conceptual design, `crux-first-reasoning` complex decisions, and `ponytail` implementation simplification. CodeGraph is evidence about **existing code**, not architectural authority.
 
-## Integration boundaries
-
-- The CodeGraph MCP tool and its usage guidance come from the **separately installed** CodeGraph server. The Plugin's Skill metadata is not an MCP server and does not grant remote or local code access on its own.
-- Never invent a graph, project index, tool output or completed installation. If tooling is missing or a client is Web-only, provide a normal code-analysis response with the available tools, or state which local step requires user action.
-- `domain-modeling` concerns conceptual/domain design; this Skill inspects **existing code relationships**. `crux-first-reasoning` handles complex decisions and dominant constraints. `ponytail` handles implementation simplification. Combine only when the actual task requires them; do not make CodeGraph a global prerequisite.
-- Upstream source, pinned CLI version, license and command reference: [references/upstream.md](references/upstream.md).
-- Positive/negative routing checks: [references/evaluation.md](references/evaluation.md).
+Operational details and pinned version: [references/upstream.md](references/upstream.md). Positive/negative checks: [references/evaluation.md](references/evaluation.md).
