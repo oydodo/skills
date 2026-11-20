@@ -85,7 +85,7 @@ flowchart TB
 | `prototype` | 用低成本、可丢弃的逻辑或 UI 原型验证设计选项 | 决策需要可交互原型或由 Wayfinder 调用时 |
 | `ponytail` | 工程实现容易引入不必要的复杂性 | 编码时追求最小但完整的实现 |
 | [`diagnosing-bugs`](https://github.com/mattpocock/skills/blob/main/skills/engineering/diagnosing-bugs/SKILL.md) | 难以复现的故障或性能回归，需要可验证反馈闭环 | 复杂 Bug、间歇性失败及根因追查；普通小修不强制触发 |
-| [`codegraph`](skills/codegraph/SKILL.md) | 从已有代码中追踪跨文件调用、影响范围和受影响测试 | 本地 CodeGraph 索引和 CLI/MCP 可用时，开展复杂代码结构分析；环境不具备时降级 |
+| [`codegraph`](skills/codegraph/SKILL.md) | 从已有代码中追踪跨文件调用、影响范围和受影响测试 | 复杂代码分析时按需使用；CLI 可用且仓库可写时自动初始化缺失索引、增量刷新过期索引，环境不具备时降级 |
 | [`visual-explainer`](https://github.com/nicobailon/visual-explainer) | 将分析、架构、进展、审查结论变成直观的图示和 HTML 页面 | 明确要求视觉化或视觉形式有显著价值，并具备合适的输出能力时 |
 | [`writing-for-agents`](https://github.com/mattpocock/skills/blob/main/skills/productivity/writing-for-agents/SKILL.md) | 优化 Agent 指令的按需加载、完成标准与无效规则 | 编写或审查 SKILL.md、AGENTS.md、CLAUDE.md 等 Agent 可读文件 |
 | [`retro`](https://github.com/mattpocock/skills/blob/main/skills/engineering/retro/SKILL.md) | 从真实开发会话中改进导航、自动检查和 Agent 工作环境 | **用户显式提出会话复盘**时使用；不自动运行 |
@@ -149,7 +149,7 @@ ChatGPT 的单个 Skill 上传入口不能直接识别包含多个 Skill 的仓�
 
 **显式调用边界**：`retro` 与 `wayfinder` 的 Claude `disable-model-invocation: true` 会在构建时保留，并同步保证 Codex 侧 `agents/openai.yaml` 的 `allow_implicit_invocation: false`；ChatGPT/Claude Web 的实际触发仍须分别验证。
 
-**CodeGraph 单独安装**：Skill 只教 Agent 在可用时使用 [CodeGraph CLI/MCP](https://github.com/colbymchenry/codegraph)，不会自动安装程序、连接 MCP 或创建本地索引；Web 对话不能据此访问本地仓库。
+**CodeGraph 工具单独安装，索引按需维护**：Skill 不会自动安装 [CodeGraph CLI/MCP](https://github.com/colbymchenry/codegraph) 或更改 MCP 配置；当 CLI 已安装、仓库可写且任务需要代码图时，会自动创建缺失索引或增量刷新过期图。MCP 已具备监听同步时不额外重复同步；Web 对话不能仅凭 Skill 访问本地仓库。
 
 在支持 Plugin Marketplace 的 ChatGPT 桌面版 / Codex 环境运行：
 
