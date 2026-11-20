@@ -54,8 +54,42 @@ class CodeGraphSkillContractTest(unittest.TestCase):
         self.assertIn("codegraph_explore", body)
         self.assertIn("codegraph status", body)
         self.assertIn("does **not** bundle", body)
-        self.assertIn("Do not execute these commands merely because this Skill was loaded", body)
+        self.assertIn("No index writes just from activation", body)
+        self.assertIn("Respect explicit read-only instructions", body)
         self.assertIn("Web-only", body)
+
+    def test_missing_and_stale_indexes_are_repaired_only_on_demand(self):
+        body = SKILL.read_text(encoding="utf-8")
+        examples = (ROOT / "skills/codegraph/references/evaluation.md").read_text(encoding="utf-8")
+        for snippet in (
+            "Ensure a usable graph, only when the task needs one",
+            "codegraph init <repo-root> --yes",
+            "codegraph sync <repo-root>",
+            "codegraph index <repo-root> --force",
+            "Existing index, MCP",
+            "Existing index, CLI only",
+            "Stale result",
+            "If initialization, sync, or rebuild fails",
+            "do not loop",
+            "Do not add background daemons",
+            "no competing writer",
+        ):
+            self.assertIn(snippet, body)
+        for case in (
+            "Missing local index",
+            "Current index through MCP",
+            "Existing index, CLI only",
+            "Changed file, MCP pending",
+            "Broken index",
+            "Read-only worktree",
+            "Wrong worktree",
+            "Negative: tiny edit",
+            "Negative: time/commit change alone",
+        ):
+            self.assertIn(case, examples)
+        self.assertNotIn("curl -fsSL", body)
+        self.assertNotIn("codegraph install --yes", body)
+        self.assertNotIn("codegraph uninit <repo-root>", body)
         self.assertNotIn("curl -fsSL", body)
 
     def test_build_and_release_packaging(self):
@@ -66,7 +100,7 @@ class CodeGraphSkillContractTest(unittest.TestCase):
         skill_text = (generated / "SKILL.md").read_text(encoding="utf-8")
         self.assertIn("name: codegraph", skill_text)
         release = json.loads((BUNDLE / "plugin.json").read_text(encoding="utf-8"))
-        self.assertEqual(release["version"], "0.1.18")
+        self.assertEqual(release["version"], "0.1.19")
         notes = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
         self.assertIn("## [0.1.10]", notes)
 
