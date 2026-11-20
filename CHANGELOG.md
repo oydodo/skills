@@ -6,6 +6,17 @@
 - **版本对应**：以 [GitHub Releases](https://github.com/oydodo/skills/releases) 和已合并 PR 为准；`v0.1.9` 引入版本记录分发；此后每版按本文件记录变更。
 - **不要混淆**：代码合并、CI 通过、ZIP 发布、Marketplace 已同步、Agent 实际触发，是不同的验收层级。
 
+## [0.1.19] - 2026-11-20
+
+### Changed — CodeGraph 缺图自动初始化、版本化过期检测与按需重建
+
+- 自维护的 `codegraph` Skill 针对真正需要跨文件图分析的任务：在本地 CLI 已安装、目标 worktree 可写且 `status` 明确报未初始化时，按安装版本自动运行一次 `init` 并核验。CodeGraph v1.6.3+ 使用 `codegraph init <repo-root> --yes --local-only` 避免把生成索引纳入 Git；v1.6.2 降级为 `init --yes`。
+- CLI 模式针对已有且同引擎构建的索引，每项任务增量 `sync` 一次。MCP 模式优先使用上游文件 watcher、连接时补同步和 stale-file 提示，避免重复维护。
+- 已根据 2026-11-17 发布的上游 v1.6.3 调整关键逻辑：`status --strict` 可辅助判断缺图、不完整或过期，但非零返回码并不等于损坏；上游引擎升级、框架/配置变化并明确提示需要重建时执行一次 `codegraph index <repo-root>`，而不是只做 `sync`。`index` 本身就完整重建，`--force` 只是绕过根目录安全保护，不能用作常规恢复。
+- 保留权限与边界：不自动安装/升级 CodeGraph、修改 MCP/Agent 全局配置、删索引、创建自制 watcher/Hook/锁；只作用于当前任务仓库，遇到只读、异常、竞争写入时降级代码检索。
+- 情景：旧 Skill 因缺索引直接退回普通搜索；新增自恢复时又需兼容上游版本变化，避免新旧索引混用或误用强制选项。
+- 验收层级：本机 v1.6.2 临时 Git 仓库上的 `status → init → sync → index` 命令实测通过；v1.6.3 语义基于上游 release/docs，真实 CLI 和 Codex/Claude/Pi 行为仍待另验。
+
 ## [0.1.18] - 2026-11-14
 
 ### Fixed — 插件里只留一份插件清单
