@@ -6,6 +6,16 @@
 - **版本对应**：以 [GitHub Releases](https://github.com/oydodo/skills/releases) 和已合并 PR 为准；`v0.1.9` 引入版本记录分发；此后每版按本文件记录变更。
 - **不要混淆**：代码合并、CI 通过、ZIP 发布、Marketplace 已同步、Agent 实际触发，是不同的验收层级。
 
+## [0.1.19] - 2026-11-20
+
+### Changed — CodeGraph 缺失索引自动初始化、过期索引按需刷新
+
+- 更新自维护 `codegraph` Skill：在复杂跨文件分析任务中，如果本地 CLI 已安装且目标 worktree 可写，`codegraph status` 明确确认无索引时，自动执行一次 `codegraph init <repo-root> --yes` 并核验；CLI 查询前每项任务最多执行一次 `codegraph sync`，代替旧版直接降级的行为。
+- 复用 CodeGraph v1.6.2 MCP 内置文件监听、连接时差异补齐和过期文件提示。MCP 正常工作时不额外执行 sync；仅在结果与源码持续矛盾时同步并重试一次。强制重建仅用于增量修复后仍损坏且无写入冲突的场景。
+- 不自动安装 CLI/MCP、不修改全局配置、不引入 Hook/服务/缓存监控、不碰其他仓库或只读目录；同步失败时仍降级源代码检索。扩充正负例验收说明与合同测试。
+- 情景：原 Skill 把缺失本地索引视作无法使用图的终点，导致已装 CodeGraph 的跨文件任务仍反复使用普通搜索；而本地初始化是作用域明确的低成本自恢复。避免另建复杂“过期监测”机制，因为上游已提供增量同步。
+- 尚未验证：真实 Codex/Claude/Pi 运行时自动执行、CodeGraph CLI 的现场表现以及 Web Plugin 侧加载；静态断言和构建不能代表行为验收。
+
 ## [0.1.18] - 2026-11-14
 
 ### Fixed — 插件里只留一份插件清单
