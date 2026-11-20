@@ -1,52 +1,62 @@
 # Upstream CodeGraph — provenance and operational notes
 
-- **Project:** [colbymchenry/codegraph](https://github.com/colbymchenry/codegraph)
-- **Upstream license:** [MIT](https://github.com/colbymchenry/codegraph/blob/v1.6.2/LICENSE) (Copyright © 2026 Colby Mchenry).
-- **Pinned documented release:** [v1.6.2](https://github.com/colbymchenry/codegraph/releases/tag/v1.6.2), tag commit `6560052a6f856855d3f71eee838fd66ccfa4285d` (checked 2026-10-30).
-- **Upstream manual:** [README at v1.6.2](https://github.com/colbymchenry/codegraph/blob/v1.6.2/README.md).
-- This Skill is maintained in `oydodo/skills`. It does not bundle upstream software or alter a separately installed CLI/MCP server.
+- **Project:** [colbymchenry/codegraph](https://github.com/colbymchenry/codegraph).
+- **Upstream license:** [MIT at v1.6.3](https://github.com/colbymchenry/codegraph/blob/v1.6.3/LICENSE) (Copyright © 2026 Colby Mchenry).
+- **Current documented release:** [v1.6.3](https://github.com/colbymchenry/codegraph/releases/tag/v1.6.3), tag commit `ef4bd058d97020a2b2a74a89f1bf21b84e9f5b30` (released 2026-11-17; checked 2026-11-20).
+- **Previous local verified CLI:** v1.6.2, tag `6560052a6f856855d3f71eee838fd66ccfa4285d` (tested 2026-11-20).
+- **Upstream manual:** [README at v1.6.3](https://github.com/colbymchenry/codegraph/blob/v1.6.3/README.md).
+- This is a Skill maintained in `oydodo/skills`, not a bundled binary or an installed MCP server.
 
-## Distinguish setup from per-repository maintenance
+## Installation vs local index maintenance
 
-**Installation requires separate approval:**
-
-```sh
-npm install -g @colbymchenry/codegraph@1.6.2
-codegraph install --print-config codex  # inspect first
-codegraph install                       # modifies supported agent MCP config
-```
-
-**Per-repository graph operations for an actual graph-worthy task:**
+Installation/upgrade is separate and requires user approval. The Skill does not run these implicitly:
 
 ```sh
-codegraph status <repo-root>          # stats / absence; not proof of freshness
-codegraph init <repo-root> --yes      # first-time local graph, when missing
-codegraph sync <repo-root>            # incremental update of existing graph
-codegraph index <repo-root> --force   # last resort: full rebuild, not normal refresh
+npm install -g @colbymchenry/codegraph@1.6.3
+codegraph install --print-config codex  # inspect global config target
+codegraph install                       # changes MCP / agent configuration
+codegraph upgrade --check              # read-only update check
 ```
 
-The user may authorize the Skill to initialize/refresh a graph automatically when analyzing a writable repository. That does **not** authorize installation, modifying global MCP settings, deleting index files, or indexing unrelated repositories. Honor `CODEGRAPH_DIR`, worktree/OS-specific index locations, and explicit read-only restrictions. Do not infer "missing" from any nonzero `status` exit: inspect the diagnostic first.
+For a graph-worthy task in an accessible, writable local worktree:
 
-## Freshness in pinned v1.6.2
+```sh
+codegraph version
+codegraph status <repo-root>
+codegraph status --strict <repo-root>  # v1.6.3+: stronger, but inspect diagnostic
+codegraph init <repo-root> --yes --local-only  # v1.6.3+ first-time, keep Git clean
+codegraph init <repo-root> --yes       # v1.6.2 fallback (no --local-only)
+codegraph sync <repo-root>             # incremental refresh, same engine
+codegraph index <repo-root>            # full rebuild; needed when old engine indexed it
+```
 
-- The MCP server's watcher incrementally syncs edited source files after a debounce period. It also reconciles the working tree on connection. A per-file staleness banner means current source should be inspected directly until the graph catches up.
-- `codegraph status` reports statistics; it is **not** a reliable standalone freshness oracle. For CLI-only graph navigation, run an incremental `sync` once before querying, rather than inventing a Git-HEAD/mtime TTL scheme.
-- When an MCP result remains inconsistent with supported local source, sync once and retry once. Reserve forced `index` for actual corruption/unusable state after sync; avoid overlapping index writers and never loop on errors.
-- If the installed version differs, consult `codegraph help <command>` and its installed docs instead of assuming v1.6.2 flags or background behavior.
+`codegraph index` **always performs a full rebuild**. The optional `--force` flag permits otherwise restricted root/home locations; **do not use it as a routine force-reindex switch**. Avoid special/sensitive paths, unrelated repos and concurrent writers. Honor `CODEGRAPH_DIR` and worktree/OS-specific index locations. No arbitrary deletion of `.codegraph/` or global changes.
 
-## Relevant CLI and MCP commands (v1.6.2)
+## Index freshness and diagnostics
+
+- **MCP mode:** The CodeGraph server already watches files, debounces edits and reconciles on connection. A pending-file staleness banner means inspect that file directly; do not sync before every MCP request.
+- **CLI-only mode:** Run one `sync` before the first graph query per task. A normal `status` can show statistics without establishing source freshness; no custom Git SHA / age / mtime ledger is needed.
+- **Old engine index:** From v1.6.3, `status` explicitly warns if the graph was built by an earlier engine, and the agent may surface a one-time warning. `sync` cannot replace the full re-index of unchanged files after an upgrade; run `codegraph index <repo-root>` once when permitted.
+- **Framework/config changes:** Follow an explicit `status` recommendation for full re-index if the effective framework/config changed, rather than treating a routine source edit the same way.
+- **Partial language coverage:** v1.6.3 adds `status --strict`, which exits nonzero for missing/incomplete/outdated indexes and partial parser coverage. A nonzero exit **does not by itself prove index corruption or mean retry until green**. Inspect the diagnostic and source compatibility.
+- **Errors:** At most one incremental recovery/retry, and one full re-index if the index is demonstrably unusable or engine-old. No loops; gracefully fall back to source search if recovery cannot complete.
+
+## Relevant CLI and MCP commands
 
 | Purpose | Command |
 | --- | --- |
 | Version and availability | `codegraph version` |
-| Check index | `codegraph status [path]` |
-| Focused evidence | `codegraph explore "<question>"` |
+| Check graph | `codegraph status [path]`; v1.6.3+ `status --strict [path]` |
+| Focused evidence | `codegraph explore "<question>"` or MCP `codegraph_explore` |
 | Symbol lookup | `codegraph query "<term>"` |
 | Call relationships | `codegraph callers <symbol>` / `codegraph callees <symbol>` |
 | Change radius | `codegraph impact <symbol>` |
 | Candidate changed-file tests | `codegraph affected <paths...>` or `codegraph affected --stdin` |
-| Initialize local graph (writes) | `codegraph init [path] --yes` |
-| Incremental refresh (writes) | `codegraph sync [path]` |
-| Forced re-index (writes) | `codegraph index [path] --force` |
+| Initialize local-only (v1.6.3+) | `codegraph init [path] --yes --local-only` |
+| Incremental refresh | `codegraph sync [path]` |
+| Full re-index | `codegraph index [path]` |
+| New v1.6.3 navigation | `codegraph implementations <name>`; `codegraph cycles` |
 
-The standard MCP tool is `codegraph_explore`; other MCP tools may not be exposed. Tooling may miss unsupported languages, ignored files, generated code, and runtime dispatch; verify consequential claims against source/tests. CodeGraph is not `codegraph-ai` or CodeGraphContext (`cgc`).
+The standard MCP surface exposes `codegraph_explore`; other tools may not be exposed. Real code may use unsupported constructs, dynamic dispatch or ignored/generated files; verify consequential conclusions against actual source/tests. If local CLI version differs, check `codegraph help <command>` before using version-specific flags.
+
+**Compatibility:** Not the unrelated CodeScope/`codegraph-ai` or CodeGraphContext (`cgc`).
