@@ -44,7 +44,9 @@ class CodeGraphSkillContractTest(unittest.TestCase):
     def test_upstream_pinned_and_licensed(self):
         text = UPSTREAM.read_text(encoding="utf-8")
         self.assertIn("github.com/colbymchenry/codegraph", text)
-        self.assertIn("v1.6.2", text)
+        self.assertIn("v1.6.3", text)
+        self.assertIn("ef4bd058d97020a2b2a74a89f1bf21b84e9f5b30", text)
+        self.assertIn("v1.6.2", text)  # backward compatibility
         self.assertIn("6560052a6f856855d3f71eee838fd66ccfa4285d", text)
         self.assertIn("MIT", text)
 
@@ -63,34 +65,40 @@ class CodeGraphSkillContractTest(unittest.TestCase):
         examples = (ROOT / "skills/codegraph/references/evaluation.md").read_text(encoding="utf-8")
         for snippet in (
             "Ensure a usable graph, only when the task needs one",
+            "codegraph init <repo-root> --yes --local-only",
             "codegraph init <repo-root> --yes",
             "codegraph sync <repo-root>",
-            "codegraph index <repo-root> --force",
-            "Existing index, MCP",
-            "Existing index, CLI only",
-            "Stale result",
-            "If initialization, sync, or rebuild fails",
-            "do not loop",
+            "codegraph status --strict <repo-root>",
+            "codegraph index <repo-root>",
+            "Outdated engine/index metadata",
+            "Existing current index, MCP",
+            "Existing current index, CLI only",
+            "Persistent inconsistency or damage",
+            "Incremental `sync` does not reprocess all existing symbols",
+            "Never loop",
             "Do not add background daemons",
-            "no competing writer",
+            "no conflicting index writer",
         ):
             self.assertIn(snippet, body)
         for case in (
             "Missing local index",
+            "Older CLI fallback",
+            "Old engine index",
             "Current index through MCP",
             "Existing index, CLI only",
             "Changed file, MCP pending",
+            "Incomplete language coverage",
             "Broken index",
             "Read-only worktree",
             "Wrong worktree",
             "Negative: tiny edit",
-            "Negative: time/commit change alone",
+            "Negative: age/HEAD alone",
+            "Restricted location",
         ):
             self.assertIn(case, examples)
         self.assertNotIn("curl -fsSL", body)
         self.assertNotIn("codegraph install --yes", body)
         self.assertNotIn("codegraph uninit <repo-root>", body)
-        self.assertNotIn("curl -fsSL", body)
 
     def test_build_and_release_packaging(self):
         generated = BUNDLE / "skills/codegraph"
