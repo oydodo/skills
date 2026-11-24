@@ -75,8 +75,11 @@ def pinned_commit(module_path: str) -> str:
 def files_under(source: Path):
     if not source.is_dir() or source.is_symlink():
         raise ValueError(f"Missing or unsafe Skill source: {source}")
+    # A Skill is a directory inside one plugin; an upstream's own plugin
+    # manifests stay behind so the bundle holds exactly one plugin.
     ignored = {".git", ".github", ".gitignore", ".DS_Store",
-               "__pycache__", "node_modules", ".pytest_cache", ".venv"}
+               "__pycache__", "node_modules", ".pytest_cache", ".venv",
+               ".claude-plugin", ".codex-plugin"}
     for path in sorted(source.rglob("*")):
         rel = path.relative_to(source)
         if any(part in ignored for part in rel.parts):

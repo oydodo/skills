@@ -6,6 +6,23 @@
 - **版本对应**：以 [GitHub Releases](https://github.com/oydodo/skills/releases) 和已合并 PR 为准；`v0.1.9` 引入版本记录分发；此后每版按本文件记录变更。
 - **不要混淆**：代码合并、CI 通过、ZIP 发布、Marketplace 已同步、Agent 实际触发，是不同的验收层级。
 
+## [0.1.18] - 2026-11-14
+
+### Fixed — 插件里只留一份插件清单
+
+- 构建复制 Skill 时不再带上上游自己的 `.claude-plugin/` 和 `.codex-plugin/`。`visual-explainer` 的源路径是上游的整个插件目录，它的 `.claude-plugin/plugin.json` 一直跟着进了 `plugins/oydodo-skills/skills/visual-explainer/`，于是插件里套着另一个插件的清单。
+- 情景：claude.ai 添加 `oydodo/skills` 为 Marketplace 时报 “Marketplace sync failed”，删掉旧来源重加仍失败。账号里最后同步成功的是 0.1.10；0.1.11 正是首次加入 `visual-explainer` 的一版，此后再没同步上。本地 `claude plugin validate` 对 Marketplace 和插件都通过，所以只能从同步前后的差别找原因；嵌套的插件清单是这一版新出现、又最像会让同步方认错插件的东西。
+- 未验证：这是按时间对应推出的原因，修好后要在 claude.ai 重新同步一次才能确认。若仍失败，下一个怀疑对象是同一 Skill 带进来的 `commands/`、`mcp/server.mjs` 和 `extension.ts`。
+
+## [0.1.17] - 2026-11-14
+
+### Added — 自维护写作 Skill `crux-first-writing`（18 → 19）
+
+- 新增 `skills/crux-first-writing/`：写或改“讲某样东西是什么”的文字时，先从它在整体里的位置找出本质，用一句正面的话说出，再从本质展开全文；逐句检验“这句是否在说对象现在的性质”，说被否决做法或旧版本的句子移到决策记录或 CHANGELOG；每次修改都从本质重写受影响的整段。附 `references/evaluation.md`。
+- 情景：Codas 本体里 link 的定义四句话全在讲它不是什么、不做什么，没有说出本质。查下来，文档在逐条反馈中被逐句修补，每做一次减法就留下一句告别句，写成了旧版的差分。`crux-first-reasoning` 管判断，触发条件是决策和诊断，且跳过文字修改，写定义时不会加载；现有写作 Skill 只零散地管“不是X而是Y”这类句式。
+- 配合顺序：`crux-first-reasoning`、`independent-judgment` 先定什么是真的、什么是主要的；本 Skill 定本质和组织；`technical-documentation`、`technical-writing`、`technical-language`、`writing-for-agents` 再管文体和措辞。
+- 未验证：Agent 是否在写定义、改文档时实际触发本 Skill，以及有无对比的效果。
+
 ## [0.1.16] - 2026-11-13
 
 ### Changed — 构建只管自己生成的条目

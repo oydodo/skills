@@ -1,7 +1,7 @@
-# Non-destructive curation: historical 80-skill snapshot; 14 selected external, 4 maintained in repository.
+# Non-destructive curation: historical 80-skill snapshot; 14 selected external, 5 maintained in repository.
 version: 12
 installed_snapshot: 80
-selected_count: 18
+selected_count: 19
 selected_local_count: 14
 selected:
   philosophy:
@@ -28,6 +28,7 @@ selected:
   visualization:
     - visual-explainer
   writing:
+    - crux-first-writing
     - technical-writing
     - technical-documentation
     - technical-language

@@ -42,7 +42,7 @@ The native release intentionally **omits** Plugin Hooks and `.agents/plugins/mar
 
 ## Pi Package — one Git install and batch update
 
-Pi supports packages containing only Skills. This repository now declares a root `package.json` with `pi.skills: ["./.agents/skills"]`, so Pi can consume all 18 Skills from the **same generated native tree**. No Pi-specific Skill fork or executable extension is included. The Pi package does not run custom scripts or install CodeGraph/MCP services.
+Pi supports packages containing only Skills. This repository now declares a root `package.json` with `pi.skills: ["./.agents/skills"]`, so Pi can consume all 19 Skills from the **same generated native tree**. No Pi-specific Skill fork or executable extension is included. The Pi package does not run custom scripts or install CodeGraph/MCP services.
 
 Install one Git package globally:
 

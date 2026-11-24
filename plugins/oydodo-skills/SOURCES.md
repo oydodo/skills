@@ -8,6 +8,7 @@ DO NOT edit here. Edit registry/skills.yaml, maintained skills, or the pinned su
 | independent-judgment | [maintained](https://github.com/oydodo/skills) | maintained in this repository | Body unmodified |
 | interview-me | [addyosmani](https://github.com/addyosmani/agent-skills) | aeac41d4d005999432bb7312f7ff06383a91d59d | Curated trigger description; body unmodified |
 | crux-first-reasoning | [maintained](https://github.com/oydodo/skills) | maintained in this repository | Body unmodified |
+| crux-first-writing | [maintained](https://github.com/oydodo/skills) | maintained in this repository | Body unmodified |
 | grilling | [mattpocock](https://github.com/mattpocock/skills) | 59db609eb1e18aaf59b63284d0e52255aff0c63c | Curated trigger description; body unmodified |
 | wayfinder | [mattpocock](https://github.com/mattpocock/skills) | 59db609eb1e18aaf59b63284d0e52255aff0c63c | Body unmodified |
 | domain-modeling | [mattpocock](https://github.com/mattpocock/skills) | 59db609eb1e18aaf59b63284d0e52255aff0c63c | Body unmodified |
